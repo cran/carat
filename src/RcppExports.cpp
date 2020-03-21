@@ -363,16 +363,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // HuHuCAR_RT
-Rcpp::List HuHuCAR_RT(DataFrame data, double Pernum, arma::vec omega, double p);
-RcppExport SEXP _carat_HuHuCAR_RT(SEXP dataSEXP, SEXP PernumSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+Rcpp::List HuHuCAR_RT(DataFrame data, double Reps, arma::vec omega, double p);
+RcppExport SEXP _carat_HuHuCAR_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP omegaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type omega(omegaSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(HuHuCAR_RT(data, Pernum, omega, p));
+    rcpp_result_gen = Rcpp::wrap(HuHuCAR_RT(data, Reps, omega, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -391,16 +391,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // HuHuCAR_RT_In
-double HuHuCAR_RT_In(arma::mat data, double Pernum, arma::vec omega, double p);
-RcppExport SEXP _carat_HuHuCAR_RT_In(SEXP dataSEXP, SEXP PernumSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+double HuHuCAR_RT_In(arma::mat data, double Reps, arma::vec omega, double p);
+RcppExport SEXP _carat_HuHuCAR_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP omegaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type omega(omegaSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(HuHuCAR_RT_In(data, Pernum, omega, p));
+    rcpp_result_gen = Rcpp::wrap(HuHuCAR_RT_In(data, Reps, omega, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -419,8 +419,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // HuHuCAR_RT_power
-arma::vec HuHuCAR_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p, double Pernum, int ncores);
-RcppExport SEXP _carat_HuHuCAR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP PernumSEXP, SEXP ncoresSEXP) {
+arma::vec HuHuCAR_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p, double Reps);
+RcppExport SEXP _carat_HuHuCAR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP RepsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -437,15 +437,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type omega(omegaSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(HuHuCAR_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, Pernum, ncores));
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    rcpp_result_gen = Rcpp::wrap(HuHuCAR_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, Reps));
     return rcpp_result_gen;
 END_RCPP
 }
 // HuHuCAR_BT_power
-arma::vec HuHuCAR_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p, double B, int ncores);
-RcppExport SEXP _carat_HuHuCAR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP BSEXP, SEXP ncoresSEXP) {
+arma::vec HuHuCAR_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p, double B);
+RcppExport SEXP _carat_HuHuCAR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -463,8 +462,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type omega(omegaSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(HuHuCAR_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, B, ncores));
+    rcpp_result_gen = Rcpp::wrap(HuHuCAR_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, B));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -490,16 +488,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // PocSimMIN_RT
-Rcpp::List PocSimMIN_RT(DataFrame data, double Pernum, arma::vec weight, double p);
-RcppExport SEXP _carat_PocSimMIN_RT(SEXP dataSEXP, SEXP PernumSEXP, SEXP weightSEXP, SEXP pSEXP) {
+Rcpp::List PocSimMIN_RT(DataFrame data, double Reps, arma::vec weight, double p);
+RcppExport SEXP _carat_PocSimMIN_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP weightSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type weight(weightSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(PocSimMIN_RT(data, Pernum, weight, p));
+    rcpp_result_gen = Rcpp::wrap(PocSimMIN_RT(data, Reps, weight, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -518,16 +516,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // PocSimMIN_RT_In
-double PocSimMIN_RT_In(arma::mat data, double Pernum, arma::vec weight, double p);
-RcppExport SEXP _carat_PocSimMIN_RT_In(SEXP dataSEXP, SEXP PernumSEXP, SEXP weightSEXP, SEXP pSEXP) {
+double PocSimMIN_RT_In(arma::mat data, double Reps, arma::vec weight, double p);
+RcppExport SEXP _carat_PocSimMIN_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP weightSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type weight(weightSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(PocSimMIN_RT_In(data, Pernum, weight, p));
+    rcpp_result_gen = Rcpp::wrap(PocSimMIN_RT_In(data, Reps, weight, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -546,8 +544,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // PocSimMIN_RT_power
-arma::vec PocSimMIN_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p, double Pernum, int ncores);
-RcppExport SEXP _carat_PocSimMIN_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP PernumSEXP, SEXP ncoresSEXP) {
+arma::vec PocSimMIN_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p, double Reps);
+RcppExport SEXP _carat_PocSimMIN_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP RepsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -564,15 +562,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type weight(weightSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(PocSimMIN_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, Pernum, ncores));
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    rcpp_result_gen = Rcpp::wrap(PocSimMIN_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, Reps));
     return rcpp_result_gen;
 END_RCPP
 }
 // PocSimMIN_BT_power
-arma::vec PocSimMIN_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p, double B, int ncores);
-RcppExport SEXP _carat_PocSimMIN_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP BSEXP, SEXP ncoresSEXP) {
+arma::vec PocSimMIN_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p, double B);
+RcppExport SEXP _carat_PocSimMIN_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -590,8 +587,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type weight(weightSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(PocSimMIN_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, B, ncores));
+    rcpp_result_gen = Rcpp::wrap(PocSimMIN_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, B));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -616,15 +612,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // StrBCD_RT
-Rcpp::List StrBCD_RT(DataFrame data, double Pernum, double p);
-RcppExport SEXP _carat_StrBCD_RT(SEXP dataSEXP, SEXP PernumSEXP, SEXP pSEXP) {
+Rcpp::List StrBCD_RT(DataFrame data, double Reps, double p);
+RcppExport SEXP _carat_StrBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrBCD_RT(data, Pernum, p));
+    rcpp_result_gen = Rcpp::wrap(StrBCD_RT(data, Reps, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -642,15 +638,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // StrBCD_RT_In
-double StrBCD_RT_In(arma::mat data, double Pernum, double p);
-RcppExport SEXP _carat_StrBCD_RT_In(SEXP dataSEXP, SEXP PernumSEXP, SEXP pSEXP) {
+double StrBCD_RT_In(arma::mat data, double Reps, double p);
+RcppExport SEXP _carat_StrBCD_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrBCD_RT_In(data, Pernum, p));
+    rcpp_result_gen = Rcpp::wrap(StrBCD_RT_In(data, Reps, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -668,8 +664,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // StrBCD_RT_power
-arma::vec StrBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double p, double Iternum, double sl, double Pernum, int ncores);
-RcppExport SEXP _carat_StrBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP pSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP PernumSEXP, SEXP ncoresSEXP) {
+arma::vec StrBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double p, double Iternum, double sl, double Reps);
+RcppExport SEXP _carat_StrBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP pSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP RepsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -685,15 +681,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type Iternum(IternumSEXP);
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, p, Iternum, sl, Pernum, ncores));
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    rcpp_result_gen = Rcpp::wrap(StrBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, p, Iternum, sl, Reps));
     return rcpp_result_gen;
 END_RCPP
 }
 // StrBCD_BT_power
-arma::vec StrBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double p, double B, int ncores);
-RcppExport SEXP _carat_StrBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP pSEXP, SEXP BSEXP, SEXP ncoresSEXP) {
+arma::vec StrBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double p, double B);
+RcppExport SEXP _carat_StrBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP pSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -710,8 +705,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, p, B, ncores));
+    rcpp_result_gen = Rcpp::wrap(StrBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, p, B));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -749,14 +743,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // DoptBCD_RT
-Rcpp::List DoptBCD_RT(DataFrame data, double Pernum);
-RcppExport SEXP _carat_DoptBCD_RT(SEXP dataSEXP, SEXP PernumSEXP) {
+Rcpp::List DoptBCD_RT(DataFrame data, double Reps);
+RcppExport SEXP _carat_DoptBCD_RT(SEXP dataSEXP, SEXP RepsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
-    rcpp_result_gen = Rcpp::wrap(DoptBCD_RT(data, Pernum));
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    rcpp_result_gen = Rcpp::wrap(DoptBCD_RT(data, Reps));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -773,14 +767,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // DoptBCD_RT_In
-double DoptBCD_RT_In(arma::mat data, double Pernum);
-RcppExport SEXP _carat_DoptBCD_RT_In(SEXP dataSEXP, SEXP PernumSEXP) {
+double DoptBCD_RT_In(arma::mat data, double Reps);
+RcppExport SEXP _carat_DoptBCD_RT_In(SEXP dataSEXP, SEXP RepsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
-    rcpp_result_gen = Rcpp::wrap(DoptBCD_RT_In(data, Pernum));
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    rcpp_result_gen = Rcpp::wrap(DoptBCD_RT_In(data, Reps));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -797,8 +791,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // DoptBCD_RT_power
-arma::vec DoptBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double Pernum, int ncores);
-RcppExport SEXP _carat_DoptBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP PernumSEXP, SEXP ncoresSEXP) {
+arma::vec DoptBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double Reps);
+RcppExport SEXP _carat_DoptBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP RepsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -813,15 +807,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< double >::type Iternum(IternumSEXP);
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(DoptBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, Pernum, ncores));
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    rcpp_result_gen = Rcpp::wrap(DoptBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, Reps));
     return rcpp_result_gen;
 END_RCPP
 }
 // DoptBCD_BT_power
-arma::vec DoptBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double B, int ncores);
-RcppExport SEXP _carat_DoptBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP BSEXP, SEXP ncoresSEXP) {
+arma::vec DoptBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double B);
+RcppExport SEXP _carat_DoptBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -837,8 +830,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type Iternum(IternumSEXP);
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(DoptBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, B, ncores));
+    rcpp_result_gen = Rcpp::wrap(DoptBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, B));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -878,15 +870,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // AdjBCD_RT
-Rcpp::List AdjBCD_RT(DataFrame data, double Pernum, double a);
-RcppExport SEXP _carat_AdjBCD_RT(SEXP dataSEXP, SEXP PernumSEXP, SEXP aSEXP) {
+Rcpp::List AdjBCD_RT(DataFrame data, double Reps, double a);
+RcppExport SEXP _carat_AdjBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
     Rcpp::traits::input_parameter< double >::type a(aSEXP);
-    rcpp_result_gen = Rcpp::wrap(AdjBCD_RT(data, Pernum, a));
+    rcpp_result_gen = Rcpp::wrap(AdjBCD_RT(data, Reps, a));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -904,15 +896,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // AdjBCD_RT_In
-double AdjBCD_RT_In(arma::mat data, double Pernum, double a);
-RcppExport SEXP _carat_AdjBCD_RT_In(SEXP dataSEXP, SEXP PernumSEXP, SEXP aSEXP) {
+double AdjBCD_RT_In(arma::mat data, double Reps, double a);
+RcppExport SEXP _carat_AdjBCD_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
     Rcpp::traits::input_parameter< double >::type a(aSEXP);
-    rcpp_result_gen = Rcpp::wrap(AdjBCD_RT_In(data, Pernum, a));
+    rcpp_result_gen = Rcpp::wrap(AdjBCD_RT_In(data, Reps, a));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -930,8 +922,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // AdjBCD_RT_power
-arma::vec AdjBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double a, double Pernum, int ncores);
-RcppExport SEXP _carat_AdjBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP PernumSEXP, SEXP ncoresSEXP) {
+arma::vec AdjBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double a, double Reps);
+RcppExport SEXP _carat_AdjBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP RepsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -947,15 +939,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type Iternum(IternumSEXP);
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< double >::type a(aSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(AdjBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, Pernum, ncores));
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    rcpp_result_gen = Rcpp::wrap(AdjBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, Reps));
     return rcpp_result_gen;
 END_RCPP
 }
 // AdjBCD_BT_power
-arma::vec AdjBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double a, double B, int ncores);
-RcppExport SEXP _carat_AdjBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP BSEXP, SEXP ncoresSEXP) {
+arma::vec AdjBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double a, double B);
+RcppExport SEXP _carat_AdjBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -972,8 +963,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< double >::type a(aSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(AdjBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, B, ncores));
+    rcpp_result_gen = Rcpp::wrap(AdjBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, B));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -998,15 +988,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // StrPBR_RT
-Rcpp::List StrPBR_RT(DataFrame data, double Pernum, int bsize);
-RcppExport SEXP _carat_StrPBR_RT(SEXP dataSEXP, SEXP PernumSEXP, SEXP bsizeSEXP) {
+Rcpp::List StrPBR_RT(DataFrame data, double Reps, int bsize);
+RcppExport SEXP _carat_StrPBR_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP bsizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
     Rcpp::traits::input_parameter< int >::type bsize(bsizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrPBR_RT(data, Pernum, bsize));
+    rcpp_result_gen = Rcpp::wrap(StrPBR_RT(data, Reps, bsize));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1024,15 +1014,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // StrPBR_RT_In
-double StrPBR_RT_In(arma::mat data, double Pernum, int bsize);
-RcppExport SEXP _carat_StrPBR_RT_In(SEXP dataSEXP, SEXP PernumSEXP, SEXP bsizeSEXP) {
+double StrPBR_RT_In(arma::mat data, double Reps, int bsize);
+RcppExport SEXP _carat_StrPBR_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP bsizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
     Rcpp::traits::input_parameter< int >::type bsize(bsizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrPBR_RT_In(data, Pernum, bsize));
+    rcpp_result_gen = Rcpp::wrap(StrPBR_RT_In(data, Reps, bsize));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1050,8 +1040,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // StrPBR_RT_power
-arma::vec StrPBR_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, int bsize, double Pernum, int ncores);
-RcppExport SEXP _carat_StrPBR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP PernumSEXP, SEXP ncoresSEXP) {
+arma::vec StrPBR_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, int bsize, double Reps);
+RcppExport SEXP _carat_StrPBR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP RepsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1067,15 +1057,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type Iternum(IternumSEXP);
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< int >::type bsize(bsizeSEXP);
-    Rcpp::traits::input_parameter< double >::type Pernum(PernumSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrPBR_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, Pernum, ncores));
+    Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    rcpp_result_gen = Rcpp::wrap(StrPBR_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, Reps));
     return rcpp_result_gen;
 END_RCPP
 }
 // StrPBR_BT_power
-arma::vec StrPBR_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, int bsize, double B, int ncores);
-RcppExport SEXP _carat_StrPBR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP BSEXP, SEXP ncoresSEXP) {
+arma::vec StrPBR_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, int bsize, double B);
+RcppExport SEXP _carat_StrPBR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1092,8 +1081,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< int >::type bsize(bsizeSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrPBR_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, B, ncores));
+    rcpp_result_gen = Rcpp::wrap(StrPBR_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, B));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1143,8 +1131,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // PocSimMIN_CT_power
-arma::vec PocSimMIN_CT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p);
-RcppExport SEXP _carat_PocSimMIN_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+arma::vec PocSimMIN_CT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p);
+RcppExport SEXP _carat_PocSimMIN_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1159,9 +1147,9 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< double >::type Iternum(IternumSEXP);
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type omega(omegaSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type weight(weightSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(PocSimMIN_CT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p));
+    rcpp_result_gen = Rcpp::wrap(PocSimMIN_CT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1281,45 +1269,45 @@ static const R_CallMethodDef CallEntries[] = {
     {"_carat_HuHuCAR_BT", (DL_FUNC) &_carat_HuHuCAR_BT, 4},
     {"_carat_HuHuCAR_RT_In", (DL_FUNC) &_carat_HuHuCAR_RT_In, 4},
     {"_carat_HuHuCAR_BT_In", (DL_FUNC) &_carat_HuHuCAR_BT_In, 4},
-    {"_carat_HuHuCAR_RT_power", (DL_FUNC) &_carat_HuHuCAR_RT_power, 15},
-    {"_carat_HuHuCAR_BT_power", (DL_FUNC) &_carat_HuHuCAR_BT_power, 15},
+    {"_carat_HuHuCAR_RT_power", (DL_FUNC) &_carat_HuHuCAR_RT_power, 14},
+    {"_carat_HuHuCAR_BT_power", (DL_FUNC) &_carat_HuHuCAR_BT_power, 14},
     {"_carat_PocSimMIN_getData", (DL_FUNC) &_carat_PocSimMIN_getData, 11},
     {"_carat_PocSimMIN_RT", (DL_FUNC) &_carat_PocSimMIN_RT, 4},
     {"_carat_PocSimMIN_BT", (DL_FUNC) &_carat_PocSimMIN_BT, 4},
     {"_carat_PocSimMIN_RT_In", (DL_FUNC) &_carat_PocSimMIN_RT_In, 4},
     {"_carat_PocSimMIN_BT_In", (DL_FUNC) &_carat_PocSimMIN_BT_In, 4},
-    {"_carat_PocSimMIN_RT_power", (DL_FUNC) &_carat_PocSimMIN_RT_power, 15},
-    {"_carat_PocSimMIN_BT_power", (DL_FUNC) &_carat_PocSimMIN_BT_power, 15},
+    {"_carat_PocSimMIN_RT_power", (DL_FUNC) &_carat_PocSimMIN_RT_power, 14},
+    {"_carat_PocSimMIN_BT_power", (DL_FUNC) &_carat_PocSimMIN_BT_power, 14},
     {"_carat_StrBCD_getData", (DL_FUNC) &_carat_StrBCD_getData, 10},
     {"_carat_StrBCD_RT", (DL_FUNC) &_carat_StrBCD_RT, 3},
     {"_carat_StrBCD_BT", (DL_FUNC) &_carat_StrBCD_BT, 3},
     {"_carat_StrBCD_RT_In", (DL_FUNC) &_carat_StrBCD_RT_In, 3},
     {"_carat_StrBCD_BT_In", (DL_FUNC) &_carat_StrBCD_BT_In, 3},
-    {"_carat_StrBCD_RT_power", (DL_FUNC) &_carat_StrBCD_RT_power, 14},
-    {"_carat_StrBCD_BT_power", (DL_FUNC) &_carat_StrBCD_BT_power, 14},
+    {"_carat_StrBCD_RT_power", (DL_FUNC) &_carat_StrBCD_RT_power, 13},
+    {"_carat_StrBCD_BT_power", (DL_FUNC) &_carat_StrBCD_BT_power, 13},
     {"_carat_DoptBCD_In", (DL_FUNC) &_carat_DoptBCD_In, 4},
     {"_carat_DoptBCD_getData", (DL_FUNC) &_carat_DoptBCD_getData, 9},
     {"_carat_DoptBCD_RT", (DL_FUNC) &_carat_DoptBCD_RT, 2},
     {"_carat_DoptBCD_BT", (DL_FUNC) &_carat_DoptBCD_BT, 2},
     {"_carat_DoptBCD_RT_In", (DL_FUNC) &_carat_DoptBCD_RT_In, 2},
     {"_carat_DoptBCD_BT_In", (DL_FUNC) &_carat_DoptBCD_BT_In, 2},
-    {"_carat_DoptBCD_RT_power", (DL_FUNC) &_carat_DoptBCD_RT_power, 13},
-    {"_carat_DoptBCD_BT_power", (DL_FUNC) &_carat_DoptBCD_BT_power, 13},
+    {"_carat_DoptBCD_RT_power", (DL_FUNC) &_carat_DoptBCD_RT_power, 12},
+    {"_carat_DoptBCD_BT_power", (DL_FUNC) &_carat_DoptBCD_BT_power, 12},
     {"_carat_AdjBCD_In", (DL_FUNC) &_carat_AdjBCD_In, 5},
     {"_carat_AdjBCD_getData", (DL_FUNC) &_carat_AdjBCD_getData, 10},
     {"_carat_AdjBCD_RT", (DL_FUNC) &_carat_AdjBCD_RT, 3},
     {"_carat_AdjBCD_BT", (DL_FUNC) &_carat_AdjBCD_BT, 3},
     {"_carat_AdjBCD_RT_In", (DL_FUNC) &_carat_AdjBCD_RT_In, 3},
     {"_carat_AdjBCD_BT_In", (DL_FUNC) &_carat_AdjBCD_BT_In, 3},
-    {"_carat_AdjBCD_RT_power", (DL_FUNC) &_carat_AdjBCD_RT_power, 14},
-    {"_carat_AdjBCD_BT_power", (DL_FUNC) &_carat_AdjBCD_BT_power, 14},
+    {"_carat_AdjBCD_RT_power", (DL_FUNC) &_carat_AdjBCD_RT_power, 13},
+    {"_carat_AdjBCD_BT_power", (DL_FUNC) &_carat_AdjBCD_BT_power, 13},
     {"_carat_StrPBR_getData", (DL_FUNC) &_carat_StrPBR_getData, 10},
     {"_carat_StrPBR_RT", (DL_FUNC) &_carat_StrPBR_RT, 3},
     {"_carat_StrPBR_BT", (DL_FUNC) &_carat_StrPBR_BT, 3},
     {"_carat_StrPBR_RT_In", (DL_FUNC) &_carat_StrPBR_RT_In, 3},
     {"_carat_StrPBR_BT_In", (DL_FUNC) &_carat_StrPBR_BT_In, 3},
-    {"_carat_StrPBR_RT_power", (DL_FUNC) &_carat_StrPBR_RT_power, 14},
-    {"_carat_StrPBR_BT_power", (DL_FUNC) &_carat_StrPBR_BT_power, 14},
+    {"_carat_StrPBR_RT_power", (DL_FUNC) &_carat_StrPBR_RT_power, 13},
+    {"_carat_StrPBR_BT_power", (DL_FUNC) &_carat_StrPBR_BT_power, 13},
     {"_carat_CTT", (DL_FUNC) &_carat_CTT, 1},
     {"_carat_CTT_In", (DL_FUNC) &_carat_CTT_In, 1},
     {"_carat_HuHuCAR_CT_power", (DL_FUNC) &_carat_HuHuCAR_CT_power, 13},

@@ -2,13 +2,13 @@
 \alias{evalRand.sim}
 \alias{evalRand.sim.careval}
 \title{
-Evaluation Randomization Procedures Using Simulated Data
+Evaluation Randomization Procedures with Covariate Data Generating Mechanism
 }
 \description{
 Evaluates randomization procedure based on several different quantities of imbalances by simulating patients' covariate-profile on the assumption of independence between covariates and levels within each covariate.
 }
 \usage{
-\method{evalRand.sim}{careval}(n = 1000, N = 500, Replace = FALSE, cov_num = 2, 
+\method{evalRand.sim}{careval}(Replace = FALSE, n = 1000, N = 500, cov_num = 2, 
              level_num = c(2, 2), pr = rep(0.5, 4), method = "HuHuCAR", ...)
 }
 \arguments{
@@ -35,5 +35,5 @@ See \code{\link{evalRand}}.
 See \code{\link{evalRand}}.
 }
 \seealso{
-  See \code{\link{evalRand}} to evaluate a randomization procedure with a given completely collected data.
+  See \code{\link{evalRand}} to evaluate a randomization procedure with complete covariate data.
 }

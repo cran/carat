@@ -62,34 +62,18 @@ Zelen M. \emph{The randomization and stratification of patients to clinical tria
 }
 \examples{
 ## Compare stratified permuted block randomization and Hu and Hu's general CAR
-cov_num <- 3
-level_num <- c(2, 10, 10)
-pr <- c(rep(0.5, times = 2), rep(0.1, times = 10), rep(0.1, times = 10))
-n <- 500
-N <- 20 # <<adjust according to CPU
 bsize <- 4
 # set weight for Hu and Hu's method, it satisfies
 # (1)Length should equal to cov_num
-omega <- c(1, 2, 2, rep(1, times = cov_num - 1))
+omega <- rep(1, 4)
 # Assess Hu and Hu's general CAR
-Obj1 <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num, 
-                     level_num = level_num, pr = pr, method = "HuHuCAR", 
-                     omega, p = 0.85)
+Obj1 <- evalRand.sim(Replace = FALSE, n = 1000, N = 500, cov_num = 2, 
+                     level_num = c(2, 2), pr = rep(0.5, 4), 
+                     method = "HuHuCAR", omega = omega, p = 0.85)
 # Assess stratified permuted block randomization
-Obj2 <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num, 
-                     level_num = level_num, pr = pr, method = "StrPBR", 
-                     bsize)
+Obj2 <- evalRand.sim(Replace = FALSE, n = 1000, N = 500, cov_num = 2, 
+                     level_num = c(2, 2), pr = rep(0.5, 4), method = "StrPBR", 
+                     bsize = bsize)
 
 RES <- compRand(Obj1, Obj2)
-# compare through all absolute imbalances
-RES$`All Imbalances`
-# compare through absolute overall imbalances
-RES$`Overall Imbalances`
-# compare through absolute marginal imbalances
-RES$`Marginal Imbalances`
-# compare through absolute within-stratum imbalances
-RES$`Marginal Imbalances`
-
-# compare through plots
-RES$plot
 }

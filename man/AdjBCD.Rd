@@ -38,7 +38,7 @@ An object of class \code{"carandom"} is a list containing at least the following
 \item{Data Type}{data type. \code{Real} or \code{Simulated}. }
 }
 \seealso{
-  See \code{\link{AdjBCD.sim}} for allocating patients through simulating; 
+  See \code{\link{AdjBCD.sim}} for allocating patients with covariate data generating mechanism; 
   See \code{\link{AdjBCD.ui}} for command-line user interface.
 }
 \references{
@@ -50,13 +50,15 @@ Baldi Antognini A, Zagoraiou M. \emph{The covariate-adaptive biased coin design 
 ## create a dataframe
 df <- data.frame("gender" = sample(c("female", "male"), 1000, TRUE, c(1 / 3, 2 / 3)), 
                  "age" = sample(c("0-30", "30-50", ">50"), 1000, TRUE), 
-                 "jobs" = sample(c("stu.", "teac.", "others"), 1000, TRUE))
+                 "jobs" = sample(c("stu.", "teac.", "others"), 1000, TRUE), 
+                 stringsAsFactors = TRUE)
 Res <- AdjBCD(df, a = 2)
 ## view the output
 Res
 \donttest{
-## view all patients' profile and assignments
-Res$Cov_Assig}
+  ## view all patients' profile and assignments
+  Res$Cov_Assig
+  }
 
 ## Simulated Data
 n <- 1000
@@ -71,10 +73,11 @@ a <- 1.8
 # obtain result
 Res.sim <- AdjBCD.sim(n, cov_num, level_num, pr, a)
 \donttest{
-# view the assignments of patients
-Res.sim$Cov_Assig[cov_num + 1, ]
-# view the differences between treatment 1 and treatment 2 at all levels
-Res.sim$Diff}
+  # view the assignments of patients
+  Res.sim$Cov_Assig[cov_num + 1, ]
+  # view the differences between treatment 1 and treatment 2 at all levels
+  Res.sim$Diff
+  }
 }
 \keyword{carandom}
 \keyword{Covariate-ajusted biased coin design}

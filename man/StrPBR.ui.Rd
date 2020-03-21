@@ -18,7 +18,7 @@ A call to user-iterface function used to allocate patients to one of two treatme
 See \code{\link{StrPBR}}.
 }
 \seealso{
- See \code{\link{StrPBR}} for allocating a given completely collected data; See \code{\link{StrPBR.sim}} for allocating patients through simulating.
+ See \code{\link{StrPBR}} for allocating patients with complete covariate data; See \code{\link{StrPBR.sim}} for allocating patients with covariate data generating mechanism.
 }
 \note{
 This function provides command-line interface so that users should follow instructions to enter data including covariates as well as levels for each covariate, block size \code{bsize} and covariate-profile of the new patient.

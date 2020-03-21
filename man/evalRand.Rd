@@ -38,7 +38,7 @@ An object of class \code{"careval"} is a list containing at least the following 
 \item{Data Type}{data type. \code{Real} or \code{Simulated}. }
 }
 \seealso{
-  See \code{\link{evalRand.sim}} to evaluate a randomization procedure by generating simulated data.
+  See \code{\link{evalRand.sim}} to evaluate a randomization procedure with covariate data generating mechanism.
 }
 \references{
 Atkinson A C. \emph{Optimum biased coin designs for sequential clinical trials with prognostic factors}[J]. Biometrika, 1982, 69(1): 61-67.
@@ -59,14 +59,15 @@ Zelen M. \emph{The randomization and stratification of patients to clinical tria
 ## create a dataframe
 df <- data.frame("gender" = sample(c("female", "male"), 1000, TRUE, c(1 / 3, 2 / 3)), 
                  "age" = sample(c("0-30", "30-50", ">50"), 1000, TRUE), 
-                 "jobs" = sample(c("stu.", "teac.", "others"), 1000, TRUE))
+                 "jobs" = sample(c("stu.", "teac.", "others"), 1000, TRUE), 
+                 stringsAsFactors = TRUE)
 Res <- evalRand(data = df, method = "HuHuCAR", N = 500, 
                 omega = c(1, 2, rep(1, ncol(df))), p = 0.85)
 ## view the output
 Res
 \donttest{
-## view all patients' assignments
-Res$Assig}
+  ## view all patients' assignments
+  Res$Assig}
 
 ## Assess by simulated data
 cov_num <- 3
@@ -80,111 +81,85 @@ Res.sim <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num,
                         level_num = level_num, pr = pr, method = "HuHuCAR", 
                         omega, p = 0.85)
 \donttest{ 
-## Compare four procedures
-cov_num <- 3
-level_num <- c(2, 10, 2)
-pr <- c(rep(0.5, times = 2), rep(0.1, times = 10), rep(0.5, times = 2))
-n <- 100
-N <- 200 # <<adjust according to CPU
-bsize <- 4
-## set weights for HuHuCAR
-omega <- c(1, 2, rep(1, cov_num)); 
-## set weights for PocSimMIN
-weight = rep(1, cov_num); 
-## set biased probability
-p = 0.80
-# assess Hu and Hu's procedure
-RH <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num, 
-                   level_num = level_num, pr = pr, method = "HuHuCAR", 
-                   omega = omega, p = p)
-# assess Pocock and Simon's method
-RPS <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num, 
-                    level_num = level_num, pr = pr, method = "PocSimMIN", 
-                    weight, p = p)
-# assess Shao's procedure
-RS <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num, 
-                   level_num = level_num, pr = pr, method = "StrBCD", 
-                   p = p)
-# assess stratified randomization
-RSR <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num, 
-                    level_num = level_num, pr = pr, method = "StrPBR", 
-                    bsize)
-
-# create containers
-C_All = C_M = C_O = matrix(NA, nrow = 4, ncol = 5)
-colnames(C_All) = colnames(C_M) = colnames(C_O) =
-  c("max", "95\%quan", "med", "mean", "loss")
-C_WS = matrix(NA, nrow = 4, ncol = bsize + 5)
-colnames(C_WS) = c("max", "95\%quan", "med", "mean", "loss",
-                   "num = 1", "num = 2", "num = 3", "num = 4")
-rownames(C_All) = rownames(C_M) = rownames(C_O) = rownames(C_WS) = 
-  c("HH", "PocSim", "Shao", "StraRand")
-
-# access the imbalaces at overall, within-stratum, and marginal levels
-C_All[1, ] = RH$`All Imbalances`
-C_All[2, ] = RPS$`All Imbalances`
-C_All[3, ] = RS$`All Imbalances`
-C_All[4, ] = RSR$`All Imbalances`
-# view the result
-C_All
-
-# assess the overall imbalance
-C_O[1, ] = RH$`Overall Imbalances`
-C_O[2, ] = RPS$`Overall Imbalances`
-C_O[3, ] = RS$`Overall Imbalances`
-C_O[4, ] = RSR$`Overall Imbalances`
-# view the result
-C_O
-
-# assess the marginal imbalances
-C_M[1, ] = RH$`Marginal Imbalances`
-C_M[2, ] = RPS$`Marginal Imbalances`
-C_M[3, ] = RS$`Marginal Imbalances`
-C_M[4, ] = RSR$`Marginal Imbalances`
-# view the result
-C_M
-
-# assess the within-stratum imbalances
-C_WS[1, ] = RH$`Within-strt. Imbalances`
-C_WS[2, ] = RPS$`Within-strt. Imbalances`
-C_WS[3, ] = RS$`Within-strt. Imbalances`
-C_WS[4, ] = RSR$`Within-strt. Imbalances`
-# view the result
-C_WS
-
-# Compare the four procedures through plots
-meth = rep(c("Hu", "PS", "Shao", "STR"), times = 4)
-shape <- rep(1 : 4, times = 4)
-crt <- rep(1 : 4, each = 4)
-crt_c <- rep(c("All", "O", "M", "WS"), each = 4)
-mean <- c(C_All[, 4], C_O[, 4], C_M[, 4], C_WS[, 4])
-loss <- c(C_All[, 5], C_O[, 5], C_M[, 5], C_WS[, 5])
-df_1 <- data.frame(meth, shape, crt, crt_c, mean, loss)
-
-require(ggplot2)
-require(gridExtra)
-p1 <- ggplot(df_1, aes(x = meth, y = mean, color = crt_c, group = crt,
-                       linetype = crt_c, shape = crt_c)) +
-  geom_line(size = 1) +
-  geom_point(size = 2) +
-  xlab("method") +
-  ylab("absolute mean") +
-  theme(plot.title = element_text(hjust = 0.5))
-
-# analyze within-stratum imbalances especially
-df_2 <- as.data.frame(c(C_WS[, 6], C_WS[, 7], C_WS[, 8], C_WS[, 9]))
-colnames(df_2) = "val"
-df_2$num <- rep(c("num = 1", "num = 2", "num = 3", "num = 4"), each = 4)
-df_2$meth <- meth
-
-p2 <- ggplot(df_2, aes(x = num, y = val, color = meth, group = meth,
-                       linetype = meth, shape = meth)) +
-  geom_line(size = 1) +
-  geom_point(size = 2) +
-  xlab("numbers of patients for each strata") +
-  ylab("absolute within-stratum mean") +
-  theme(plot.title = element_text(hjust = 0.5))
-
-grid.arrange(p1, p2, ncol = 1)
+  ## Compare four procedures
+  cov_num <- 3
+  level_num <- c(2, 10, 2)
+  pr <- c(rep(0.5, times = 2), rep(0.1, times = 10), rep(0.5, times = 2))
+  n <- 100
+  N <- 200 # <<adjust according to CPU
+  bsize <- 4
+  ## set weights for HuHuCAR
+  omega <- c(1, 2, rep(1, cov_num)); 
+  ## set weights for PocSimMIN
+  weight = rep(1, cov_num); 
+  ## set biased probability
+  p = 0.80
+  # assess Hu and Hu's procedure
+  RH <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num, 
+                     level_num = level_num, pr = pr, method = "HuHuCAR", 
+                     omega = omega, p = p)
+  # assess Pocock and Simon's method
+  RPS <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num, 
+                      level_num = level_num, pr = pr, method = "PocSimMIN", 
+                      weight, p = p)
+  # assess Shao's procedure
+  RS <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num, 
+                     level_num = level_num, pr = pr, method = "StrBCD", 
+                     p = p)
+  # assess stratified randomization
+  RSR <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num, 
+                      level_num = level_num, pr = pr, method = "StrPBR", 
+                      bsize)
+  
+  # create containers
+  C_M = C_O = C_WS = matrix(NA, nrow = 4, ncol = 5)
+  colnames(C_M) = colnames(C_O) = colnames(C_WS) = 
+    c("max", "95\%quan", "med", "mean", "loss")
+  rownames(C_M) = rownames(C_O) = rownames(C_WS) = 
+    c("HH", "PocSim", "Shao", "StraRand")
+  
+  # assess the overall imbalance
+  C_O[1, ] = RH$Imb[1, ]
+  C_O[2, ] = RPS$Imb[1, ]
+  C_O[3, ] = RS$Imb[1, ]
+  C_O[4, ] = RSR$Imb[1, ]
+  # view the result
+  C_O
+  
+  # assess the marginal imbalances
+  C_M[1, ] = apply(RH$Imb[(1 + RH$strt_num) : (1 + RH$strt_num + sum(level_num)), ], 2, mean)
+  C_M[2, ] = apply(RPS$Imb[(1 + RPS$strt_num) : (1 + RPS$strt_num + sum(level_num)), ], 2, mean)
+  C_M[3, ] = apply(RS$Imb[(1 + RS$strt_num) : (1 + RS$strt_num + sum(level_num)), ], 2, mean)
+  C_M[4, ] = apply(RSR$Imb[(1 + RSR$strt_num) : (1 + RSR$strt_num + sum(level_num)), ], 2, mean)
+  # view the result
+  C_M
+  
+  # assess the within-stratum imbalances
+  C_WS[1, ] = apply(RH$Imb[2 : (1 + RH$strt_num), ], 2, mean)
+  C_WS[2, ] = apply(RPS$Imb[2 : (1 + RPS$strt_num), ], 2, mean)
+  C_WS[3, ] = apply(RS$Imb[2 : (1 + RS$strt_num), ], 2, mean)
+  C_WS[4, ] = apply(RSR$Imb[2 : (1 + RSR$strt_num), ], 2, mean)
+  # view the result
+  C_WS
+  
+  # Compare the four procedures through plots
+  meth = rep(c("Hu", "PS", "Shao", "STR"), times = 3)
+  shape <- rep(1 : 4, times = 3)
+  crt <- rep(1 : 3, each = 4)
+  crt_c <- rep(c("O", "M", "WS"), each = 4)
+  mean <- c(C_O[, 4], C_M[, 4], C_WS[, 4])
+  loss <- c(C_O[, 5], C_M[, 5], C_WS[, 5])
+  df_1 <- data.frame(meth, shape, crt, crt_c, mean, loss, 
+                     stringsAsFactors = TRUE)
+  
+  require(ggplot2)
+  p1 <- ggplot(df_1, aes(x = meth, y = mean, color = crt_c, group = crt,
+                         linetype = crt_c, shape = crt_c)) +
+    geom_line(size = 1) +
+    geom_point(size = 2) +
+    xlab("method") +
+    ylab("absolute mean") +
+    theme(plot.title = element_text(hjust = 0.5))
+  p1
 }
 }

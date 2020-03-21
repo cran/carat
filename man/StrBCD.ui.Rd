@@ -18,7 +18,7 @@ A call to user-iterface function used to allocate patients to one of two treatme
 See \code{\link{StrBCD}}.
 }
 \seealso{
-  See \code{\link{StrBCD}} for allocating a given completely collected data; See \code{\link{StrBCD.sim}} for allocating patients through simulating.
+  See \code{\link{StrBCD}} for allocating patients with complete covariate data; See \code{\link{StrBCD.sim}} for allocating patients with covariate date generating mechanism.
 }
 \value{
 It returns an object of \code{\link{class}} \code{"carseq"}.

@@ -32,7 +32,7 @@ An object of class \code{"carandom"} is a list containing at least the following
 \item{Data Type}{data type. \code{Real} or \code{Simulated}. }
 }
 \seealso{
-  See \code{\link{StrPBR.sim}} for allocating patients through simulating. 
+  See \code{\link{StrPBR.sim}} for allocating patients with covariate date generating mechanism. 
   See \code{\link{StrPBR.ui}} for command-line user interface.
 }
 \references{
@@ -44,13 +44,14 @@ Zelen M. \emph{The randomization and stratification of patients to clinical tria
 ## creat a dataframe
 df <- data.frame("gender" = sample(c("female", "male"), 100, TRUE, c(1 / 3, 2 / 3)), 
                  "age" = sample(c("0-30", "30-50", ">50"), 100, TRUE), 
-                 "jobs" = sample(c("stu.", "teac.", "others"), 100, TRUE))
+                 "jobs" = sample(c("stu.", "teac.", "others"), 100, TRUE), 
+                 stringsAsFactors = TRUE)
 Res <- StrPBR(data = df, bsize = 4)
 ## view the output
 Res
 \donttest{
-## view all patients' profile and assignments
-Res$Cov_Assig}
+  ## view all patients' profile and assignments
+  Res$Cov_Assig}
 
 ## Simulated data
 cov_num <- 3
@@ -60,60 +61,60 @@ Res.sim <- StrPBR.sim(n = 100, cov_num, level_num, pr)
 ## view the output
 Res.sim
 \donttest{
-## view the detials of difference
-Res.sim$Diff}
+  ## view the detials of difference
+  Res.sim$Diff}
 
 \donttest{
-N <- 5
-n <- 1000
-cov_num <- 3
-level_num <- c(2, 3, 5) 
-# Set pr to follow two tips:
-#(1) length of pr should be sum(level_num);
-#(2)sum of probabilities for each margin should be 1.
-pr <- c(0.4, 0.6, 0.3, 0.4, 0.3, rep(0.2, times = 5))
-omega <- c(0.2, 0.2, rep(0.6 / cov_num, times = cov_num))
-# Set block size for stratified randomization
-bsize <- 4
-
-## generate a container to contain Diff
-DS <- matrix(NA, ncol = N, nrow = 1 + prod(level_num) + sum(level_num))
-for(i in 1 : N){
-  rtS <- StrPBR.sim(n, cov_num, level_num, pr, bsize)
-  DS[ , i] <- rtS$Diff
-}
-
-## do some analysis
-require(dplyr)
-
-## analyze the overall imbalance
-Ana_O <- matrix(NA, nrow = 1, ncol = 3)
-rownames(Ana_O) <- c("Str.R")
-colnames(Ana_O) <- c("mean", "median", "95\%quantile")
-tempS <- DS[1, ] \%>\% abs
-Ana_O[1, ] <- c((tempS \%>\% mean), (tempS \%>\% median),
-                (tempS \%>\% quantile(0.95)))
-## analyze the within-stratum imbalances
-tempWS <- DS[2 : 1 + prod(level_num), ] \%>\% abs
-Ana_W <- matrix(NA, nrow = 1, ncol = 3)
-rownames(Ana_W) <- c("Str.R")
-colnames(Ana_W) <- c("mean", "median", "95\%quantile")
-Ana_W[1, ] = c((tempWS \%>\% apply(1, mean) \%>\% mean),
-               (tempWS \%>\% apply(1, median) \%>\% mean),
-               (tempWS \%>\% apply(1, mean) \%>\% quantile(0.95)))
-
-## analyze the marginal imbalance
-tempMS <- DS[(1 + prod(level_num) + 1) : (1 + prod(level_num) + sum(level_num)), ] \%>\% abs
-Ana_M <- matrix(NA, nrow = 1, ncol = 3)
-rownames(Ana_M) <- c("Str.R");
-colnames(Ana_M) <- c("mean", "median", "95\%quantile")
-Ana_M[1, ] = c((tempMS \%>\% apply(1, mean) \%>\% mean),
-               (tempMS \%>\% apply(1, median) \%>\% mean),
-               (tempMS \%>\% apply(1, mean) \%>\% quantile(0.95)))
-
-AnaHP <- list(Ana_O, Ana_M, Ana_W)
-names(AnaHP) <- c("Overall", "Marginal", "Within-stratum")
-
-AnaHP
+  N <- 5
+  n <- 1000
+  cov_num <- 3
+  level_num <- c(2, 3, 5) 
+  # Set pr to follow two tips:
+  #(1) length of pr should be sum(level_num);
+  #(2)sum of probabilities for each margin should be 1.
+  pr <- c(0.4, 0.6, 0.3, 0.4, 0.3, rep(0.2, times = 5))
+  omega <- c(0.2, 0.2, rep(0.6 / cov_num, times = cov_num))
+  # Set block size for stratified randomization
+  bsize <- 4
+  
+  ## generate a container to contain Diff
+  DS <- matrix(NA, ncol = N, nrow = 1 + prod(level_num) + sum(level_num))
+  for(i in 1 : N){
+    rtS <- StrPBR.sim(n, cov_num, level_num, pr, bsize)
+    DS[ , i] <- rtS$Diff
+  }
+  
+  ## do some analysis
+  require(dplyr)
+  
+  ## analyze the overall imbalance
+  Ana_O <- matrix(NA, nrow = 1, ncol = 3)
+  rownames(Ana_O) <- c("Str.R")
+  colnames(Ana_O) <- c("mean", "median", "95\%quantile")
+  tempS <- DS[1, ] \%>\% abs
+  Ana_O[1, ] <- c((tempS \%>\% mean), (tempS \%>\% median),
+                  (tempS \%>\% quantile(0.95)))
+  ## analyze the within-stratum imbalances
+  tempWS <- DS[2 : 1 + prod(level_num), ] \%>\% abs
+  Ana_W <- matrix(NA, nrow = 1, ncol = 3)
+  rownames(Ana_W) <- c("Str.R")
+  colnames(Ana_W) <- c("mean", "median", "95\%quantile")
+  Ana_W[1, ] = c((tempWS \%>\% apply(1, mean) \%>\% mean),
+                 (tempWS \%>\% apply(1, median) \%>\% mean),
+                 (tempWS \%>\% apply(1, mean) \%>\% quantile(0.95)))
+  
+  ## analyze the marginal imbalance
+  tempMS <- DS[(1 + prod(level_num) + 1) : (1 + prod(level_num) + sum(level_num)), ] \%>\% abs
+  Ana_M <- matrix(NA, nrow = 1, ncol = 3)
+  rownames(Ana_M) <- c("Str.R");
+  colnames(Ana_M) <- c("mean", "median", "95\%quantile")
+  Ana_M[1, ] = c((tempMS \%>\% apply(1, mean) \%>\% mean),
+                 (tempMS \%>\% apply(1, median) \%>\% mean),
+                 (tempMS \%>\% apply(1, mean) \%>\% quantile(0.95)))
+  
+  AnaHP <- list(Ana_O, Ana_M, Ana_W)
+  names(AnaHP) <- c("Overall", "Marginal", "Within-stratum")
+  
+  AnaHP
 }
 }

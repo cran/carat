@@ -18,7 +18,7 @@ A call to user-interface function used to allocate patients to one of two treatm
 See \code{\link{DoptBCD}}.
 }
 \seealso{
-  See \code{\link{DoptBCD}} for allocating a given completely collected data; See \code{\link{DoptBCD.sim}} for allocating patients through simulating.
+  See \code{\link{DoptBCD}} for allocating patients with complete covariate data; See \code{\link{DoptBCD.sim}} for allocating patients with covariate data generating mechanism.
 }
 \note{
 This function provides command-line interface so that users should follow instructions to enter data including covariates as well as levels for each covariate and covariate-profile of the new patient.

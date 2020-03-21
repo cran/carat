@@ -57,13 +57,15 @@ where \eqn{n_1^*} is the number of patients assigned to treatment \eqn{1} and \e
 set.seed(100)
 df<- data.frame("gender" = sample(c("female", "male"), 100, TRUE, c(1 / 3, 2 / 3)),
                 "age" = sample(c("0-30", "30-50", ">50"), 100, TRUE),
-                "jobs" = sample(c("stu.", "teac.", "other"), 100, TRUE, c(0.4, 0.2, 0.4)))
+                "jobs" = sample(c("stu.", "teac.", "other"), 100, TRUE, c(0.4, 0.2, 0.4)), 
+                stringsAsFactors = TRUE)
 ##data preprocessing
 data.pd <- StrPBR(data = df, bsize = 4)$Cov_Assig
 
 #Then we need to combine patients' profiles and outcomes after randomization and treatments.
 outcome = runif(100)
-data.combined = data.frame(rbind(data.pd,outcome))
+data.combined = data.frame(rbind(data.pd,outcome), 
+                           stringsAsFactors = TRUE)
 
 #run the bootstrap t-test
 B = 200

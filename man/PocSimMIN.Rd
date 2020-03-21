@@ -48,7 +48,7 @@ An object of class \code{"carandom"} is a list containing at least the following
 \item{Data Type}{data type. \code{Real} or \code{Simulated}. }
 }
 \seealso{
-  See \code{\link{PocSimMIN.sim}} for allocating patients through simulating. 
+  See \code{\link{PocSimMIN.sim}} for allocating patients with covariate data generating mechanism. 
   See \code{\link{PocSimMIN.ui}} for command-line user interface.
 }
 \references{
@@ -60,14 +60,15 @@ Pocock S J, Simon R. \emph{Sequential treatment assignment with balancing for pr
 ## creat a dataframe
 df <- data.frame("gender" = sample(c("female", "male"), 1000, TRUE, c(1 / 3, 2 / 3)), 
                  "age" = sample(c("0-30", "30-50", ">50"), 1000, TRUE), 
-                 "jobs" = sample(c("stu.", "teac.", "others"), 1000, TRUE))
+                 "jobs" = sample(c("stu.", "teac.", "others"), 1000, TRUE), 
+                 stringsAsFactors = TRUE)
 weight <- c(1, 2, 1)
 Res <- PocSimMIN(data = df, weight)
 ## view the output
 Res
 \donttest{
-## view all patients' profile and assignments
-Res$Cov_Assig}
+  ## view all patients' profile and assignments
+  Res$Cov_Assig}
 
 ## Simulated Data
 cov_num = 3
@@ -77,75 +78,75 @@ Res.sim <- PocSimMIN.sim(n = 1000, cov_num, level_num, pr)
 ## view the output
 Res.sim
 \donttest{
-## view the detials of difference
-Res.sim$Diff}
+  ## view the detials of difference
+  Res.sim$Diff}
 
 \donttest{
-N <- 5
-n <- 1000
-cov_num <- 3
-level_num <- c(2, 3, 5) 
-# Set pr to follow two tips:
-# (1) length of pr should be sum(level_num);
-# (2)sum of probabilities for each margin should be 1.
-pr <- c(0.4, 0.6, 0.3, 0.4, 0.3, rep(0.2, times = 5))
-omega <- c(0.2, 0.2, rep(0.6 / cov_num, times = cov_num))
-weight <- c(2, rep(1, times = cov_num - 1))
-
-## generate a container to contain Diff
-DH <- matrix(NA, ncol = N, nrow = 1 + prod(level_num) + sum(level_num))
-DP <- matrix(NA, ncol = N, nrow = 1 + prod(level_num) + sum(level_num))
-for(i in 1 : N){
-  result <- HuHuCAR.sim(n, cov_num, level_num, pr, omega)
-  resultP <- PocSimMIN.sim(n, cov_num, level_num, pr, weight)
-  DH[ , i] <- result$Diff; DP[ , i] <- resultP$Diff
-}
-
-## do some analysis
-require(dplyr)
-
-## analyze the overall imbalance
-Ana_O <- matrix(NA, nrow = 2, ncol = 3)
-rownames(Ana_O) <- c("NEW", "PS")
-colnames(Ana_O) <- c("mean", "median", "95\%quantile")
-temp <- DH[1, ] \%>\% abs
-tempP <- DP[1, ] \%>\% abs
-Ana_O[1, ] <- c((temp \%>\% mean), (temp \%>\% median),
-                (temp \%>\% quantile(0.95)))
-Ana_O[2, ] <- c((tempP \%>\% mean), (tempP \%>\% median),
-                (tempP \%>\% quantile(0.95)))
-
-## analyze the within-stratum imbalances
-tempW <- DH[2 : (1 + prod(level_num)), ] \%>\% abs
-tempWP <- DP[2 : 1 + prod(level_num), ] \%>\% abs
-Ana_W <- matrix(NA, nrow = 2, ncol = 3)
-rownames(Ana_W) <- c("NEW", "PS")
-colnames(Ana_W) <- c("mean", "median", "95\%quantile")
-Ana_W[1, ] = c((tempW \%>\% apply(1, mean) \%>\% mean),
-               (tempW \%>\% apply(1, median) \%>\% mean),
-               (tempW \%>\% apply(1, mean) \%>\% quantile(0.95)))
-Ana_W[2, ] = c((tempWP \%>\% apply(1, mean) \%>\% mean),
-               (tempWP \%>\% apply(1, median) \%>\% mean),
-               (tempWP \%>\% apply(1, mean) \%>\% quantile(0.95)))
-
-## analyze the marginal imbalance
-tempM <- DH[(1 + prod(level_num) + 1) :
-              (1 + prod(level_num) + sum(level_num)), ] \%>\% abs
-tempMP <- DP[(1 + prod(level_num) + 1) :
-               (1 + prod(level_num) + sum(level_num)), ] \%>\% abs
-Ana_M <- matrix(NA, nrow = 2, ncol = 3)
-rownames(Ana_M) <- c("NEW", "PS")
-colnames(Ana_M) <- c("mean", "median", "95\%quantile")
-Ana_M[1, ] = c((tempM \%>\% apply(1, mean) \%>\% mean),
-               (tempM \%>\% apply(1, median) \%>\% mean),
-               (tempM \%>\% apply(1, mean) \%>\% quantile(0.95)))
-Ana_M[2, ] = c((tempMP \%>\% apply(1, mean) \%>\% mean),
-               (tempMP \%>\% apply(1, median) \%>\% mean),
-               (tempMP \%>\% apply(1, mean) \%>\% quantile(0.95)))
-
-AnaHP <- list(Ana_O, Ana_M, Ana_W)
-names(AnaHP) <- c("Overall", "Marginal", "Within-stratum")
-
-AnaHP
+  N <- 5
+  n <- 1000
+  cov_num <- 3
+  level_num <- c(2, 3, 5) 
+  # Set pr to follow two tips:
+  # (1) length of pr should be sum(level_num);
+  # (2)sum of probabilities for each margin should be 1.
+  pr <- c(0.4, 0.6, 0.3, 0.4, 0.3, rep(0.2, times = 5))
+  omega <- c(0.2, 0.2, rep(0.6 / cov_num, times = cov_num))
+  weight <- c(2, rep(1, times = cov_num - 1))
+  
+  ## generate a container to contain Diff
+  DH <- matrix(NA, ncol = N, nrow = 1 + prod(level_num) + sum(level_num))
+  DP <- matrix(NA, ncol = N, nrow = 1 + prod(level_num) + sum(level_num))
+  for(i in 1 : N){
+    result <- HuHuCAR.sim(n, cov_num, level_num, pr, omega)
+    resultP <- PocSimMIN.sim(n, cov_num, level_num, pr, weight)
+    DH[ , i] <- result$Diff; DP[ , i] <- resultP$Diff
+  }
+  
+  ## do some analysis
+  require(dplyr)
+  
+  ## analyze the overall imbalance
+  Ana_O <- matrix(NA, nrow = 2, ncol = 3)
+  rownames(Ana_O) <- c("NEW", "PS")
+  colnames(Ana_O) <- c("mean", "median", "95\%quantile")
+  temp <- DH[1, ] \%>\% abs
+  tempP <- DP[1, ] \%>\% abs
+  Ana_O[1, ] <- c((temp \%>\% mean), (temp \%>\% median),
+                  (temp \%>\% quantile(0.95)))
+  Ana_O[2, ] <- c((tempP \%>\% mean), (tempP \%>\% median),
+                  (tempP \%>\% quantile(0.95)))
+  
+  ## analyze the within-stratum imbalances
+  tempW <- DH[2 : (1 + prod(level_num)), ] \%>\% abs
+  tempWP <- DP[2 : 1 + prod(level_num), ] \%>\% abs
+  Ana_W <- matrix(NA, nrow = 2, ncol = 3)
+  rownames(Ana_W) <- c("NEW", "PS")
+  colnames(Ana_W) <- c("mean", "median", "95\%quantile")
+  Ana_W[1, ] = c((tempW \%>\% apply(1, mean) \%>\% mean),
+                 (tempW \%>\% apply(1, median) \%>\% mean),
+                 (tempW \%>\% apply(1, mean) \%>\% quantile(0.95)))
+  Ana_W[2, ] = c((tempWP \%>\% apply(1, mean) \%>\% mean),
+                 (tempWP \%>\% apply(1, median) \%>\% mean),
+                 (tempWP \%>\% apply(1, mean) \%>\% quantile(0.95)))
+  
+  ## analyze the marginal imbalance
+  tempM <- DH[(1 + prod(level_num) + 1) :
+                (1 + prod(level_num) + sum(level_num)), ] \%>\% abs
+  tempMP <- DP[(1 + prod(level_num) + 1) :
+                 (1 + prod(level_num) + sum(level_num)), ] \%>\% abs
+  Ana_M <- matrix(NA, nrow = 2, ncol = 3)
+  rownames(Ana_M) <- c("NEW", "PS")
+  colnames(Ana_M) <- c("mean", "median", "95\%quantile")
+  Ana_M[1, ] = c((tempM \%>\% apply(1, mean) \%>\% mean),
+                 (tempM \%>\% apply(1, median) \%>\% mean),
+                 (tempM \%>\% apply(1, mean) \%>\% quantile(0.95)))
+  Ana_M[2, ] = c((tempMP \%>\% apply(1, mean) \%>\% mean),
+                 (tempMP \%>\% apply(1, median) \%>\% mean),
+                 (tempMP \%>\% apply(1, mean) \%>\% quantile(0.95)))
+  
+  AnaHP <- list(Ana_O, Ana_M, Ana_W)
+  names(AnaHP) <- c("Overall", "Marginal", "Within-stratum")
+  
+  AnaHP
 }
 }

@@ -18,7 +18,7 @@ A call to user-interface function used to allocate patients to one of two treatm
     See \code{\link{AdjBCD}}.
 }
 \seealso{
-  See \code{\link{AdjBCD}} for allocating a given completely collected data; See \code{\link{AdjBCD.sim}} for allocating patients through simulating.
+  See \code{\link{AdjBCD}} for allocating patients with complete covariate data; See \code{\link{AdjBCD.sim}} for allocating patients with covariate data generating mechanism.
   
 }
 \note{

@@ -31,7 +31,6 @@
   \item{bsize}{block size for stratified randomization. It is required to be multiple of 2. Notice that \code{bsize} is only needed when \code{"StrPBR"} is to be used.}
   \item{B}{integer,the number of bootstrap samplings. It is needed only when \code{test} is \code{boot.test}.}
   \item{Pernum}{integer,the number of randomized replications. It is needed only when \code{test} is \code{rand.test}.}
-  \item{ncores}{number of cores used in parallel computation. It is needed only when \code{test} is \code{rand.test} or \code{boot.test}. It is suggested not to be greater than half the cores of servers or laptops.}
   }}
 }
 \value{
@@ -54,11 +53,10 @@ p = 0.85
 Iternum = 10#<<for demonstration,it is suggested to be around 1000
 sl = 0.05
 Pernum = 10#<<for demonstration,it is suggested to be 200
-ncores = 1
 
 #Evaluation of Power
 library("ggplot2")
 Strtp=evalPower(n,cov_num,level_num,pr,type,beta,di,sigma,
-                Iternum,sl,HuHuCAR,rand.test,TRUE,omega,p,Pernum,ncores)
+                Iternum,sl,HuHuCAR,rand.test,TRUE,omega,p,Pernum)
 Strtp
 }

@@ -21,7 +21,7 @@ See \code{\link{PocSimMIN}}.
 This function provides command-line interface so that users should follow instructions to enter data including covariates as well as levels for each covariate, \code{weight}, biased probability \code{p} and covariate-profile of the new patient. 
 }
 \seealso{
-  See \code{\link{PocSimMIN}} for allocating a given completely collected data; See \code{\link{PocSimMIN.sim}} for allocating patients through simulating.
+  See \code{\link{PocSimMIN}} for allocating patients with complete covariate data; See \code{\link{PocSimMIN.sim}} for allocating patients with covariate data generating mechanism.
 }
 \value{
 It returns an object of \code{\link{class}} \code{"carseq"}.

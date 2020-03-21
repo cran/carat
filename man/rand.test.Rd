@@ -2,16 +2,18 @@
 \alias{rand.test}
 \title{Randomization Test}
 \usage{
-  rand.test(data, Pernum = 200, method = HuHuCAR, conf = 0.95, binwidth = 30, \dots)
+  rand.test(data, Reps = 200, method = HuHuCAR, conf = 0.95, 
+                         plot = TRUE, binwidth = 30, \dots)
 }
 \description{
   Performs randomization test on treatment effects.
 }
 \arguments{
   \item{data}{a dataframe, consists of patients' profiles, treatment assignments and outputs. See \code{\link{getData}}.}
-  \item{Pernum}{integer, the number of randomized replications. It is suggested to be   200.}
+  \item{Reps}{integer, the number of randomized replications. It is suggested to be   200.}
    \item{method}{the randomization to be used in allocating patients. The default randomization \code{HuHuCAR} uses Hu and Hu's general covariate-adaptive randomization; the alternatives are \code{PocSimMIN}, \code{StrBCD}, \code{StrPBR}, \code{DoptBCD} as well as \code{AdjBCD}.}
   \item{conf}{confidence level of the interval. Default is 0.95.}
+  \item{plot}{whether plot or not. Optional input: TRUE or FALSE.}
   \item{binwidth}{number of bins for each bar in histogram. Default is 30.}
   \item{\dots}{arguments to be passed to methods. It depends on the \code{method} used and the following arguments are accepted:
   \describe{
@@ -63,13 +65,13 @@ mu1 = 0
 mu2 = 0.01
 sigma = 1
 type = "linear"
-p = 0.85
+p=0.85
 
 dataS = getData(n,cov_num,level_num,pr,type,beta,mu1,mu2,sigma,StrBCD, p)
 
 #run the randomization test
 library("ggplot2")
-Pernum = 200
-Strt=rand.test(dataS,Pernum,StrBCD,p=p)
+Strt=rand.test(data = dataS,Reps = 200,method = StrBCD,conf = 0.95, 
+               plot = TRUE, binwidth = 30,p = 0.85)
 Strt
 }

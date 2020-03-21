@@ -322,7 +322,7 @@ evalRand = function(data, method = "HuHuCAR", N = 500, ...){
 }
 
 ## Assess the procedure for simulated data
-evalRand.sim.careval = function(n = 1000,  N = 500, Replace = FALSE, cov_num = 2, level_num = c(2, 2),
+evalRand.sim.careval = function(Replace = FALSE, n = 1000,  N = 500, cov_num = 2, level_num = c(2, 2),
                                 pr = rep(0.5, 4), method = "HuHuCAR", ...) UseMethod("careval")
 
 evalRand.sim = function(Replace = FALSE, n = 1000, N = 500, cov_num = 2, 
