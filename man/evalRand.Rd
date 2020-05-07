@@ -10,32 +10,32 @@ Evaluates a specific randomization procedure based on several different quantiti
 }
 \arguments{
   \item{data}{a dataframe. A row of the dataframe contains the covariate profile of a patient.}
-  \item{N}{iteration number.}
-  \item{method}{the randomization to be used in allocating patients. The default randomization \dQuote{\code{HuHuCAR}} uses Hu and Hu's general covariate-adaptive randomization; the alternatives are \dQuote{\code{PocSimMIN}}, \dQuote{\code{StrBCD}}, \dQuote{\code{StrPBR}}, \dQuote{\code{DoptBCD}} as well as  \dQuote{\code{AdjBCD}}.}
-  \item{\dots}{arguments to be passed to methods. It depends on the \code{method} and the following arguments are accepted:
+  \item{N}{the iteration number.}
+  \item{method}{the randomization method to be used in allocating patients. The default randomization \dQuote{\code{HuHuCAR}} uses Hu and Hu's general covariate-adaptive randomization; the alternatives are \dQuote{\code{PocSimMIN}}, \dQuote{\code{StrBCD}}, \dQuote{\code{StrPBR}}, \dQuote{\code{DoptBCD}}, and \dQuote{\code{AdjBCD}}.}
+  \item{\dots}{arguments to be passed to methods. These depend on the \code{method} and the following arguments are accepted:
   \describe{
-  \item{omega}{vector of weights at the overall, within-stratum as well as maginal levels. It is required that at least one element is larger than 0. Notice that \code{omega} is only needed when \code{HuHuCAR} is to be assessed.}
-  \item{weight}{vector of weights for all involved margins. It is required that at least one element is NOT 0 and \code{length(weight) = cov_num}. Notice that \code{weight} is only needed when \code{PocSimMIN} is to be assessed.}
-  \item{p}{probabilities of assigning one patinet to treatment 1. \code{p} should be larger than \code{1/2} to obtain balance. Notice that \code{p} is only needed when \code{"HuHuCAR"},  \code{"PocSimMIN"} and \code{"StrBCD"} are to be assessed.}
-  \item{a}{a design parameter. As \code{a} goes to \eqn{\infty}, the design becomes more deteministic. Notice that \code{a} is only needed when \code{"AdjBCD"} is to be assessed.}
-  \item{bsize}{block size for stratified permuted block randomization. It should be multiple of \code{2}. Notice that \code{bsize} is only needed when \code{"StrPBR"} is to be assessed.}
+  \item{omega}{the vector of weights at the overall, within-stratum, and marginal levels. It is required that at least one element is larger than 0. Note that \code{omega} is only needed when \code{HuHuCAR} is to be assessed.}
+  \item{weight}{the vector of weights for all involved margins. It is required that at least one element is NOT 0 and \code{length(weight) = cov_num}. Note that \code{weight} is only needed when \code{PocSimMIN} is to be assessed.}
+  \item{p}{the probability of assigning one patinet to treatment 1. \code{p} should be larger than \code{1/2} to obtain balance. Note that \code{p} is only needed when \code{"HuHuCAR"},  \code{"PocSimMIN"} and \code{"StrBCD"} are to be assessed.}
+  \item{a}{a design parameter. As \code{a} goes to \eqn{\infty}, the design becomes more deteministic. Note that \code{a} is only needed when \code{"AdjBCD"} is to be assessed.}
+  \item{bsize}{the block size for stratified permuted block randomization. It is required to be a multiple of \code{2}. Note that \code{bsize} is only needed when \code{"StrPBR"} is to be assessed.}
   }}
 }
 \details{
-    \code{data} is designed for \code{N} times using \code{method}.
+    The \code{data} is designed for \code{N} times using \code{method}.
 }
 \value{
 It returns an object of \code{\link{class}} \code{"careval"}. 
 
-The functions \code{\link{print}} is used to obtain results. The generic accessor functions \code{Assig}, \code{Diff}, \code{data}, \code{All strata} and so on extract various useful features of the value returned by that function. 
+The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{Assig}, \code{Diff}, \code{data}, \code{All strata} and others extract various useful features of the value returned by \code{evalRand}. 
 
 An object of class \code{"careval"} is a list containing at least the following components: 
 
-\item{N}{number of patients.}
-\item{Assig}{a \code{n*N} matrix containing assignments for each patient for N iterationsd. }
-\item{Imb}{matrix containing maximum, 95\%-quantile, median, loss and mean of absolute imbalances at overall, each within-stratum and each marginal levels.}
-\item{Within-strt. by num of pats}{a vector containing mean absolute imbalances of the strata with \eqn{i} patients falling in, where \eqn{i = 1, \dots, bsize}.}
-\item{Data Type}{data type. \code{Real} or \code{Simulated}. }
+\item{N}{the number of patients.}
+\item{Assig}{a \code{n*N} matrix containing assignments for each patient for N iterations. }
+\item{Imb}{a matrix containing maximum, 95\%-quantile, median, and mean of absolute imbalances at overall, each within-stratum and each marginal levels.}
+\item{SNUM}{a matrix with \code{N} colunms containing number of patients at overall, each marginal and each within-stratum levels for each iteration.}
+\item{Data Type}{the data type. \code{Real} or \code{Simulated}. }
 }
 \seealso{
   See \code{\link{evalRand.sim}} to evaluate a randomization procedure with covariate data generating mechanism.
@@ -112,9 +112,9 @@ Res.sim <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num,
                       bsize)
   
   # create containers
-  C_M = C_O = C_WS = matrix(NA, nrow = 4, ncol = 5)
+  C_M = C_O = C_WS = matrix(NA, nrow = 4, ncol = 4)
   colnames(C_M) = colnames(C_O) = colnames(C_WS) = 
-    c("max", "95\%quan", "med", "mean", "loss")
+    c("max", "95\%quan", "med", "mean")
   rownames(C_M) = rownames(C_O) = rownames(C_WS) = 
     c("HH", "PocSim", "Shao", "StraRand")
   
@@ -148,8 +148,7 @@ Res.sim <- evalRand.sim(n = n, N = N, Replace = FALSE, cov_num = cov_num,
   crt <- rep(1 : 3, each = 4)
   crt_c <- rep(c("O", "M", "WS"), each = 4)
   mean <- c(C_O[, 4], C_M[, 4], C_WS[, 4])
-  loss <- c(C_O[, 5], C_M[, 5], C_WS[, 5])
-  df_1 <- data.frame(meth, shape, crt, crt_c, mean, loss, 
+  df_1 <- data.frame(meth, shape, crt, crt_c, mean, 
                      stringsAsFactors = TRUE)
   
   require(ggplot2)

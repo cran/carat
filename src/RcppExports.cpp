@@ -419,8 +419,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // HuHuCAR_RT_power
-arma::vec HuHuCAR_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p, double Reps);
-RcppExport SEXP _carat_HuHuCAR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP RepsSEXP) {
+arma::vec HuHuCAR_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p, double Reps, int nthreads);
+RcppExport SEXP _carat_HuHuCAR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -438,13 +438,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type omega(omegaSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
-    rcpp_result_gen = Rcpp::wrap(HuHuCAR_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, Reps));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(HuHuCAR_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, Reps, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
 // HuHuCAR_BT_power
-arma::vec HuHuCAR_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p, double B);
-RcppExport SEXP _carat_HuHuCAR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP BSEXP) {
+arma::vec HuHuCAR_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p, double B, int nthreads);
+RcppExport SEXP _carat_HuHuCAR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -462,7 +463,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type omega(omegaSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    rcpp_result_gen = Rcpp::wrap(HuHuCAR_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, B));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(HuHuCAR_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, B, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -544,8 +546,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // PocSimMIN_RT_power
-arma::vec PocSimMIN_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p, double Reps);
-RcppExport SEXP _carat_PocSimMIN_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP RepsSEXP) {
+arma::vec PocSimMIN_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p, double Reps, int nthreads);
+RcppExport SEXP _carat_PocSimMIN_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -563,13 +565,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type weight(weightSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
-    rcpp_result_gen = Rcpp::wrap(PocSimMIN_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, Reps));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(PocSimMIN_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, Reps, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
 // PocSimMIN_BT_power
-arma::vec PocSimMIN_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p, double B);
-RcppExport SEXP _carat_PocSimMIN_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP BSEXP) {
+arma::vec PocSimMIN_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p, double B, int nthreads);
+RcppExport SEXP _carat_PocSimMIN_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -587,7 +590,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type weight(weightSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    rcpp_result_gen = Rcpp::wrap(PocSimMIN_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, B));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(PocSimMIN_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, B, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -664,8 +668,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // StrBCD_RT_power
-arma::vec StrBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double p, double Iternum, double sl, double Reps);
-RcppExport SEXP _carat_StrBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP pSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP RepsSEXP) {
+arma::vec StrBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double p, double Iternum, double sl, double Reps, int nthreads);
+RcppExport SEXP _carat_StrBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP pSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -682,13 +686,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type Iternum(IternumSEXP);
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, p, Iternum, sl, Reps));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(StrBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, p, Iternum, sl, Reps, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
 // StrBCD_BT_power
-arma::vec StrBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double p, double B);
-RcppExport SEXP _carat_StrBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP pSEXP, SEXP BSEXP) {
+arma::vec StrBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double p, double B, int nthreads);
+RcppExport SEXP _carat_StrBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP pSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -705,7 +710,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, p, B));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(StrBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, p, B, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -791,8 +797,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // DoptBCD_RT_power
-arma::vec DoptBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double Reps);
-RcppExport SEXP _carat_DoptBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP RepsSEXP) {
+arma::vec DoptBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double Reps, int nthreads);
+RcppExport SEXP _carat_DoptBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -808,13 +814,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type Iternum(IternumSEXP);
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
-    rcpp_result_gen = Rcpp::wrap(DoptBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, Reps));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(DoptBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, Reps, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
 // DoptBCD_BT_power
-arma::vec DoptBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double B);
-RcppExport SEXP _carat_DoptBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP BSEXP) {
+arma::vec DoptBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double B, int nthreads);
+RcppExport SEXP _carat_DoptBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -830,7 +837,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type Iternum(IternumSEXP);
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    rcpp_result_gen = Rcpp::wrap(DoptBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, B));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(DoptBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, B, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -922,8 +930,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // AdjBCD_RT_power
-arma::vec AdjBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double a, double Reps);
-RcppExport SEXP _carat_AdjBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP RepsSEXP) {
+arma::vec AdjBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double a, double Reps, int nthreads);
+RcppExport SEXP _carat_AdjBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -940,13 +948,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< double >::type a(aSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
-    rcpp_result_gen = Rcpp::wrap(AdjBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, Reps));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(AdjBCD_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, Reps, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
 // AdjBCD_BT_power
-arma::vec AdjBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double a, double B);
-RcppExport SEXP _carat_AdjBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP BSEXP) {
+arma::vec AdjBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double a, double B, int nthreads);
+RcppExport SEXP _carat_AdjBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -963,7 +972,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< double >::type a(aSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    rcpp_result_gen = Rcpp::wrap(AdjBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, B));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(AdjBCD_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, B, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1040,8 +1050,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // StrPBR_RT_power
-arma::vec StrPBR_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, int bsize, double Reps);
-RcppExport SEXP _carat_StrPBR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP RepsSEXP) {
+arma::vec StrPBR_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, int bsize, double Reps, int nthreads);
+RcppExport SEXP _carat_StrPBR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1058,13 +1068,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< int >::type bsize(bsizeSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrPBR_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, Reps));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(StrPBR_RT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, Reps, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
 // StrPBR_BT_power
-arma::vec StrPBR_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, int bsize, double B);
-RcppExport SEXP _carat_StrPBR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP BSEXP) {
+arma::vec StrPBR_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, int bsize, double B, int nthreads);
+RcppExport SEXP _carat_StrPBR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1081,7 +1092,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sl(slSEXP);
     Rcpp::traits::input_parameter< int >::type bsize(bsizeSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrPBR_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, B));
+    Rcpp::traits::input_parameter< int >::type nthreads(nthreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(StrPBR_BT_power(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, B, nthreads));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1269,45 +1281,45 @@ static const R_CallMethodDef CallEntries[] = {
     {"_carat_HuHuCAR_BT", (DL_FUNC) &_carat_HuHuCAR_BT, 4},
     {"_carat_HuHuCAR_RT_In", (DL_FUNC) &_carat_HuHuCAR_RT_In, 4},
     {"_carat_HuHuCAR_BT_In", (DL_FUNC) &_carat_HuHuCAR_BT_In, 4},
-    {"_carat_HuHuCAR_RT_power", (DL_FUNC) &_carat_HuHuCAR_RT_power, 14},
-    {"_carat_HuHuCAR_BT_power", (DL_FUNC) &_carat_HuHuCAR_BT_power, 14},
+    {"_carat_HuHuCAR_RT_power", (DL_FUNC) &_carat_HuHuCAR_RT_power, 15},
+    {"_carat_HuHuCAR_BT_power", (DL_FUNC) &_carat_HuHuCAR_BT_power, 15},
     {"_carat_PocSimMIN_getData", (DL_FUNC) &_carat_PocSimMIN_getData, 11},
     {"_carat_PocSimMIN_RT", (DL_FUNC) &_carat_PocSimMIN_RT, 4},
     {"_carat_PocSimMIN_BT", (DL_FUNC) &_carat_PocSimMIN_BT, 4},
     {"_carat_PocSimMIN_RT_In", (DL_FUNC) &_carat_PocSimMIN_RT_In, 4},
     {"_carat_PocSimMIN_BT_In", (DL_FUNC) &_carat_PocSimMIN_BT_In, 4},
-    {"_carat_PocSimMIN_RT_power", (DL_FUNC) &_carat_PocSimMIN_RT_power, 14},
-    {"_carat_PocSimMIN_BT_power", (DL_FUNC) &_carat_PocSimMIN_BT_power, 14},
+    {"_carat_PocSimMIN_RT_power", (DL_FUNC) &_carat_PocSimMIN_RT_power, 15},
+    {"_carat_PocSimMIN_BT_power", (DL_FUNC) &_carat_PocSimMIN_BT_power, 15},
     {"_carat_StrBCD_getData", (DL_FUNC) &_carat_StrBCD_getData, 10},
     {"_carat_StrBCD_RT", (DL_FUNC) &_carat_StrBCD_RT, 3},
     {"_carat_StrBCD_BT", (DL_FUNC) &_carat_StrBCD_BT, 3},
     {"_carat_StrBCD_RT_In", (DL_FUNC) &_carat_StrBCD_RT_In, 3},
     {"_carat_StrBCD_BT_In", (DL_FUNC) &_carat_StrBCD_BT_In, 3},
-    {"_carat_StrBCD_RT_power", (DL_FUNC) &_carat_StrBCD_RT_power, 13},
-    {"_carat_StrBCD_BT_power", (DL_FUNC) &_carat_StrBCD_BT_power, 13},
+    {"_carat_StrBCD_RT_power", (DL_FUNC) &_carat_StrBCD_RT_power, 14},
+    {"_carat_StrBCD_BT_power", (DL_FUNC) &_carat_StrBCD_BT_power, 14},
     {"_carat_DoptBCD_In", (DL_FUNC) &_carat_DoptBCD_In, 4},
     {"_carat_DoptBCD_getData", (DL_FUNC) &_carat_DoptBCD_getData, 9},
     {"_carat_DoptBCD_RT", (DL_FUNC) &_carat_DoptBCD_RT, 2},
     {"_carat_DoptBCD_BT", (DL_FUNC) &_carat_DoptBCD_BT, 2},
     {"_carat_DoptBCD_RT_In", (DL_FUNC) &_carat_DoptBCD_RT_In, 2},
     {"_carat_DoptBCD_BT_In", (DL_FUNC) &_carat_DoptBCD_BT_In, 2},
-    {"_carat_DoptBCD_RT_power", (DL_FUNC) &_carat_DoptBCD_RT_power, 12},
-    {"_carat_DoptBCD_BT_power", (DL_FUNC) &_carat_DoptBCD_BT_power, 12},
+    {"_carat_DoptBCD_RT_power", (DL_FUNC) &_carat_DoptBCD_RT_power, 13},
+    {"_carat_DoptBCD_BT_power", (DL_FUNC) &_carat_DoptBCD_BT_power, 13},
     {"_carat_AdjBCD_In", (DL_FUNC) &_carat_AdjBCD_In, 5},
     {"_carat_AdjBCD_getData", (DL_FUNC) &_carat_AdjBCD_getData, 10},
     {"_carat_AdjBCD_RT", (DL_FUNC) &_carat_AdjBCD_RT, 3},
     {"_carat_AdjBCD_BT", (DL_FUNC) &_carat_AdjBCD_BT, 3},
     {"_carat_AdjBCD_RT_In", (DL_FUNC) &_carat_AdjBCD_RT_In, 3},
     {"_carat_AdjBCD_BT_In", (DL_FUNC) &_carat_AdjBCD_BT_In, 3},
-    {"_carat_AdjBCD_RT_power", (DL_FUNC) &_carat_AdjBCD_RT_power, 13},
-    {"_carat_AdjBCD_BT_power", (DL_FUNC) &_carat_AdjBCD_BT_power, 13},
+    {"_carat_AdjBCD_RT_power", (DL_FUNC) &_carat_AdjBCD_RT_power, 14},
+    {"_carat_AdjBCD_BT_power", (DL_FUNC) &_carat_AdjBCD_BT_power, 14},
     {"_carat_StrPBR_getData", (DL_FUNC) &_carat_StrPBR_getData, 10},
     {"_carat_StrPBR_RT", (DL_FUNC) &_carat_StrPBR_RT, 3},
     {"_carat_StrPBR_BT", (DL_FUNC) &_carat_StrPBR_BT, 3},
     {"_carat_StrPBR_RT_In", (DL_FUNC) &_carat_StrPBR_RT_In, 3},
     {"_carat_StrPBR_BT_In", (DL_FUNC) &_carat_StrPBR_BT_In, 3},
-    {"_carat_StrPBR_RT_power", (DL_FUNC) &_carat_StrPBR_RT_power, 13},
-    {"_carat_StrPBR_BT_power", (DL_FUNC) &_carat_StrPBR_BT_power, 13},
+    {"_carat_StrPBR_RT_power", (DL_FUNC) &_carat_StrPBR_RT_power, 14},
+    {"_carat_StrPBR_BT_power", (DL_FUNC) &_carat_StrPBR_BT_power, 14},
     {"_carat_CTT", (DL_FUNC) &_carat_CTT, 1},
     {"_carat_CTT_In", (DL_FUNC) &_carat_CTT_In, 1},
     {"_carat_HuHuCAR_CT_power", (DL_FUNC) &_carat_HuHuCAR_CT_power, 13},

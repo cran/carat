@@ -396,33 +396,29 @@ arma::mat remd(arma::mat A, int bsize){
 }
 
 arma::field<arma::mat> Analyze(arma::mat DIF, int row, int strt_num, int bsize, 
-                               arma::mat SNUM, arma::mat ASSIG){
-  arma::field<arma::mat> Res(3, 1); 
+                               arma::mat ASSIG){
+  arma::field<arma::mat> Res(2, 1); 
   
   arma::mat AD = abs(DIF);
-  arma::mat AD2 = pow(AD, 2);
   
   Rcpp::Environment stats("package:stats");
   Rcpp::Function quantile = stats["quantile"];
   
   arma::vec prb(3); prb(0) = 1; prb(1) = 0.95; prb(2) = 0.5;
-  Rcpp::NumericMatrix QUA(row + 1, 3); QUA.fill(arma::datum::nan);  
+  Rcpp::NumericMatrix QUA(row + 1, 3); QUA.fill(arma::datum::nan); 
   for(int l = 0; l < (row + 1); l++){
     SEXP q = quantile(AD.row(l), prb);
     Rcpp::NumericVector qua = Rcpp::as<Rcpp::NumericVector>(q);
     QUA.row(l) = qua;
   }
   arma::mat Q = Rcpp::as<arma::mat>(QUA);
-  arma::mat R(row + 1, 5); 
+  arma::mat R(row + 1, 4); 
   R.cols(0, 2) = Q; 
-  
-  arma::vec loss = mean(AD2, 1); 
-  R.col(4) = loss; 
   
   arma::vec m = mean(AD, 1); 
   R.col(3) = m; 
   
-  arma::vec SM(bsize);
+  /*arma::vec SM(bsize);
   arma::mat Dstr = AD.rows(1, strt_num);
   
   arma::mat ypar = remd(SNUM, bsize);
@@ -439,10 +435,11 @@ arma::field<arma::mat> Analyze(arma::mat DIF, int row, int strt_num, int bsize,
       SM(isum(s) - 1) = M; 
     }
   }
+  */
   
   Res(0, 0) = ASSIG; 
   Res(1, 0) = R; 
-  Res(2, 0) = SM; 
+  //Res(2, 0) = SM; 
   
   return Res; 
 }
@@ -491,6 +488,15 @@ bool sigma_check(double sigma){
   }
 }
 
+bool nthreads_check(int nthreads){
+  if(nthreads == 1){
+    return TRUE;
+  }
+  else{
+    Rcpp::Rcout<<"The number of threads can only be 1 due to the limitation of OpenMP. The OpenMP-supported version can be loaded in https://github.com/yexiaoqingruc/carat."<<std::endl;
+    return FALSE;
+  }
+}
 
 /*
  * GROUP-2: base functions
@@ -1315,7 +1321,7 @@ arma::field<arma::mat> C_Summarize(bool Replace, unsigned int cov_num,
                                    arma::vec omega, double p, 
                                    int bsize, double a, 
                                    int n, int N){
-  arma::field<arma::mat> RR(4, 1); 
+  arma::field<arma::mat> RR(5, 1); 
   
   arma::mat ProbS = Prob_S(cov_num, level_num, pr); 
   
@@ -1341,11 +1347,12 @@ arma::field<arma::mat> C_Summarize(bool Replace, unsigned int cov_num,
         arma::mat SS = RES(0, 0).col(0);
         SNUM.col(iter) = SS;
       }
-      arma::field<arma::mat> result = Analyze(DSA, row, strt_num, bsize, SNUM, ASSIGS); 
+      arma::field<arma::mat> result = Analyze(DSA, row, strt_num, bsize, ASSIGS); 
       RR(0, 0) = result(0, 0); 
       RR(1, 0) = result(1, 0); 
-      RR(2, 0) = result(2, 0); 
+      RR(2, 0) = SNUM; 
       RR(3, 0) = PS; 
+      RR(4, 0) = DSA; 
       return RR;
     }
     else{
@@ -1388,11 +1395,12 @@ arma::field<arma::mat> C_Summarize(bool Replace, unsigned int cov_num,
           SNUM.col(ad) = S;
         }
       }
-      arma::field<arma::mat> result = Analyze(DIF, row, strt_num, bsize, SNUM, ASSIG);
+      arma::field<arma::mat> result = Analyze(DIF, row, strt_num, bsize, ASSIG);
       RR(0, 0) = result(0, 0); 
       RR(1, 0) = result(1, 0); 
-      RR(2, 0) = result(2, 0); 
+      RR(2, 0) = SNUM; 
       RR(3, 0) = PS; 
+      RR(4, 0) = DIF; 
       return RR;
     }
   }
@@ -1421,11 +1429,12 @@ arma::field<arma::mat> C_Summarize(bool Replace, unsigned int cov_num,
         arma::mat SS = RES(0, 0);
         SNUM.col(iter) = SS;
       }
-      arma::field<arma::mat> result = Analyze(DSA, row, strt_num, bsize, SNUM, ASSIGS);
+      arma::field<arma::mat> result = Analyze(DSA, row, strt_num, bsize, ASSIGS);
       RR(0, 0) = result(0, 0); 
       RR(1, 0) = result(1, 0); 
-      RR(2, 0) = result(2, 0); 
+      RR(2, 0) = SNUM; 
       RR(3, 0) = PS; 
+      RR(4, 0) = DSA; 
       return RR;
     }
     else{
@@ -1470,11 +1479,12 @@ arma::field<arma::mat> C_Summarize(bool Replace, unsigned int cov_num,
           SNUM.col(Dk) = S;
         }
       }
-      arma::field<arma::mat> result = Analyze(DIF, row, strt_num, bsize, SNUM, ASSIG);
+      arma::field<arma::mat> result = Analyze(DIF, row, strt_num, bsize, ASSIG);
       RR(0, 0) = result(0, 0); 
       RR(1, 0) = result(1, 0); 
-      RR(2, 0) = result(2, 0); 
+      RR(2, 0) = SNUM; 
       RR(3, 0) = PS; 
+      RR(4, 0) = DIF; 
       return RR;
     }
   }
@@ -1484,7 +1494,7 @@ arma::field<arma::mat> C_Summarize(bool Replace, unsigned int cov_num,
 arma::field<arma::mat> C_RSummarize(arma::mat data_proc, unsigned int cov_num, arma::vec level_num, 
                                     Rcpp::String method, arma::vec omega, double p, int bsize, 
                                     double a, int N){
-  arma::field<arma::mat> RR(4, 1); 
+  arma::field<arma::mat> RR(5, 1); 
   arma::mat PS = PStrR(data_proc);
   int strt_num = PS.n_cols;
   int lnum = sum(level_num);
@@ -1506,11 +1516,12 @@ arma::field<arma::mat> C_RSummarize(arma::mat data_proc, unsigned int cov_num, a
       arma::mat SS = RES(0, 0).col(0);
       SNUM.col(iter) = SS;
     }
-    arma::field<arma::mat> result = Analyze(DSA, row, strt_num, bsize, SNUM, ASSIGS);
+    arma::field<arma::mat> result = Analyze(DSA, row, strt_num, bsize, ASSIGS);
     RR(0, 0) = result(0, 0); 
     RR(1, 0) = result(1, 0); 
-    RR(2, 0) = result(2, 0); 
+    RR(2, 0) = SNUM; 
     RR(3, 0) = PS; 
+    RR(4, 0) = DSA; 
     return RR;
   }
   else{
@@ -1554,11 +1565,12 @@ arma::field<arma::mat> C_RSummarize(arma::mat data_proc, unsigned int cov_num, a
         SNUM.col(ad) = S;
       }
     }
-    arma::field<arma::mat> result = Analyze(DIF, row, strt_num, bsize, SNUM, ASSIG);
+    arma::field<arma::mat> result = Analyze(DIF, row, strt_num, bsize, ASSIG);
     RR(0, 0) = result(0, 0); 
     RR(1, 0) = result(1, 0); 
-    RR(2, 0) = result(2, 0); 
+    RR(2, 0) = SNUM; 
     RR(3, 0) = PS; 
+    RR(4, 0) = DIF; 
     return RR;
   }
 }
@@ -1816,63 +1828,75 @@ double HuHuCAR_BT_In(arma::mat data,double B,arma::vec omega,double p){
 }
 
 // [[Rcpp::export]]
-arma::vec HuHuCAR_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,std::string type,arma::vec beta,arma::vec mu1,arma::vec mu2,double sigma,double Iternum,double sl,arma::vec omega,double p,double Reps){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+arma::vec HuHuCAR_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,std::string type,arma::vec beta,arma::vec mu1,arma::vec mu2,double sigma,double Iternum,double sl,arma::vec omega,double p,double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = HuHuCAR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,omega,p);
+          double pval = HuHuCAR_RT_In(data,Reps,omega,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = HuHuCAR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,omega,p);
-        double pval = HuHuCAR_RT_In(data,Reps,omega,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
 // [[Rcpp::export]]
-arma::vec HuHuCAR_BT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,std::string type,arma::vec beta,arma::vec mu1,arma::vec mu2,double sigma,double Iternum,double sl,arma::vec omega,double p,double B){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+arma::vec HuHuCAR_BT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,std::string type,arma::vec beta,arma::vec mu1,arma::vec mu2,double sigma,double Iternum,double sl,arma::vec omega,double p,double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = HuHuCAR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,omega,p);
+          double pval = HuHuCAR_BT_In(data,B,omega,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = HuHuCAR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,omega,p);
-        double pval = HuHuCAR_BT_In(data,B,omega,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -2155,32 +2179,38 @@ double PocSimMIN_BT_In(arma::mat data,double B,arma::vec weight,double p){
 }
 
 // [[Rcpp::export]]
-arma::vec PocSimMIN_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,std::string type,arma::vec beta,arma::vec mu1,arma::vec mu2,double sigma,double Iternum,double sl,arma::vec weight,double p,double Reps){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+arma::vec PocSimMIN_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,std::string type,arma::vec beta,arma::vec mu1,arma::vec mu2,double sigma,double Iternum,double sl,arma::vec weight,double p,double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = PocSimMIN_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,weight,p);
+          double pval = PocSimMIN_RT_In(data,Reps,weight,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = PocSimMIN_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,weight,p);
-        double pval = PocSimMIN_RT_In(data,Reps,weight,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -2189,32 +2219,38 @@ arma::vec PocSimMIN_BT_power(int n,unsigned int cov_num,arma::vec level_num,
                              arma::vec pr,std::string type,arma::vec beta,
                              arma::vec mu1,arma::vec mu2,double sigma,
                              double Iternum,double sl,arma::vec weight,
-                             double p,double B){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                             double p,double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = PocSimMIN_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,weight,p);
+          double pval = PocSimMIN_BT_In(data,B,weight,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = PocSimMIN_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,weight,p);
-        double pval = PocSimMIN_BT_In(data,B,weight,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -2409,32 +2445,38 @@ arma::vec StrBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           double p,double Iternum,double sl,
-                          double Reps){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = StrBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,p);
+          double pval = StrBCD_RT_In(data,Reps,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = StrBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,p);
-        double pval = StrBCD_RT_In(data,Reps,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::ones<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -2443,32 +2485,38 @@ arma::vec StrBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,
                           double sigma,double Iternum,double sl,
-                          double p,double B){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double p,double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = StrBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,p);
+          double pval = StrBCD_BT_In(data,B,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = StrBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,p);
-        double pval = StrBCD_BT_In(data,B,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -2721,32 +2769,38 @@ double DoptBCD_BT_In(arma::mat data,double B){
 arma::vec DoptBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
                            arma::vec pr,std::string type,arma::vec beta,
                            arma::vec mu1,arma::vec mu2,double sigma,
-                           double Iternum,double sl,double Reps){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                           double Iternum,double sl,double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = DoptBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma);
+          double pval = DoptBCD_RT_In(data,Reps);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = DoptBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma);
-        double pval = DoptBCD_RT_In(data,Reps);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -2755,31 +2809,37 @@ arma::vec DoptBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
 arma::vec DoptBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
                            arma::vec pr,std::string type,arma::vec beta,
                            arma::vec mu1,arma::vec mu2,double sigma,
-                           double Iternum,double sl,double B){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                           double Iternum,double sl,double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = DoptBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma);
+          double pval = DoptBCD_BT_In(data,B);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = DoptBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma);
-        double pval = DoptBCD_BT_In(data,B);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -3056,32 +3116,38 @@ arma::vec AdjBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           double Iternum,double sl,double a,
-                          double Reps){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = AdjBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,a);
+          double pval = AdjBCD_RT_In(data,Reps,a);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = AdjBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,a);
-        double pval = AdjBCD_RT_In(data,Reps,a);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -3089,32 +3155,38 @@ arma::vec AdjBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
 arma::vec AdjBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,double sigma,
-                          double Iternum,double sl,double a,double B){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double Iternum,double sl,double a,double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = AdjBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,a);
+          double pval = AdjBCD_RT_In(data,B,a);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = AdjBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,a);
-        double pval = AdjBCD_RT_In(data,B,a);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -3378,32 +3450,38 @@ arma::vec StrPBR_RT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           double Iternum,double sl,int bsize,
-                          double Reps){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = StrPBR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,bsize);
+          double pval = StrPBR_RT_In(data,Reps,bsize);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = StrPBR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,bsize);
-        double pval = StrPBR_RT_In(data,Reps,bsize);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -3412,32 +3490,38 @@ arma::vec StrPBR_BT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           double Iternum,double sl,int bsize,
-                          double B){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = StrPBR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,bsize);
+          double pval = StrPBR_BT_In(data,B,bsize);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = StrPBR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,bsize);
-        double pval = StrPBR_BT_In(data,B,bsize);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -3494,7 +3578,7 @@ arma::vec HuHuCAR_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                            arma::vec mu1, arma::vec mu2,double sigma,
                            double Iternum,double sl,arma::vec omega,double p){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -3525,7 +3609,7 @@ arma::vec PocSimMIN_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                              arma::vec mu1, arma::vec mu2,double sigma,
                              double Iternum,double sl,arma::vec weight,double p){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -3556,7 +3640,7 @@ arma::vec StrBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec mu1, arma::vec mu2,double sigma,
                           double Iternum,double sl,double p){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -3587,7 +3671,7 @@ arma::vec DoptBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                            arma::vec mu1, arma::vec mu2,double sigma,
                            int Iternum,double sl){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -3618,7 +3702,7 @@ arma::vec AdjBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           int Iternum,double sl,double a){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -3649,7 +3733,7 @@ arma::vec StrPBR_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           double Iternum,double sl,int bsize){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }

@@ -49,6 +49,9 @@ HuHuCAR.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   R = NULL;
   R$Cov_Assig = CA;
   
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
+  
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));
   colnames(AS) = c(BBCDname(ncol(AS), "strt."));
@@ -125,6 +128,9 @@ PocSimMIN.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   R = NULL;
   R$Cov_Assig = CA;
   
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
+  
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));
   colnames(AS) = c(BBCDname(ncol(AS), "strt."));
@@ -193,6 +199,9 @@ StrBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   R = NULL;
   R$Cov_Assig = CA;
   
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
+  
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));
   colnames(AS) = c(BBCDname(ncol(AS), "strt."));
@@ -253,6 +262,9 @@ StrPBR.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   
   R = NULL;
   R$Cov_Assig = CA;
+  
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));
@@ -316,7 +328,10 @@ DoptBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   colnames(CA) = BBCDname(n, "pat");
   
   R = NULL;
-  R$Cov_Assig = CA;
+  R$Cov_Assig = CA; 
+  
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));
@@ -454,6 +469,9 @@ AdjBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   
   R = NULL;
   R$Cov_Assig = CA;
+  
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));

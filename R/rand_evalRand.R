@@ -299,16 +299,14 @@ evalRand = function(data, method = "HuHuCAR", N = 500, ...){
   R$strt_num = strt_num; 
   
   Imbmat = RES[2, 1][[1]]; 
-  colnames(Imbmat) = c("max", "95% quan", "median", "mean", "loss");
+  colnames(Imbmat) = c("max", "95% quan", "median", "mean");
   rownames(Imbmat) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
   R$Imb = Imbmat; 
   
-  PS = RES[4, 1][[1]]; 
-  R$`All strata` = PS; 
+  R$SNUM = RES[3, 1][[1]]; 
   
-  WS = t(RES[3, 1][[1]]); 
-  colnames(WS) = BBCDname(bsize, "pnum = "); 
-  R$"Within-strt. by num of pats" = WS; 
+  PS = RES[4, 1][[1]]; 
+  R$`All strata` = PS;
   
   R$method = method; 
   R$cov_num = cov_num; 
@@ -317,12 +315,17 @@ evalRand = function(data, method = "HuHuCAR", N = 500, ...){
   R$iteration = N;
   R$'Data Type' = "Real"; 
   
+  DIF = RES[5, 1][[1]]; 
+  colnames(DIF) = BBCDname(N, "iter"); 
+  rownames(DIF) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  R$DIF = DIF; 
+  
   class(R) = "careval"; 
   return(R);
 }
 
 ## Assess the procedure for simulated data
-evalRand.sim.careval = function(Replace = FALSE, n = 1000,  N = 500, cov_num = 2, level_num = c(2, 2),
+evalRand.sim.careval = function(n = 1000,  N = 500, Replace = FALSE, cov_num = 2, level_num = c(2, 2),
                                 pr = rep(0.5, 4), method = "HuHuCAR", ...) UseMethod("careval")
 
 evalRand.sim = function(Replace = FALSE, n = 1000, N = 500, cov_num = 2, 
@@ -626,13 +629,11 @@ evalRand.sim = function(Replace = FALSE, n = 1000, N = 500, cov_num = 2,
   R$strt_num = strt_num; 
   
   Imbmat = RES[2, 1][[1]]; 
-  colnames(Imbmat) = c("max", "95% quan", "median", "mean", "loss");
+  colnames(Imbmat) = c("max", "95% quan", "median", "mean");
   rownames(Imbmat) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
   R$Imb = Imbmat; 
   
-  WS = t(RES[3, 1][[1]]); 
-  colnames(WS) = BBCDname(bsize, "pnum = "); 
-  R$"Within-strt. by num of pats" = WS; 
+  R$SNUM = RES[3, 1][[1]]; 
   
   R$method = method; 
   R$cov_num = cov_num; 
@@ -641,6 +642,11 @@ evalRand.sim = function(Replace = FALSE, n = 1000, N = 500, cov_num = 2,
   R$iteration = N; 
   R$'Data Type' = "Simulated"; 
   R$DataGeneration = Replace;
+  
+  DIF = RES[5, 1][[1]]; 
+  colnames(DIF) = BBCDname(N, "iter"); 
+  rownames(DIF) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  R$DIF = DIF; 
   
   class(R) = "careval"; 
   return(R);

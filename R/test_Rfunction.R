@@ -9,7 +9,7 @@ getData<-function(n,cov_num,level_num,pr,type,beta,mu1,mu2,sigma = 1,method = Hu
   }
   names[cov_num+1] = "assignment"
   names[cov_num+2] = "outcome"
-  datafr = data.frame(data,row.names = names)
+  datafr = data.frame(data,row.names = names, stringsAsFactors = TRUE)
   return(datafr)
 }
 
@@ -22,7 +22,7 @@ rand.test<-function(data,Reps = 200,method = HuHuCAR,conf = 0.95, plot = TRUE, b
   pval = result$pval
   testmethod<-"Randomization test"
   x<-result$Randata
-  datanew = data.frame(x)
+  datanew = data.frame(x, stringsAsFactors = TRUE)
   estimate = result$estimate
   names(estimate)<-"difference for treatment effect"
   if(plot == TRUE){
@@ -88,7 +88,7 @@ corr.test<-function(data,conf = 0.95){
 evalPower<-function(n,cov_num,level_num,pr,type,beta,di = seq(0,0.5,0.1),sigma = 1,Iternum,sl = 0.05,method = HuHuCAR,test,plot = "TRUE",...){
   a = Sys.time()
   if(plot!= TRUE && plot!= FALSE){
-    print("Please specify whether to plot or not! Enter ON or OFF")
+    print("Please specify whether to plot or not! Enter TRUE or FALSE")
     return(NULL)
   }
   else{
@@ -111,8 +111,10 @@ evalPower<-function(n,cov_num,level_num,pr,type,beta,di = seq(0,0.5,0.1),sigma =
     else{stop("Please enter a valid test! rand.test, boot.test or corr.test")}
     result = FUN(n,cov_num,level_num,pr,type,beta,di,mu2,sigma,Iternum,sl,...)
     if(plot == TRUE){
+      diff = di 
       value = result[1:length(di)]
-      tgg=data.frame(diff = di,value = value,sd = round(result[(length(di)+1):(2*length(di))], digits = 2))
+      sd = round(result[(length(di)+1):(2*length(di))], digits = 2)
+      tgg=data.frame(diff,value,sd,stringsAsFactors = TRUE)
       pic = ggplot(tgg, aes(x=di, y=value)) + geom_line() + geom_point(size=4, shape=20)+
         xlab("Difference in means")+ylab("Power")
       b = Sys.time()
@@ -120,7 +122,10 @@ evalPower<-function(n,cov_num,level_num,pr,type,beta,di = seq(0,0.5,0.1),sigma =
       return(result)
     }
     else{
-      tgg=data.frame(diff = di,value = result[1:length(di)],sd = round(result[(length(di)+1):(2*length(di))], digits = 2))
+      diff = di
+      value = result[1:length(di)]
+      sd = round(result[(length(di)+1):(2*length(di))], digits = 2)
+      tgg=data.frame(diff,value,sd, stringsAsFactors = TRUE)
       b = Sys.time()
       result = list(Powers = tgg,Time = paste(paste("Execute time:",round(as.numeric(b-a), digits = 2),units(b-a))))
       return(result)
@@ -169,18 +174,17 @@ compPower<-function(powers,diffs,testname){
     diffp = rep(diffs,k)
   }
   letit = "Sample Size"
-  for(i in 1:length(testname)){
-    if(grepl("corr",testname[i])||grepl("rand",testname[i])||grepl("boot",testname[i])||grepl("Simple",testname[i])){
-      letit = "Tests"
-    }
+  if(grepl("corr",testname)[1]||grepl("rand",testname)[1]||grepl("boot",testname)[1]||grepl("Simple",testname)[1]){
+    letit = "Tests"
   }
-  tgg = data.frame(Lines,diffp,popp)
+  Lines = factor(Lines,levels = testname)
+  tgg = data.frame(Lines,diffp,popp, stringsAsFactors = TRUE)
   pic = ggplot(tgg,aes(x = diffp,y = popp,color = Lines,shape = Lines)) + geom_line() +geom_point(size=4)+
     xlab("Difference in means")+ylab("Power")+scale_colour_hue(name = letit)+
     scale_shape_discrete(name = letit)+theme(legend.position="bottom")
   tpp = t(matrix(popp_out,nrow = l))
   rownames(tpp) = testname
-  tpp = data.frame(tpp)
+  tpp = data.frame(tpp, stringsAsFactors = TRUE)
   colnames(tpp) = diffs
   result = list(powers = tpp,plot = pic)
   return(result)
