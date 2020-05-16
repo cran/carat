@@ -1,4 +1,4 @@
-cee59a2f03a62043744c3bdfe931e7c4 *DESCRIPTION
+b3a4a8e2b93c96ab94f21b8f979ccd7d *DESCRIPTION
 5b1b8e06efa91d3810959c7b05579816 *NAMESPACE
 ece8195c94f5f8bebff3858581bf5c7b *R/RcppExports.R
 ca89008512a9e705e236e0e76a39ee98 *R/class_carandom.R
@@ -12,7 +12,7 @@ bda00d588dcfcf79a19c0f1fdd5c82e9 *R/rand_completeData.R
 563d9cc2cdf2a8462696cd3f22fe05cc *R/rand_generatingData.R
 b3ca3d34de07da1af0f014125238600a *R/test_Rfunction.R
 43854b3705dff9aaf7affef6ccfc92c5 *data/pats.rda
-35b169a912a2f406e8dc84974974b057 *inst/NEWS.Rd
+1d134172a8ef278e00abb951f61bf38e *inst/NEWS.Rd
 757dff9d662ff89d9d2743755b60e219 *man/AdjBCD.Rd
 cdd97d22e3f8bc2453e14aa11a550850 *man/AdjBCD.sim.Rd
 105090a5dff077f3ff9c975c259c067f *man/AdjBCD.ui.Rd
@@ -43,7 +43,7 @@ cc0b5ca7018294facd0bd3473990cd89 *man/evalRand.Rd
 9aca2951c5a51aee6dd7a0332d9f071a *man/pats.Rd
 271eb475e0b594d67de4eb4726b7ccba *man/print.carandom.Rd
 e7983e85711efe89381678240c3381fb *man/rand.test.Rd
-2cefd95e9a796b58a38db4b6d514b9cd *src/All.cpp
+afdfd611a0f85f812431d68c25b3b7c1 *src/All.cpp
 4b2d739cb7ff638b3446e7e406e32b57 *src/Makevars
 61059660eb073d93e00e8ee054237071 *src/Makevars.win
 ebf65fbb0746219048e8d8072cd499f2 *src/RcppExports.cpp

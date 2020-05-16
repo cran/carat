@@ -10,3 +10,8 @@
   }
 }
 
+\section{version 1.1 (May 15th, 2020)}{
+  \itemize{
+    \item A small modification was added to the function \code{getData}. 
+  }
+}

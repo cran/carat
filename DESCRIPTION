@@ -1,8 +1,8 @@
 Package: carat
 Type: Package
 Title: Covariate-Adaptive Randomization for Clinical Trials
-Version: 1.0
-Date: 2020-05-07
+Version: 1.1
+Date: 2020-05-15
 Authors@R: c(
     person(given="Fuyi", family="Tu", email="fuyi.tu@ruc.edu.cn", role="aut"),
     person(given="Xiaoqing", family="Ye", email="ye_xiaoq@163.com", role=c("aut","cre")),
@@ -24,6 +24,6 @@ Author: Fuyi Tu [aut],
   Xiaoqing Ye [aut, cre],
   Wei Ma [aut, ths],
   Feifang Hu [aut, ths]
-Packaged: 2020-05-07 02:04:08 UTC; liliecnu
+Packaged: 2020-05-15 14:15:48 UTC; liliecnu
 Repository: CRAN
-Date/Publication: 2020-05-07 04:40:02 UTC
+Date/Publication: 2020-05-17 00:30:05 UTC
