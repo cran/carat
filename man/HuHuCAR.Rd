@@ -1,9 +1,8 @@
 \name{HuHuCAR}
 \alias{HuHuCAR}
-\alias{HuHuCAR.carandom}
 \title{Hu and Hu's General Covariate-Adaptive Randomization}
 \usage{
-\method{HuHuCAR}{carandom}(data, omega = NULL, p = 0.85)
+HuHuCAR(data, omega = NULL, p = 0.85)
 }
 \description{
 Allocates patients to one of two treatments using Hu and Hu's general covariate-adaptive randomization proposed by Hu Y, Hu F (2012) <Doi:10.1214/12-AOS983>. 

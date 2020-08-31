@@ -2,8 +2,9 @@
 \alias{rand.test}
 \title{Randomization Test}
 \usage{
-  rand.test(data, Reps = 200, method = HuHuCAR, conf = 0.95, 
-                         plot = TRUE, binwidth = 30, \dots)
+  rand.test(data, Reps = 200, method = c("HuHuCAR", "PocSimMIN", "StrBCD", 
+                                       "StrPBR", "DoptBCD", "AdjBCD"), 
+          conf = 0.95, binwidth = 30, \dots)
 }
 \description{
   Performs randomization test on treatment effects.
@@ -11,9 +12,8 @@
 \arguments{
   \item{data}{a dataframe. It consists of patients' profiles, treatment assignments and outputs. See \code{\link{getData}}.}
   \item{Reps}{an integer. It represents the number of randomized replications. It is suggested to be \code{200}.}
-   \item{method}{the randomization to be used in allocating patients. The default randomization \code{HuHuCAR} uses Hu and Hu's general covariate-adaptive randomization; the alternatives are \code{PocSimMIN}, \code{StrBCD}, \code{StrPBR}, \code{DoptBCD} and \code{AdjBCD}.}
+   \item{method}{a character string specifying the alternative randomization methods to be used in allocating patients, must be one of \code{"HuHuCAR"} (default), \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"DoptBCD"} or \code{"AdjBCD"}.}
   \item{conf}{confidence level of the interval. Default is 0.95.}
-  \item{plot}{bool. It shows whether plot or not. Optional input: TRUE or FALSE.}
   \item{binwidth}{the number of bins for each bar in histogram. The default is 30.}
   \item{\dots}{arguments to be passed to methods. These depends on the \code{method} used and the following arguments are accepted:
   \describe{
@@ -68,12 +68,12 @@ type = "linear"
 p = 0.85
 
 dataS = getData(n, cov_num, level_num, pr, type,
-               beta, mu1, mu2, sigma, StrBCD, p)
+               beta, mu1, mu2, sigma, "StrBCD", p)
 
 #run the randomization test
 library("ggplot2")
-Strt = rand.test(data = dataS, Reps = 200,method = StrBCD, 
-                conf = 0.95, plot = TRUE, binwidth = 30,
+Strt = rand.test(data = dataS, Reps = 200,method = "StrBCD", 
+                conf = 0.95, binwidth = 30,
                 p = 0.85)
 Strt
 }

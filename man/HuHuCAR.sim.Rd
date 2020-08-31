@@ -1,12 +1,11 @@
 \name{HuHuCAR.sim}
 \alias{HuHuCAR.sim}
-\alias{HuHuCAR.sim.carandom}
 \title{Hu and Hu's General Covariate-Adaptive Randomization with Covariate Data Generating Mechanism}
 \description{
 Allocates patients to one of two treatments using general covariate-adaptive randomization proposed by Hu Y, Hu F (2012) <Doi:10.1214/12-AOS983>, by simulating covariate profiles based on the assumption of independence between covariates and levels within each covariate.
 }
 \usage{
-\method{HuHuCAR.sim}{carandom}(n = 1000, cov_num = 2, level_num = c(2, 2), 
+HuHuCAR.sim(n = 1000, cov_num = 2, level_num = c(2, 2), 
             pr = rep(0.5, 4), omega = NULL, p = 0.85)
 }
 \arguments{

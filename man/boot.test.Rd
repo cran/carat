@@ -2,7 +2,9 @@
 \alias{boot.test}
 \title{Bootstrap t-test}
 \usage{
-  boot.test(data, B = 200, method = HuHuCAR, conf = 0.95, \dots)
+  boot.test(data, B=200, method = c("HuHuCAR", "PocSimMIN", "StrBCD", 
+                                  "StrPBR", "DoptBCD", "AdjBCD"), 
+          conf = 0.95, \dots)
 }
 \description{
   Performs bootstrap t-test on treatment effects. This test is proposed by Shao et al. (2010) <doi:10.1093/biomet/asq014>.
@@ -10,7 +12,7 @@
 \arguments{
   \item{data}{a dataframe. It consists of patients' profiles, treatment assignments and outputs. See \code{\link{getData}}.}
   \item{B}{an integer. It indicates the number of bootstrap samples. The default is 200.}
-  \item{method}{the method of randomization to be used in allocating patients. The default randomization method \code{HuHuCAR} uses Hu and Hu's general covariate-adaptive randomization; the alternatives are \code{PocSimMIN}, \code{StrBCD}, \code{StrPBR}, \code{DoptBCD}, and \code{AdjBCD}.}
+  \item{method}{a character string specifying the alternative randomization methods to be used in allocating patients, must be one of \code{"HuHuCAR"} (default), \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"DoptBCD"} or \code{"AdjBCD"}.}
   \item{conf}{confidence level of the interval. The default is \code{0.95}.}
   \item{\dots}{arguments to be passed to methods. These depend on the \code{method} used and the following arguments are accepted:
   \describe{
@@ -68,6 +70,6 @@ data.combined = data.frame(rbind(data.pd,outcome), stringsAsFactors = TRUE)
 
 #run the bootstrap t-test
 B = 200
-Strbt = boot.test(data.combined, B, StrPBR, bsize = 4)
+Strbt = boot.test(data.combined, B, "StrPBR", bsize = 4)
 Strbt
 }

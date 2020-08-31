@@ -1,9 +1,8 @@
 \name{StrBCD}
 \alias{StrBCD}
-\alias{StrBCD.carandom}
 \title{Shao's Method in the Two-Arms Case}
 \usage{
-\method{StrBCD}{carandom}(data, p = 0.85)
+StrBCD(data, p = 0.85)
 }
 \description{
 Allocates patients to one of the two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <Doi:10.1093/biomet/asq014>. 

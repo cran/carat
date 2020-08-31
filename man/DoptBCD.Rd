@@ -1,9 +1,8 @@
 \name{DoptBCD}
 \alias{DoptBCD}
-\alias{DoptBCD.carandom}
 \title{Atkinson's \eqn{D_A}-optimal Biased Coin Design}
 \usage{
-\method{DoptBCD}{carandom}(data)
+DoptBCD(data)
 }
 \description{
 Allocates patients to one of two treatments based on the \eqn{D_A}-optimal biased coin design with in the presence of the prognostic factors proposed by Atkinson A C (1982) <Doi:10.2307/2335853>.

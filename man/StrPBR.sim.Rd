@@ -1,6 +1,5 @@
 \name{StrPBR.sim}
 \alias{StrPBR.sim}
-\alias{StrPBR.sim.carandom}
 \title{
 Stratified Permuted Block Randomization with Covariate Data Generating Mechanism
 }
@@ -8,7 +7,7 @@ Stratified Permuted Block Randomization with Covariate Data Generating Mechanism
 Allocates patients to one of two treatments using stratified randomization proposed by Zelen M (1974) <Doi: 10.1016/0021-9681(74)90015-0>, by simulating covariates-profile on assumption of independence between covariates and levels within each covariate.
 }
 \usage{
-\method{StrPBR.sim}{carandom}(n = 1000, cov_num = 2, level_num = c(2, 2), 
+StrPBR.sim(n = 1000, cov_num = 2, level_num = c(2, 2), 
            pr = rep(0.5, 4), bsize = 4)
 }
 \arguments{

@@ -1,6 +1,5 @@
 \name{AdjBCD.ui}
 \alias{AdjBCD.ui}
-\alias{AdjBCD.ui.carseq}
 \title{
 Command-line User Interface Using Covariate-adjusted Biased Coin Design
 }
@@ -8,7 +7,7 @@ Command-line User Interface Using Covariate-adjusted Biased Coin Design
 A call to the user-interface function for allocation of patients to one of two treatments, using covariate-adjusted biased coin design, as proposed by Baldi Antognini A, Zagoraiou M (2011) <Doi:10.1093/biomet/asr021>. 
 }
 \usage{
-\method{AdjBCD.ui}{carseq}(path, folder = "AdjBCD")
+AdjBCD.ui(path, folder = "AdjBCD")
 }
 \arguments{
   \item{path}{the path in which a folder used to store variables will be created.}

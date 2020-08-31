@@ -1,9 +1,8 @@
 \name{AdjBCD}
 \alias{AdjBCD}
-\alias{AdjBCD.carandom}
 \title{Covariate-adjusted Biased Coin Design}
 \usage{
-\method{AdjBCD}{carandom}(data, a = 2)
+AdjBCD(data, a = 2)
 }
 \description{
 Allocates patients to one of two treatments based on covariate-adjusted biased coin design as proposed by Baldi Antognini A, Zagoraiou M (2011) <Doi:10.1093/biomet/asr021>. 

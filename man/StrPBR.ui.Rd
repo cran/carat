@@ -1,6 +1,5 @@
 \name{StrPBR.ui}
 \alias{StrPBR.ui}
-\alias{StrPBR.ui.carseq}
 \title{
 Command-line User Interface Using Stratified Permuted Block Randomization with Two-Arms Case
 }
@@ -8,7 +7,7 @@ Command-line User Interface Using Stratified Permuted Block Randomization with T
 A call to the user-iterface function used to allocate patients to one of two treatments using stratified permuted block randomization proposed by Zelen M (1974) <Doi: 10.1016/0021-9681(74)90015-0>. 
 }
 \usage{
-\method{StrPBR.ui}{carseq}(path, folder = "StrPBR")
+StrPBR.ui(path, folder = "StrPBR")
 }
 \arguments{
   \item{path}{the path in which a folder used to storage variables will be created. }

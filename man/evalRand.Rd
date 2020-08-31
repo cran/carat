@@ -1,9 +1,8 @@
 \name{evalRand}
 \alias{evalRand}
-\alias{evalRand.careval}
 \title{Evaluation of Randomization Procedures}
 \usage{
-\method{evalRand}{careval}(data, method = "HuHuCAR", N = 500, ...)
+evalRand(data, method = "HuHuCAR", N = 500, ...)
 }
 \description{
 Evaluates a specific randomization procedure based on several different quantities of imbalances. 

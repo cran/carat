@@ -1,9 +1,8 @@
 \name{compRand}
 \alias{compRand}
-\alias{compRand.carcomp}
 \title{Compare Different Randomization Procedures via Tables and Plots}
 \usage{
-\method{compRand}{carcomp}(...)
+compRand(...)
 }
 \description{
 Compares randomization procedures based on several different quantities of imbalances. Among all included randomization procedures of class \code{"careval"}, two or more procedures can be compared in this function. 

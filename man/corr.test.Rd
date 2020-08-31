@@ -50,7 +50,7 @@ type = "linear"
 p = 0.85
 
 dataH = getData(n,cov_num,level_num,pr,type,beta,
-                mu1,mu2,sigma,HuHuCAR,omega,p)
+                mu1,mu2,sigma,"HuHuCAR",omega,p)
 
 #run the corrected t-test
 HHct=corr.test(dataH)

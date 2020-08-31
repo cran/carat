@@ -28,6 +28,7 @@ import(ggplot2)
 #import(RcppArmadillo)
 importFrom(Rcpp, evalCpp)
 importFrom(stats, quantile, qnorm)
+importFrom(methods, is)
 import(stringr)
 #importFrom(ggplot2, ggplot, aes, geom_line, geom_point, xlab, ylab, theme, 
 #                    element_text)
@@ -40,8 +41,9 @@ S3method(print, carandom)
 S3method(print, careval)
 S3method(print, carcomp)
 S3method(print, carseq)
+S3method(print, plotrandtest)
 
-export(print.carandom, print.careval, print.carcomp, print.carseq)
+#export(print.carandom, print.careval, print.carcomp, print.carseq)
 
 
 

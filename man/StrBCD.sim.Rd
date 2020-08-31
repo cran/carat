@@ -1,6 +1,5 @@
 \name{StrBCD.sim}
 \alias{StrBCD.sim}
-\alias{StrBCD.sim.carandom}
 \title{
 Shao's Method in the Two-Arms Case with Covariate Data Generating Mechanism
 }
@@ -8,7 +7,7 @@ Shao's Method in the Two-Arms Case with Covariate Data Generating Mechanism
 Allocates patients to one of two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <Doi:10.1093/biomet/asq014>, by simulating covariate profiles under the assumption of independence between covariates and levels within each covariate.
 }
 \usage{
-\method{StrBCD.sim}{carandom}(n = 1000, cov_num = 2, level_num = c(2, 2), 
+StrBCD.sim(n = 1000, cov_num = 2, level_num = c(2, 2), 
            pr = rep(0.5, 4), p = 0.85)
 }
 \arguments{

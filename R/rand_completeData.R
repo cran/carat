@@ -5,7 +5,7 @@
 ################################################################################
 #HuHuCAR = function(data, omega = NULL, p = 0.85) UseMethod("HuHuCAR")
 
-HuHuCAR.carandom = function(data, omega = NULL, p = 0.85) UseMethod("carandom")
+#HuHuCAR.carandom = function(data, omega = NULL, p = 0.85) UseMethod("carandom")
 
 HuHuCAR = function(data, omega = NULL, p = 0.85){
   
@@ -85,7 +85,7 @@ HuHuCAR = function(data, omega = NULL, p = 0.85){
 ################################################################################
 #PocSimMIN = function(data, weight = NULL, p = 0.85) UseMethod("PocSimMIN")
 
-PocSimMIN.carandom = function(data, weight = NULL, p = 0.85) UseMethod("carandom")
+#PocSimMIN.carandom = function(data, weight = NULL, p = 0.85) UseMethod("carandom")
 
 PocSimMIN = function(data, weight = NULL, p = 0.85){
   
@@ -166,7 +166,7 @@ PocSimMIN = function(data, weight = NULL, p = 0.85){
 ################################################################################
 #StrBCD = function(data, p = 0.85) UseMethod("StrBCD")
 
-StrBCD.carandom = function(data, p = 0.85) UseMethod("carandom")
+#StrBCD.carandom = function(data, p = 0.85) UseMethod("carandom")
 
 StrBCD = function(data, p = 0.85){
   
@@ -238,7 +238,7 @@ StrBCD = function(data, p = 0.85){
 ################################################################################
 #StrPBR = function(data, bsize = 4) UseMethod("StrPBR")
 
-StrPBR.carandom = function(data, bsize = 4) UseMethod("carandom")
+#StrPBR.carandom = function(data, bsize = 4) UseMethod("carandom")
 
 StrPBR = function(data, bsize = 4){
   
@@ -315,7 +315,7 @@ StrPBR = function(data, bsize = 4){
 ################################################################################
 #DoptBCD = function(data) UseMethod("DoptBCD")
 
-DoptBCD.carandom = function(data) UseMethod("carandom")
+#DoptBCD.carandom = function(data) UseMethod("carandom")
 
 DoptBCD = function(data){
   
@@ -377,7 +377,7 @@ DoptBCD = function(data){
 ###############################################################################
 #AdjBCD = function(data, a = 2.0) UseMethod("AdjBCD")
 
-AdjBCD.carandom = function(data, a = 2.0) UseMethod("carandom")
+#AdjBCD.carandom = function(data, a = 2.0) UseMethod("carandom")
 
 AdjBCD = function(data, a = 2.0){
   

@@ -1,6 +1,5 @@
 \name{AdjBCD.sim}
 \alias{AdjBCD.sim}
-\alias{AdjBCD.sim.carandom}
 \title{
 Covariate-adjusted Biased Coin Design with Covariate Data Generating Mechanism
 }
@@ -8,7 +7,7 @@ Covariate-adjusted Biased Coin Design with Covariate Data Generating Mechanism
 Allocates patients to one of two treatments based on the covariate-adjusted biased coin design as proposed by Baldi Antognini A, Zagoraiou M (2011) <Doi:10.1093/biomet/asr021>, by simulating the covariates-profile under the assumption of independence between covariates and levels within each covariate.  
 }
 \usage{
-\method{AdjBCD.sim}{carandom}(n = 1000, cov_num = 2, level_num = c(2, 2), 
+AdjBCD.sim(n = 1000, cov_num = 2, level_num = c(2, 2), 
            pr = rep(0.5, 4), a = 2)
 }
 \arguments{

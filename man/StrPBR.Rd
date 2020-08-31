@@ -1,9 +1,8 @@
 \name{StrPBR}
 \alias{StrPBR}
-\alias{StrPBR.carandom}
 \title{Stratified Permuted Block Randomization}
 \usage{
-\method{StrPBR}{carandom}(data, bsize = 4)
+StrPBR(data, bsize = 4)
 }
 \description{
 Allocates patients to one of two treatments using stratified permuted block randomization proposed by Zelen M (1974) <Doi: 10.1016/0021-9681(74)90015-0>. 

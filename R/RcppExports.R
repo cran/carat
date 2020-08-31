@@ -93,8 +93,8 @@ HuHuCAR_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sig
     .Call(`_carat_HuHuCAR_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, omega, p)
 }
 
-HuHuCAR_RT <- function(data, Reps, omega, p) {
-    .Call(`_carat_HuHuCAR_RT`, data, Reps, omega, p)
+HuHuCAR_RT <- function(data, Reps, conf, omega, p = 0.85) {
+    .Call(`_carat_HuHuCAR_RT`, data, Reps, conf, omega, p)
 }
 
 HuHuCAR_BT <- function(data, B, omega, p) {
@@ -109,11 +109,11 @@ HuHuCAR_BT_In <- function(data, B, omega, p) {
     .Call(`_carat_HuHuCAR_BT_In`, data, B, omega, p)
 }
 
-HuHuCAR_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, Reps, nthreads) {
+HuHuCAR_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, Reps, nthreads = 2L) {
     .Call(`_carat_HuHuCAR_RT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, Reps, nthreads)
 }
 
-HuHuCAR_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, B, nthreads) {
+HuHuCAR_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, B, nthreads = 2L) {
     .Call(`_carat_HuHuCAR_BT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, omega, p, B, nthreads)
 }
 
@@ -121,8 +121,8 @@ PocSimMIN_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, s
     .Call(`_carat_PocSimMIN_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, weight, p)
 }
 
-PocSimMIN_RT <- function(data, Reps, weight, p) {
-    .Call(`_carat_PocSimMIN_RT`, data, Reps, weight, p)
+PocSimMIN_RT <- function(data, Reps, conf, weight, p = 0.85) {
+    .Call(`_carat_PocSimMIN_RT`, data, Reps, conf, weight, p)
 }
 
 PocSimMIN_BT <- function(data, B, weight, p) {
@@ -137,11 +137,11 @@ PocSimMIN_BT_In <- function(data, B, weight, p) {
     .Call(`_carat_PocSimMIN_BT_In`, data, B, weight, p)
 }
 
-PocSimMIN_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, Reps, nthreads) {
+PocSimMIN_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, Reps, nthreads = 2L) {
     .Call(`_carat_PocSimMIN_RT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, Reps, nthreads)
 }
 
-PocSimMIN_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, B, nthreads) {
+PocSimMIN_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, B, nthreads = 2L) {
     .Call(`_carat_PocSimMIN_BT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, weight, p, B, nthreads)
 }
 
@@ -149,8 +149,8 @@ StrBCD_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigm
     .Call(`_carat_StrBCD_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, p)
 }
 
-StrBCD_RT <- function(data, Reps, p) {
-    .Call(`_carat_StrBCD_RT`, data, Reps, p)
+StrBCD_RT <- function(data, Reps, conf, p = 0.85) {
+    .Call(`_carat_StrBCD_RT`, data, Reps, conf, p)
 }
 
 StrBCD_BT <- function(data, B, p) {
@@ -165,11 +165,11 @@ StrBCD_BT_In <- function(data, B, p) {
     .Call(`_carat_StrBCD_BT_In`, data, B, p)
 }
 
-StrBCD_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, p, Iternum, sl, Reps, nthreads) {
+StrBCD_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, p, Iternum, sl, Reps, nthreads = 2L) {
     .Call(`_carat_StrBCD_RT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, p, Iternum, sl, Reps, nthreads)
 }
 
-StrBCD_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, p, B, nthreads) {
+StrBCD_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, p, B, nthreads = 2L) {
     .Call(`_carat_StrBCD_BT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, p, B, nthreads)
 }
 
@@ -181,8 +181,8 @@ DoptBCD_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sig
     .Call(`_carat_DoptBCD_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma)
 }
 
-DoptBCD_RT <- function(data, Reps) {
-    .Call(`_carat_DoptBCD_RT`, data, Reps)
+DoptBCD_RT <- function(data, Reps, conf) {
+    .Call(`_carat_DoptBCD_RT`, data, Reps, conf)
 }
 
 DoptBCD_BT <- function(data, B) {
@@ -197,11 +197,11 @@ DoptBCD_BT_In <- function(data, B) {
     .Call(`_carat_DoptBCD_BT_In`, data, B)
 }
 
-DoptBCD_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, Reps, nthreads) {
+DoptBCD_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, Reps, nthreads = 2L) {
     .Call(`_carat_DoptBCD_RT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, Reps, nthreads)
 }
 
-DoptBCD_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, B, nthreads) {
+DoptBCD_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, B, nthreads = 2L) {
     .Call(`_carat_DoptBCD_BT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, B, nthreads)
 }
 
@@ -213,8 +213,8 @@ AdjBCD_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigm
     .Call(`_carat_AdjBCD_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, a)
 }
 
-AdjBCD_RT <- function(data, Reps, a) {
-    .Call(`_carat_AdjBCD_RT`, data, Reps, a)
+AdjBCD_RT <- function(data, Reps, conf, a) {
+    .Call(`_carat_AdjBCD_RT`, data, Reps, conf, a)
 }
 
 AdjBCD_BT <- function(data, B, a) {
@@ -229,11 +229,11 @@ AdjBCD_BT_In <- function(data, B, a) {
     .Call(`_carat_AdjBCD_BT_In`, data, B, a)
 }
 
-AdjBCD_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, Reps, nthreads) {
+AdjBCD_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, Reps, nthreads = 2L) {
     .Call(`_carat_AdjBCD_RT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, Reps, nthreads)
 }
 
-AdjBCD_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, B, nthreads) {
+AdjBCD_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, B, nthreads = 2L) {
     .Call(`_carat_AdjBCD_BT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, a, B, nthreads)
 }
 
@@ -241,8 +241,8 @@ StrPBR_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigm
     .Call(`_carat_StrPBR_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, bsize)
 }
 
-StrPBR_RT <- function(data, Reps, bsize) {
-    .Call(`_carat_StrPBR_RT`, data, Reps, bsize)
+StrPBR_RT <- function(data, Reps, conf, bsize) {
+    .Call(`_carat_StrPBR_RT`, data, Reps, conf, bsize)
 }
 
 StrPBR_BT <- function(data, B, bsize) {
@@ -257,11 +257,11 @@ StrPBR_BT_In <- function(data, B, bsize) {
     .Call(`_carat_StrPBR_BT_In`, data, B, bsize)
 }
 
-StrPBR_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, Reps, nthreads) {
+StrPBR_RT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, Reps, nthreads = 2L) {
     .Call(`_carat_StrPBR_RT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, Reps, nthreads)
 }
 
-StrPBR_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, B, nthreads) {
+StrPBR_BT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, B, nthreads = 2L) {
     .Call(`_carat_StrPBR_BT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize, B, nthreads)
 }
 
@@ -295,5 +295,9 @@ AdjBCD_CT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sig
 
 StrPBR_CT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize) {
     .Call(`_carat_StrPBR_CT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize)
+}
+
+test <- function(alpha) {
+    .Call(`_carat_test`, alpha)
 }
 

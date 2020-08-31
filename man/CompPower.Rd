@@ -36,9 +36,9 @@ weight = rep(0.1,5)
 ##data generation
 library("ggplot2")
 Strctp=evalPower(n,cov_num,level_num,pr,type,beta,di,
-                sigma,Iternum,sl,StrBCD,corr.test,FALSE,p)
+                sigma,Iternum,sl,"StrBCD","corr.test",FALSE,p)
 PSctp=evalPower(n,cov_num,level_num,pr,type,beta,di,sigma,
-                Iternum,sl,PocSimMIN,corr.test,FALSE,weight,p)
+                Iternum,sl,"PocSimMIN","corr.test",FALSE,weight,p)
 powers = list(Strctp,PSctp)
 testname = c("StrBCD.corr","PocSimMIN.corr")
 

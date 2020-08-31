@@ -3,8 +3,8 @@
 ################################################################################
 ## Hu and Hu's general covariate-adaptive randomization(CAR) ########
 ################################################################################
-HuHuCAR.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2), 
-                                pr = rep(0.5, 4), omega = NULL, p = 0.85) UseMethod("carandom")
+# HuHuCAR.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2), 
+#                                 pr = rep(0.5, 4), omega = NULL, p = 0.85) UseMethod("carandom")
 
 HuHuCAR.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2), 
                        pr = rep(0.5, 4), omega = NULL, p = 0.85){
@@ -80,9 +80,9 @@ HuHuCAR.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
 ################################################################################
 ## Pocock and Simon's procedure with two arms ########
 ################################################################################
-PocSimMIN.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2), 
-                                  pr = rep(0.5, 4), weight = NULL, 
-                                  p = 0.85) UseMethod("carandom")
+# PocSimMIN.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2), 
+#                                   pr = rep(0.5, 4), weight = NULL, 
+#                                   p = 0.85) UseMethod("carandom")
 
 PocSimMIN.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2), 
                          pr = rep(0.5, 4), weight = NULL, 
@@ -159,8 +159,8 @@ PocSimMIN.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
 ################################################################################
 ## Shao's randomization ########
 ################################################################################
-StrBCD.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2),
-                               pr = rep(0.5, 4), p = 0.85) UseMethod("carandom")
+# StrBCD.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2),
+#                                pr = rep(0.5, 4), p = 0.85) UseMethod("carandom")
 
 StrBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
                       pr = rep(0.5, 4), p = 0.85){
@@ -229,8 +229,8 @@ StrBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
 ################################################################################
 ## Stratified randomization (STR) with two arms ########
 ################################################################################
-StrPBR.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2),
-                               pr = rep(0.5, 4), bsize = 4) UseMethod("carandom")
+# StrPBR.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2),
+#                                pr = rep(0.5, 4), bsize = 4) UseMethod("carandom")
 
 StrPBR.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2), 
                       pr = rep(0.5, 4), bsize = 4){
@@ -299,8 +299,8 @@ StrPBR.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
 ################################################################################
 ## Atkinson's Optimum Biased Coin Design with two arms ########
 ################################################################################
-DoptBCD.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2),
-                                pr = rep(0.5, 4)) UseMethod("carandom")
+# DoptBCD.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2),
+#                                 pr = rep(0.5, 4)) UseMethod("carandom")
 
 DoptBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2), 
                        pr = rep(0.5, 4)){
@@ -432,8 +432,8 @@ DoptBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
 ################################################################################
 ## Covariate-adaptive Biased Coin Design with two arms ########
 ################################################################################
-AdjBCD.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2),
-                               pr = rep(0.5, 4), a = 2.0) UseMethod("carandom")
+# AdjBCD.sim.carandom = function(n = 1000, cov_num = 2, level_num = c(2, 2),
+#                                pr = rep(0.5, 4), a = 2.0) UseMethod("carandom")
 
 AdjBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2), 
                       pr = rep(0.5, 4), a = 2.0){

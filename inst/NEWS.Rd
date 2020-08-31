@@ -15,3 +15,15 @@
     \item A small modification was added to the function \code{getData}. 
   }
 }
+
+\section{version 1.2 (August 31th, 2020)}{
+  \itemize{
+     \item A our own defined class \code{plotrandtest} was added and applied to the function \code{rand.test}. 
+     \item The option \code{plot} was delected in \code{rand.test}. 
+     \item Character strings were directly used as arguments values for \code{method} and \code{test} of the testing functions and \code{getData}. 
+     \item We standardized the usual function to check if an object has from a specific class in the function \code{compRand}, using \code{is()}. 
+     \item We corrected the man pages of the corresponding randomization functions, such as \code{PocSimMIN}. 
+     \item The underlying S3 methods are not exported to users. 
+     \item The generation of names vector in \code{getData} was altered. 
+  }
+}

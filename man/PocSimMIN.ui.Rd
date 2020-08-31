@@ -1,6 +1,5 @@
 \name{PocSimMIN.ui}
 \alias{PocSimMIN.ui}
-\alias{PocSimMIN.ui.carseq}
 \title{
 Command-line User Interface Using Pocock and Simon's Procedure with Two-Arms Case
 }
@@ -8,7 +7,7 @@ Command-line User Interface Using Pocock and Simon's Procedure with Two-Arms Cas
 A call to the user-iterface function used to allocate patients to one of two treatments using Pocock and Simon's method proposed by Pocock S J, Simon R (1975) <Doi:10.2307/2529712>. 
 }
 \usage{
-\method{PocSimMIN.ui}{carseq}(path, folder = "PocSimMIN")
+PocSimMIN.ui(path, folder = "PocSimMIN")
 }
 \arguments{
   \item{path}{the path in which a folder used to storage variables will be created. }

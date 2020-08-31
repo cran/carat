@@ -1,12 +1,13 @@
 
-compRand.carcomp = function(...) UseMethod("carcomp")
+#compRand.carcomp = function(...) UseMethod("carcomp")
 
 compRand = function(...){
   Objects = list(...); 
-  clch = as.character(lapply(Objects, class)); 
-  if(length(which(clch != "careval")) >= 1){
-    stop("Inputs must be of class 'careval'!")
+  clch = as.numeric(lapply(Objects, methods::is, class2 = "careval")); 
+  if(0 %in% clch){
+    stop("Inputs must be of class 'careval'!"); 
   }
+  
   DataG = character(); 
   DataType = character(); 
   mechanism = character(); 
@@ -82,13 +83,13 @@ compRand = function(...){
   RR = list("Overall Imbalances" = C_O, 
             "Marginal Imbalances" = C_M, "Within-stratum Imbalances" = C_S);
   
-  df_abm = data.frame(t(AbM)); 
+  df_abm = data.frame(t(AbM), stringsAsFactors = TRUE); 
   Randomization = rep(mechanism, each = N); 
   label = rep(1 :leng, each = N); 
   df_abm$"Randomization" = Randomization; 
   df_abm$"label" = label; 
   
-  dfmm = data.frame("Randomization" = mechanism); 
+  dfmm = data.frame("Randomization" = mechanism, stringsAsFactors = TRUE); 
   for(i in 1 : leng){
     ind = which(df_abm$Randomization == mechanism[i]); 
     dfmm[i, 2] = mean(df_abm$overall[ind]); 
@@ -106,63 +107,8 @@ compRand = function(...){
   marginal = df_abm$marginal; 
   marginalmm = dfmm$marginalmm; 
   
-  p1 = ggplot2::ggplot(df_abm) + 
-    ggplot2::geom_boxplot(ggplot2::aes(x = Randomization, y = overall, fill = Randomization)) + 
-    ggplot2::scale_fill_brewer(palette="Pastel2") + 
-    ggplot2::xlab("") + 
-    ggplot2::ylab("Mean abs. overall imbalance") + 
-    ggplot2::geom_point(data = dfmm, ggplot2::aes(x = pos, y = overallmm), 
-                        size = 1, color = "red", shape = 15) + 
-    ggplot2::geom_line(data = dfmm, ggplot2::aes(x = pos, y = overallmm), 
-                       size = 1, linetype = "dotted", color = "red") + 
-    ggplot2::scale_x_discrete(limits = mechanism)
-  
-  p3 = ggplot2::ggplot(df_abm) + 
-    ggplot2::geom_boxplot(ggplot2::aes(x = Randomization, y = within.strt., fill = Randomization)) + 
-    ggplot2::scale_fill_brewer(palette="Pastel2") + 
-    ggplot2::xlab("") + 
-    ggplot2::ylab("Mean abs. within-strt. imbalance") + 
-    ggplot2::geom_point(data = dfmm, ggplot2::aes(x = pos, y = within.strt.mm), 
-                        size = 1, color = "red", shape = 15) + 
-    ggplot2::geom_line(data = dfmm, ggplot2::aes(x = pos, y = within.strt.mm), 
-                       size = 1, linetype = "dotted", color = "red") + 
-    ggplot2::scale_x_discrete(limits = mechanism) 
-  
-  p2 = ggplot2::ggplot(df_abm) + 
-    ggplot2::geom_boxplot(ggplot2::aes(x = Randomization, y = marginal, fill = Randomization)) + 
-    ggplot2::scale_fill_brewer(palette="Pastel2") +
-    ggplot2::xlab("") + 
-    ggplot2::ylab("Mean abs. within-cov-margin imbalance") + 
-    ggplot2::geom_point(data = dfmm, ggplot2::aes(x = pos, y = marginalmm), 
-                        size = 1, color = "red", shape = 15) + 
-    ggplot2::geom_line(data = dfmm, ggplot2::aes(x = pos, y = marginalmm), 
-                       size = 1, linetype = "dotted", color = "red") + 
-    ggplot2::scale_x_discrete(limits = mechanism) 
-  
-  position = "bottom";
-  ncol = 3; nrow = 1; 
-  
-  plots = list(p1, p2, p3); 
-  g = ggplot2::ggplotGrob(plots[[1]] + 
-                            ggplot2::theme(legend.position = position))$grobs; 
-  legend = g[[which(sapply(g, function(x) x$name) == "guide-box")]]; 
-  lheight = sum(legend$height); 
-  lwidth = sum(legend$width); 
-  gl = lapply(plots, function(x) x + 
-                ggplot2::theme(legend.position="none")); 
-  gl = c(gl, ncol = ncol, nrow = nrow); 
-  
-  combined = gridExtra::arrangeGrob(do.call(gridExtra::arrangeGrob, gl),
-                                    legend,
-                                    ncol = 1,
-                                    heights = grid::unit.c(grid::unit(1, "npc") - lheight, lheight));
-  
-  
-  grid::grid.newpage()
-  grid::grid.draw(combined)
-  
-  # return gtable invisibly
-  invisible(combined)
+  RR$dfmm = dfmm; 
+  RR$df_abm = df_abm; 
   
   RR$mechanism = mechanism; 
   RR$N = n;

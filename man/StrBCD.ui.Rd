@@ -1,6 +1,5 @@
 \name{StrBCD.ui}
 \alias{StrBCD.ui}
-\alias{StrBCD.ui.carseq}
 \title{
 Command-line User Interface Using Shao's Method 
 }
@@ -8,7 +7,7 @@ Command-line User Interface Using Shao's Method
 A call to the user-interface function used to allocate patients to one of two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <Doi:10.1093/biomet/asq014>. 
 }
 \usage{
-\method{StrBCD.ui}{carseq}(path, folder = "StrBCD")
+StrBCD.ui(path, folder = "StrBCD")
 }
 \arguments{
   \item{path}{the path in which a folder used to storage variables will be created. }

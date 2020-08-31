@@ -1,9 +1,8 @@
 \name{PocSimMIN}
 \alias{PocSimMIN}
-\alias{PocSimMIN.carandom}
 \title{Pocock and Simon's Method in the Two-Arms Case}
 \usage{
-\method{PocSimMIN}{carandom}(data, weight = NULL, p = 0.85)
+PocSimMIN(data, weight = NULL, p = 0.85)
 }
 \description{
 Allocates patients to one of two treatments using Pocock and Simon's method proposed by Pocock S J, Simon R (1975) <Doi:10.2307/2529712>. 

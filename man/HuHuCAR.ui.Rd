@@ -1,6 +1,5 @@
 \name{HuHuCAR.ui}
 \alias{HuHuCAR.ui}
-\alias{HuHuCAR.ui.carseq}
 \title{
 Command-line User Interface Using Hu and Hu's General Covariate-adaptive Randomization
 }
@@ -8,7 +7,7 @@ Command-line User Interface Using Hu and Hu's General Covariate-adaptive Randomi
 A call to the user-iterface function used to allocate patients to one of two treatments using Hu and Hu's general covariate-adaptive randomization method as proposed by Hu Y, Hu F (2012) <Doi:10.1214/12-AOS983>. 
 }
 \usage{
-\method{HuHuCAR.ui}{carseq}(path, folder = "HuHuCAR")
+HuHuCAR.ui(path, folder = "HuHuCAR")
 }
 \arguments{
   \item{path}{the path in which a folder used to store variables will be created. }

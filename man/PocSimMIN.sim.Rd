@@ -1,6 +1,5 @@
 \name{PocSimMIN.sim}
 \alias{PocSimMIN.sim}
-\alias{PocSimMIN.sim.carandom}
 \title{
 Pocock and Simon's Method in the Two-Arms Case with Covariate Data Generating Mechanism
 }
@@ -8,7 +7,7 @@ Pocock and Simon's Method in the Two-Arms Case with Covariate Data Generating Me
 Allocates patients to one of two treatments using Pocock and Simon's method proposed by Pocock S J, Simon R (1975) <Doi:10.2307/2529712>, by simulating covariate profiles under the assumption of independence between covariates and levels within each covariate.
 }
 \usage{
-\method{PocSimMIN.sim}{carandom}(n = 1000, cov_num = 2, level_num = c(2, 2), 
+PocSimMIN.sim(n = 1000, cov_num = 2, level_num = c(2, 2), 
               pr = rep(0.5, 4), weight = NULL, p = 0.85)
 }
 \arguments{

@@ -3,7 +3,9 @@
 \title{Evaluation of Tests and Randomization Procedures through Power}
 \usage{
   evalPower(n, cov_num, level_num, pr, type, beta, di = seq(0,0.5,0.1), sigma = 1,
-            Iternum, sl = 0.05, method = HuHuCAR, test, plot = "TRUE", ...)
+          Iternum, sl = 0.05, method = c("HuHuCAR", "PocSimMIN", "StrBCD", "StrPBR", 
+                                         "DoptBCD","AdjBCD"), 
+          test = c("rand.test", "boot.test", "corr.test"), plot = TRUE, ...)
 }
 \description{
   Returns powers and a plot of the chosen test and method under different treatment effects.
@@ -19,8 +21,8 @@
   \item{sigma}{the error variance for the linear model. The default value is 1. It is only used when \code{type} is \code{linear}.}
   \item{Iternum}{an integer. It is the number of iterations required for calculating the average power.}
   \item{sl}{the significance level. If the p-value returned by the test is less than \code{sl}, we will reject the null hypothesis. The default value is \code{0.05}.}
-  \item{method}{the randomization method to be used in allocating patients. The default randomization \code{HuHuCAR} uses Hu and Hu's general covariate-adaptive randomization; the alternatives are \code{PocSimMIN}, \code{StrBCD}, \code{StrPBR}, \code{DoptBCD}, and \code{AdjBCD}.}
-  \item{test}{the test used to verify hypothesis. Optional input: \code{rand.test}, \code{boot.test} or \code{corr.test}, which are the randomization test, the bootstrap t-test and the corrected t-test respectively.}
+  \item{method}{a character string specifying the alternative randomization methods to be used in allocating patients, must be one of \code{"HuHuCAR"} (default), \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"DoptBCD"} or \code{"AdjBCD"}.}
+  \item{test}{a charater string specifying the alternative test used to verify hypothesis, must one of \code{"rand.test"}, \code{"boot.test"} or \code{"corr.test"}, which are the randomization test, the bootstrap t-test and the corrected t-test respectively.}
   \item{plot}{bool. It shows whether to plot or not. Optional input: \code{TRUE} or \code{FALSE}.}
   \item{...}{arguments to be passed to methods. These depend on the \code{method} and \code{test} used and the following arguments are accepted:
   \describe{
@@ -58,6 +60,6 @@ Reps = 10#<<for demonstration,it is suggested to be 200
 #Evaluation of Power
 library("ggplot2")
 Strtp=evalPower(n,cov_num,level_num,pr,type,beta,di,sigma,
-                Iternum,sl,HuHuCAR,rand.test,TRUE,omega,p,Reps, nthreads = 1)
+                Iternum,sl,"HuHuCAR","rand.test",TRUE,omega,p,Reps, nthreads = 1)
 Strtp
 }

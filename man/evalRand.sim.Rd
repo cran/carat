@@ -1,6 +1,5 @@
 \name{evalRand.sim}
 \alias{evalRand.sim}
-\alias{evalRand.sim.careval}
 \title{
 Evaluation Randomization Procedures with Covariate Data Generating Mechanism
 }
@@ -8,7 +7,7 @@ Evaluation Randomization Procedures with Covariate Data Generating Mechanism
 Evaluates randomization procedure based on several different quantities of imbalances by simulating patients' covariate profiles under the assumption of independence between covariates and levels within each covariate.
 }
 \usage{
-\method{evalRand.sim}{careval}(n = 1000, N = 500, Replace = FALSE, cov_num = 2, 
+evalRand.sim(n = 1000, N = 500, Replace = FALSE, cov_num = 2, 
              level_num = c(2, 2), pr = rep(0.5, 4), method = "HuHuCAR", ...)
 }
 \arguments{

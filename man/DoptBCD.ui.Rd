@@ -1,6 +1,5 @@
 \name{DoptBCD.ui}
 \alias{DoptBCD.ui}
-\alias{DoptBCD.ui.carseq}
 \title{
 Command-line User Interface Using Atkinson's \eqn{D_A}-optimal Biased Coin Design
 }
@@ -8,7 +7,7 @@ Command-line User Interface Using Atkinson's \eqn{D_A}-optimal Biased Coin Desig
 A call to the user-interface function used to allocate patients to one of two treatments using Atkinson's \eqn{D_A}-optimal biased coin design proposed by Atkinson A C (1982) <Doi:10.2307/2335853>. 
 }
 \usage{
-\method{DoptBCD.ui}{carseq}(path, folder = "DoptBCD")
+DoptBCD.ui(path, folder = "DoptBCD")
 }
 \arguments{
   \item{path}{the path in which a folder used to store variables will be created. }
