@@ -3,7 +3,7 @@
 ##############################################################################################################
 ## paths generation
 ##############################################################################################################
-pathout = function(path, folder = "HHCAR", method = "HuHuCAR"){
+pathout = function(path, folder = "HuHCAR", method = "HuHuCAR"){
   pathvec = character(); 
   pathf = paste(path, folder, sep = "/");
   pathff = paste(pathf, "CovLevInd", sep = "/"); 

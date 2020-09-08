@@ -25,5 +25,13 @@
      \item We corrected the man pages of the corresponding randomization functions, such as \code{PocSimMIN}. 
      \item The underlying S3 methods are not exported to users. 
      \item The generation of names vector in \code{getData} was altered. 
+     \item All of the modifications are consistent to the \pkg{OpenMP}-supported version \pkg{caratOMP} in \issue{carat}. 
   }
 }
+
+\section{version 1.3 (September 8th, 2020)}{
+ \itemize{
+    \item  A small modification was added to the function \code{evalRand}. 
+ }
+}
+

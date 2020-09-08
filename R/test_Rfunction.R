@@ -130,7 +130,8 @@ compPower<-function(powers,diffs,testname){
   }
   if(!is.list(powers)){
     stop("Input of powers must be a list!")
-  }else if(length(powers) != length(testname)){
+   
+   }else if(length(powers) != length(testname)){
     stop("The length of powers must match that of testname!")
   }else{
     k = length(powers)

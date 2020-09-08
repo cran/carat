@@ -295,7 +295,10 @@ evalRand = function(data, method = "HuHuCAR", N = 500, ...){
   rownames(A) = BBCDname(n, "pat");
   R$Assig = A;
   
-  strt_num = Rprod(level_num); 
+  PS = RES[4, 1][[1]]; 
+  R$`All strata` = PS;
+  
+  strt_num = ncol(PS); 
   R$strt_num = strt_num; 
   
   Imbmat = RES[2, 1][[1]]; 
@@ -304,9 +307,6 @@ evalRand = function(data, method = "HuHuCAR", N = 500, ...){
   R$Imb = Imbmat; 
   
   R$SNUM = RES[3, 1][[1]]; 
-  
-  PS = RES[4, 1][[1]]; 
-  R$`All strata` = PS;
   
   R$method = method; 
   R$cov_num = cov_num; 
