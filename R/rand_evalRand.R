@@ -297,7 +297,6 @@ evalRand = function(data, method = "HuHuCAR", N = 500, ...){
   
   PS = RES[4, 1][[1]]; 
   R$`All strata` = PS;
-  
   strt_num = ncol(PS); 
   R$strt_num = strt_num; 
   

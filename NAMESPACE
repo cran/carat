@@ -1,7 +1,5 @@
-# Refer to all C/Fortran routines by their name prefixed by C_
 useDynLib(carat, .registration=TRUE)
 #exportPattern("^[[:alpha:]]+")
-#exportPattern("^[^_]+")
 
 ## from randomization
 # Real Data
@@ -42,9 +40,3 @@ S3method(print, careval)
 S3method(print, carcomp)
 S3method(print, carseq)
 S3method(print, plotrandtest)
-
-#export(print.carandom, print.careval, print.carcomp, print.carseq)
-
-
-
-

@@ -419,23 +419,23 @@ arma::field<arma::mat> Analyze(arma::mat DIF, int row, int strt_num, int bsize,
   R.col(3) = m; 
   
   /*arma::vec SM(bsize);
-  arma::mat Dstr = AD.rows(1, strt_num);
-  
-  arma::mat ypar = remd(SNUM, bsize);
-  arma::uvec isum(bsize); isum(0) = bsize; 
-  isum.subvec(1, bsize - 1) = arma::linspace<arma::uvec>(1, bsize - 1, bsize - 1);
-  for(int s = 0; s < bsize; s++){
-    arma::uvec ind = arma::find(ypar == s);
-    arma::vec Dstr_c = Dstr(ind);
-    if(Dstr_c.n_elem == 0){
-      SM(isum(s) - 1) = arma::datum::nan;
-    }
-    else{
-      double M = mean(Dstr_c);
-      SM(isum(s) - 1) = M; 
-    }
-  }
-  */
+   arma::mat Dstr = AD.rows(1, strt_num);
+   
+   arma::mat ypar = remd(SNUM, bsize);
+   arma::uvec isum(bsize); isum(0) = bsize; 
+   isum.subvec(1, bsize - 1) = arma::linspace<arma::uvec>(1, bsize - 1, bsize - 1);
+   for(int s = 0; s < bsize; s++){
+   arma::uvec ind = arma::find(ypar == s);
+   arma::vec Dstr_c = Dstr(ind);
+   if(Dstr_c.n_elem == 0){
+   SM(isum(s) - 1) = arma::datum::nan;
+   }
+   else{
+   double M = mean(Dstr_c);
+   SM(isum(s) - 1) = M; 
+   }
+   }
+   */
   
   Res(0, 0) = ASSIG; 
   Res(1, 0) = R; 
@@ -763,62 +763,62 @@ arma::field<arma::mat> AdBCDOne(arma::mat D, arma::mat PStr, arma::vec cov_profi
  *         input.
  */
 /*// [[Rcpp::export]]
-arma::field<arma::mat> BBCDOne(arma::vec D, arma::mat PStr, arma::vec cov_profile, 
-                               unsigned int cov_num, arma::vec level_num, 
-                               arma::mat numJ, arma::vec strp, int J = 2, int No = 0){
-  arma::field<arma::mat> Res(5, 1); 
-  
-  arma::vec brid(2); brid(0) = 1; brid(1) = -1;
-  int strt_num = PStr.n_cols; 
-  if(No == 0){
-    arma::vec Ja(2); Ja.fill(1.0 / 2);
-    int TJ = arma::randi<arma::vec>(J, arma::distr_param(1, J))(0); 
-    int T = arma::randi<arma::vec>(2, arma::distr_param(1, 2))(0);
-    int r1 = ReturnCol(PStr, cov_profile)(0);
-    strp(r1 - 1) = strp(r1 - 1) + 1; 
-    D(0) = D(0) + brid(T - 1); D(r1) = D(r1) + brid(T - 1);
-    int tJ = 0;
-    for(unsigned int v = 0; v < cov_num; v++){
-      int sJ = strt_num + tJ + cov_profile(v); 
-      D(sJ) = D(sJ) + brid(T - 1); 
-      tJ += level_num(v);
-    }
-    numJ(T - 1, TJ - 1) = numJ(T - 1, TJ - 1) + 1;
-    Res(0, 0) = strp; 
-    Res(1, 0) = No + 1; 
-    Res(2, 0) = numJ; 
-    Res(3, 0) = T; 
-    Res(4, 0) = D; 
-    return Res;
-  }
-  else{
-    int TJ = arma::randi<arma::vec>(J, arma::distr_param(1, J))(0);
-    arma::vec Jb(2); 
-    Jb(0) = 0; Jb(1) = 1 - numJ(0, TJ - 1) * J / No;
-    double p1 = Jb.max();
-    arma::vec Jpro(2); Jpro(0) = p1; Jpro(1) = 1 - p1;
-    arma::vec T_One = arma::randu<arma::vec>(1); 
-    int T = sum(T_One > p1);
-    numJ(T, TJ - 1) = numJ(T, TJ - 1) + 1;
-    
-    int r = ReturnCol(PStr, cov_profile)(0);
-    strp(r - 1) = strp(r - 1) + 1; 
-    D(0) = D(0) + brid(T); D(r) = D(r) + brid(T);
-    int tJ = 0;
-    for(unsigned int v = 0; v < cov_num; v++){
-      int sJ = strt_num + tJ + cov_profile(v); 
-      D(sJ) = D(sJ) + brid(T); 
-      tJ += level_num(v);
-    }
-    Res(0, 0) = strp; 
-    Res(1, 0) = No + 1; 
-    Res(2, 0) = numJ; 
-    Res(3, 0) = T + 1; 
-    Res(4, 0) = D; 
-    return Res;
-  }
-}
-*/
+ arma::field<arma::mat> BBCDOne(arma::vec D, arma::mat PStr, arma::vec cov_profile, 
+ unsigned int cov_num, arma::vec level_num, 
+ arma::mat numJ, arma::vec strp, int J = 2, int No = 0){
+ arma::field<arma::mat> Res(5, 1); 
+ 
+ arma::vec brid(2); brid(0) = 1; brid(1) = -1;
+ int strt_num = PStr.n_cols; 
+ if(No == 0){
+ arma::vec Ja(2); Ja.fill(1.0 / 2);
+ int TJ = arma::randi<arma::vec>(J, arma::distr_param(1, J))(0); 
+ int T = arma::randi<arma::vec>(2, arma::distr_param(1, 2))(0);
+ int r1 = ReturnCol(PStr, cov_profile)(0);
+ strp(r1 - 1) = strp(r1 - 1) + 1; 
+ D(0) = D(0) + brid(T - 1); D(r1) = D(r1) + brid(T - 1);
+ int tJ = 0;
+ for(unsigned int v = 0; v < cov_num; v++){
+ int sJ = strt_num + tJ + cov_profile(v); 
+ D(sJ) = D(sJ) + brid(T - 1); 
+ tJ += level_num(v);
+ }
+ numJ(T - 1, TJ - 1) = numJ(T - 1, TJ - 1) + 1;
+ Res(0, 0) = strp; 
+ Res(1, 0) = No + 1; 
+ Res(2, 0) = numJ; 
+ Res(3, 0) = T; 
+ Res(4, 0) = D; 
+ return Res;
+ }
+ else{
+ int TJ = arma::randi<arma::vec>(J, arma::distr_param(1, J))(0);
+ arma::vec Jb(2); 
+ Jb(0) = 0; Jb(1) = 1 - numJ(0, TJ - 1) * J / No;
+ double p1 = Jb.max();
+ arma::vec Jpro(2); Jpro(0) = p1; Jpro(1) = 1 - p1;
+ arma::vec T_One = arma::randu<arma::vec>(1); 
+ int T = sum(T_One > p1);
+ numJ(T, TJ - 1) = numJ(T, TJ - 1) + 1;
+ 
+ int r = ReturnCol(PStr, cov_profile)(0);
+ strp(r - 1) = strp(r - 1) + 1; 
+ D(0) = D(0) + brid(T); D(r) = D(r) + brid(T);
+ int tJ = 0;
+ for(unsigned int v = 0; v < cov_num; v++){
+ int sJ = strt_num + tJ + cov_profile(v); 
+ D(sJ) = D(sJ) + brid(T); 
+ tJ += level_num(v);
+ }
+ Res(0, 0) = strp; 
+ Res(1, 0) = No + 1; 
+ Res(2, 0) = numJ; 
+ Res(3, 0) = T + 1; 
+ Res(4, 0) = D; 
+ return Res;
+ }
+ }
+ */
 /*
  * GROUP-3: inner functions
  */
@@ -1826,7 +1826,6 @@ arma::vec HuHuCAR_BT(DataFrame data,double B,arma::vec omega,double p){
   return r;
 }
 
-
 //[[Rcpp::export]]
 double HuHuCAR_RT_In(arma::mat data,double Reps,arma::vec omega,double p){
   unsigned int cov_num = data.n_rows-2;
@@ -1892,70 +1891,75 @@ double HuHuCAR_BT_In(arma::mat data,double B,arma::vec omega,double p){
 }
 
 // [[Rcpp::export]]
-arma::vec HuHuCAR_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,std::string type,
-                           arma::vec beta,arma::vec mu1,arma::vec mu2,double sigma,double Iternum,
-                           double sl,arma::vec omega,double p,double Reps,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+arma::vec HuHuCAR_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,std::string type,arma::vec beta,arma::vec mu1,arma::vec mu2,double sigma,double Iternum,double sl,arma::vec omega,double p,double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = HuHuCAR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,omega,p);
+          double pval = HuHuCAR_RT_In(data,Reps,omega,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = HuHuCAR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,omega,p);
-        double pval = HuHuCAR_RT_In(data,Reps,omega,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
 // [[Rcpp::export]]
-arma::vec HuHuCAR_BT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,
-                           std::string type,arma::vec beta,arma::vec mu1,arma::vec mu2,
-                           double sigma,double Iternum,double sl,arma::vec omega,double p,
-                           double B,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+arma::vec HuHuCAR_BT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,std::string type,arma::vec beta,arma::vec mu1,arma::vec mu2,double sigma,double Iternum,double sl,arma::vec omega,double p,double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = HuHuCAR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,omega,p);
+          double pval = HuHuCAR_BT_In(data,B,omega,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = HuHuCAR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,omega,p);
-        double pval = HuHuCAR_BT_In(data,B,omega,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier   
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -2145,6 +2149,7 @@ Rcpp::List PocSimMIN_RT(DataFrame data,double Reps, double conf, arma::vec weigh
   }
 }
 
+
 //[[Rcpp::export]]
 arma::vec PocSimMIN_BT(DataFrame data,double B,arma::vec weight,double p){
   Rcpp::List resu = Preprocess_out(data);
@@ -2303,36 +2308,38 @@ double PocSimMIN_BT_In(arma::mat data,double B,arma::vec weight,double p){
 }
 
 // [[Rcpp::export]]
-arma::vec PocSimMIN_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,std::string type,
-                             arma::vec beta,arma::vec mu1,arma::vec mu2,double sigma,double Iternum,
-                             double sl,arma::vec weight,double p,double Reps,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+arma::vec PocSimMIN_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma::vec pr,std::string type,arma::vec beta,arma::vec mu1,arma::vec mu2,double sigma,double Iternum,double sl,arma::vec weight,double p,double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = PocSimMIN_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,weight,p);
+          double pval = PocSimMIN_RT_In(data,Reps,weight,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = PocSimMIN_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,weight,p);
-        double pval = PocSimMIN_RT_In(data,Reps,weight,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -2341,34 +2348,38 @@ arma::vec PocSimMIN_BT_power(int n,unsigned int cov_num,arma::vec level_num,
                              arma::vec pr,std::string type,arma::vec beta,
                              arma::vec mu1,arma::vec mu2,double sigma,
                              double Iternum,double sl,arma::vec weight,
-                             double p,double B,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                             double p,double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = PocSimMIN_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,weight,p);
+          double pval = PocSimMIN_BT_In(data,B,weight,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = PocSimMIN_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,weight,p);
-        double pval = PocSimMIN_BT_In(data,B,weight,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -2520,6 +2531,7 @@ Rcpp::List StrBCD_RT(DataFrame data,double Reps,double conf,double p = 0.85){
   }
 }
 
+
 //[[Rcpp::export]]
 arma::vec StrBCD_BT(DataFrame data,double B,double p){
   Rcpp::List resu = Preprocess_out(data);
@@ -2628,34 +2640,38 @@ arma::vec StrBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           double p,double Iternum,double sl,
-                          double Reps,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = StrBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,p);
+          double pval = StrBCD_RT_In(data,Reps,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = StrBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,p);
-        double pval = StrBCD_RT_In(data,Reps,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::ones<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -2664,34 +2680,38 @@ arma::vec StrBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,
                           double sigma,double Iternum,double sl,
-                          double p,double B,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double p,double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = StrBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,p);
+          double pval = StrBCD_BT_In(data,B,p);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = StrBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,p);
-        double pval = StrBCD_BT_In(data,B,p);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -2913,6 +2933,7 @@ Rcpp::List DoptBCD_RT(DataFrame data,double Reps,double conf){
   }
 }
 
+
 //[[Rcpp::export]]
 arma::vec DoptBCD_BT(DataFrame data,double B){
   Rcpp::List resu = Preprocess_out(data);
@@ -3006,34 +3027,38 @@ double DoptBCD_BT_In(arma::mat data,double B){
 arma::vec DoptBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
                            arma::vec pr,std::string type,arma::vec beta,
                            arma::vec mu1,arma::vec mu2,double sigma,
-                           double Iternum,double sl,double Reps,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                           double Iternum,double sl,double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = DoptBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma);
+          double pval = DoptBCD_RT_In(data,Reps);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = DoptBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma);
-        double pval = DoptBCD_RT_In(data,Reps);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -3042,34 +3067,37 @@ arma::vec DoptBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
 arma::vec DoptBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
                            arma::vec pr,std::string type,arma::vec beta,
                            arma::vec mu1,arma::vec mu2,double sigma,
-                           double Iternum,double sl,double B,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                           double Iternum,double sl,double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = DoptBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma);
+          double pval = DoptBCD_BT_In(data,B);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = DoptBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma);
-        double pval = DoptBCD_BT_In(data,B);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -3418,34 +3446,38 @@ arma::vec AdjBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           double Iternum,double sl,double a,
-                          double Reps,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = AdjBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,a);
+          double pval = AdjBCD_RT_In(data,Reps,a);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)  
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = AdjBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,a);
-        double pval = AdjBCD_RT_In(data,Reps,a);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -3453,34 +3485,38 @@ arma::vec AdjBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
 arma::vec AdjBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,double sigma,
-                          double Iternum,double sl,double a,double B,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double Iternum,double sl,double a,double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = AdjBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,a);
+          double pval = AdjBCD_RT_In(data,B,a);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)   
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = AdjBCD_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,a);
-        double pval = AdjBCD_RT_In(data,B,a);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -3684,6 +3720,7 @@ Rcpp::List StrPBR_RT(DataFrame data,double Reps,double conf,int bsize){
   }
 }
 
+
 //[[Rcpp::export]]
 arma::vec StrPBR_BT(DataFrame data,double B,int bsize){
   Rcpp::List resu = Preprocess_out(data);
@@ -3836,34 +3873,38 @@ arma::vec StrPBR_RT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           double Iternum,double sl,int bsize,
-                          double Reps,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double Reps,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = StrPBR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,bsize);
+          double pval = StrPBR_RT_In(data,Reps,bsize);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)   
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = StrPBR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,bsize);
-        double pval = StrPBR_RT_In(data,Reps,bsize);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -3872,34 +3913,38 @@ arma::vec StrPBR_BT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           double Iternum,double sl,int bsize,
-                          double B,int nthreads = 2){
-  if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
-    Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
-    return result;
+                          double B,int nthreads){
+  bool check = nthreads_check(nthreads);
+  if(check == TRUE){
+    if(mu1.n_elem != mu2.n_elem){
+      arma::vec result(2*mu1.n_elem);
+      Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
+      return result;
+    }
+    else{
+      unsigned int N = Iternum;
+      unsigned int N1 = mu1.n_elem; 
+      unsigned int i,j;
+      arma::mat p_all(N1,N,arma::fill::zeros);
+      
+      for(i = 0; i < N1; i++){
+        for(j = 0; j < N; j++){
+          arma::mat data = StrPBR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,bsize);
+          double pval = StrPBR_BT_In(data,B,bsize);
+          p_all(i,j) = pval<sl/2?1:0;
+        }
+      }
+      
+      arma::vec result(2*N1);
+      for(i = 0; i < N1; i++){
+        result(i) = sum(p_all.row(i))/Iternum;
+        result(i+N1) = stddev(p_all.row(i));
+      }
+      return result;
+    }
   }
   else{
-    unsigned int N = Iternum;
-    unsigned int N1 = mu1.n_elem; 
-    unsigned int i,j;
-    arma::mat p_all(N1,N,arma::fill::zeros);
-    
-#pragma omp parallel for shared(n,N,mu1,mu2) private(i,j) num_threads(nthreads) schedule(static,N1*N/nthreads) collapse(2)    
-    for(i = 0; i < N1; i++){
-      for(j = 0; j < N; j++){
-        arma::mat data = StrPBR_getData(n,cov_num,level_num,pr,type,beta,mu1(i),mu2(i),sigma,bsize);
-        double pval = StrPBR_BT_In(data,B,bsize);
-        p_all(i,j) = pval<sl/2?1:0;
-      }
-    }
-#pragma omp barrier
-    
-    arma::vec result(2*N1);
-    for(i = 0; i < N1; i++){
-      result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
-    }
-    return result;
+    return arma::zeros<arma::vec>(2*mu1.n_elem);
   }
 }
 
@@ -3956,7 +4001,7 @@ arma::vec HuHuCAR_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                            arma::vec mu1, arma::vec mu2,double sigma,
                            double Iternum,double sl,arma::vec omega,double p){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -3987,7 +4032,7 @@ arma::vec PocSimMIN_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                              arma::vec mu1, arma::vec mu2,double sigma,
                              double Iternum,double sl,arma::vec weight,double p){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -4018,7 +4063,7 @@ arma::vec StrBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec mu1, arma::vec mu2,double sigma,
                           double Iternum,double sl,double p){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -4049,7 +4094,7 @@ arma::vec DoptBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                            arma::vec mu1, arma::vec mu2,double sigma,
                            int Iternum,double sl){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -4080,7 +4125,7 @@ arma::vec AdjBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           int Iternum,double sl,double a){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -4111,7 +4156,7 @@ arma::vec StrPBR_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           double Iternum,double sl,int bsize){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -4134,9 +4179,4 @@ arma::vec StrPBR_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     }
     return result;
   }
-}
-
-//[[Rcpp::export]]
-double test(double alpha){
-  return(arma::normcdf(alpha));
 }

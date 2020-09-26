@@ -24,6 +24,9 @@ It returns an object of \code{\link{class}} \code{"carseq"}.
 
 The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{assignment}, \code{covariate}, \code{cov_num}, \code{cov_profile} and others extract various useful features of the value returned by \code{StrBCD.ui}. 
 }
+\references{
+Shao J, Yu X, Zhong B. \emph{A theory for testing hypotheses under covariate-adaptive randomization}[J]. Biometrika, 2010, 97(2): 347-360. 
+}
 \note{
 This function provides a command-line interface and users should follow the prompts to enter data including covariates as well as levels for each covariate, biased probability \code{p} and the covariate profile of the new patient. 
 }

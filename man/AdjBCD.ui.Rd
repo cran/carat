@@ -23,6 +23,9 @@ AdjBCD.ui(path, folder = "AdjBCD")
 \note{
 This function provides a command-line user interface, and users should follow the prompts to enter data including covariates as well as levels for each covariate, design parameter \code{a} and the covariate profile of the new patient.
 }
+\references{
+Baldi Antognini A, Zagoraiou M. \emph{The covariate-adaptive biased coin design for balancing clinical trials in the presence of prognostic factors}[J]. Biometrika, 2011, 98(3): 519-535.
+}
 \value{
 It returns an object of \code{\link{class}} \code{"carseq"}.
 

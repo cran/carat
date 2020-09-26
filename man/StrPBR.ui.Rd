@@ -22,6 +22,9 @@ See \code{\link{StrPBR}}.
 \note{
 This function provides a command-line interface and users should follow the prompts to enter data including covariates as well as levels for each covariate, block size \code{bsize} and the covariate profile of the new patient.
 }
+\references{
+Zelen M. \emph{The randomization and stratification of patients to clinical trials}[J]. Journal of chronic diseases, 1974, 27(7): 365-375.
+}
 \value{
 It returns an object of \code{\link{class}} \code{"carseq"}.
 

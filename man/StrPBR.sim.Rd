@@ -20,6 +20,9 @@ StrPBR.sim(n = 1000, cov_num = 2, level_num = c(2, 2),
 \details{
 See \code{\link{StrPBR}}.
 }
+\references{
+Zelen M. \emph{The randomization and stratification of patients to clinical trials}[J]. Journal of chronic diseases, 1974, 27(7): 365-375.
+}
 \value{
 See \code{\link{StrPBR}}.
 }

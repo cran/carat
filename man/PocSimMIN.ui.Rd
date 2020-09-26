@@ -22,6 +22,9 @@ This function provides a command-line interface and users should follow the prom
 \seealso{
   See \code{\link{PocSimMIN}} for allocating a given completely collected data; See \code{\link{PocSimMIN.sim}} for allocating patients with covariate data generating mechanism.
 }
+\references{
+Pocock S J, Simon R. \emph{Sequential treatment assignment with balancing for prognostic factors in the controlled clinical trial}[J]. Biometrics, 1975: 103-115.
+}
 \value{
 It returns an object of \code{\link{class}} \code{"carseq"}.
 

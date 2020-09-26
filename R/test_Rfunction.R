@@ -4,7 +4,7 @@ getData<-function(n,cov_num,level_num,pr,type,beta,mu1,mu2,sigma = 1,method = "H
               "DoptBCD" = DoptBCD_getData, "AdjBCD" = AdjBCD_getData)
   data = FUN(n,cov_num,level_num,pr,type,beta,mu1,mu2,sigma,...)
   names = c(paste0("covariate",1:cov_num),"assignment","outcome")
-  datafr = data.frame(data,row.names = names, stringsAsFactors = TRUE)
+  datafr = data.frame(data, row.names = names, stringsAsFactors = TRUE)
   return(datafr)
 }
 
@@ -97,10 +97,10 @@ evalPower<-function(n,cov_num,level_num,pr,type,beta,di = seq(0,0.5,0.1),sigma =
     else{stop("Please enter a valid test! rand.test, boot.test or corr.test")}
     result = FUN(n,cov_num,level_num,pr,type,beta,di,mu2,sigma,Iternum,sl,...)
     if(plot == TRUE){
-      diff = di
+      diff = di 
       value = result[1:length(di)]
-      sd = round(result[(length(di)+1):(2*length(di))])
-      tgg=data.frame(diff, value, sd, digits = 2, stringsAsFactors = TRUE)
+      sd = round(result[(length(di)+1):(2*length(di))], digits = 2)
+      tgg=data.frame(diff, value, sd, stringsAsFactors = TRUE)
       pic = ggplot2::ggplot(tgg, ggplot2::aes(x=di, y=value)) + ggplot2::geom_line() + geom_point(size=4, shape=20)+
         xlab("Difference in means")+ylab("Power")
       b = Sys.time()
@@ -110,8 +110,8 @@ evalPower<-function(n,cov_num,level_num,pr,type,beta,di = seq(0,0.5,0.1),sigma =
     else{
       diff = di
       value = result[1:length(di)]
-      sd = round(result[(length(di)+1):(2*length(di))])
-      tgg=data.frame(diff, value, sd, digits = 2, stringsAsFactors = TRUE)
+      sd = round(result[(length(di)+1):(2*length(di))], digits = 2)
+      tgg=data.frame(diff, value, sd, stringsAsFactors = TRUE)
       b = Sys.time()
       result = list(Powers = tgg,Time = paste("Execute time:",round(as.numeric(b-a), digits = 2),units(b-a)))
       return(result)
@@ -130,8 +130,7 @@ compPower<-function(powers,diffs,testname){
   }
   if(!is.list(powers)){
     stop("Input of powers must be a list!")
-   
-   }else if(length(powers) != length(testname)){
+  }else if(length(powers) != length(testname)){
     stop("The length of powers must match that of testname!")
   }else{
     k = length(powers)

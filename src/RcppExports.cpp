@@ -1258,17 +1258,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// test
-double test(double alpha);
-RcppExport SEXP _carat_test(SEXP alphaSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
-    rcpp_result_gen = Rcpp::wrap(test(alpha));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_carat_Rprod", (DL_FUNC) &_carat_Rprod, 1},
@@ -1345,7 +1334,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_carat_DoptBCD_CT_power", (DL_FUNC) &_carat_DoptBCD_CT_power, 11},
     {"_carat_AdjBCD_CT_power", (DL_FUNC) &_carat_AdjBCD_CT_power, 12},
     {"_carat_StrPBR_CT_power", (DL_FUNC) &_carat_StrPBR_CT_power, 12},
-    {"_carat_test", (DL_FUNC) &_carat_test, 1},
     {NULL, NULL, 0}
 };
 
