@@ -9,6 +9,8 @@
 
 HuHuCAR = function(data, omega = NULL, p = 0.85){
   
+  R = NULL;
+  
   pdoub = as.double(p); 
   if(is.na(pdoub)){
     stop("p must be a positive number!");
@@ -25,9 +27,21 @@ HuHuCAR = function(data, omega = NULL, p = 0.85){
     datap = data;
   }
   
-  rdata = Preprocess(datap); 
-  data_proc = rdata$data; 
-  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  dataverify = unique(apply(data[1, ], 2, class)); 
+  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
+    data_proc = t(data); 
+    cov_num = nrow(data_proc); 
+    level_num = vector(); 
+    for(i in 1 : cov_num){
+      level_num[i] = length(unique(data_proc[i, ])); 
+    }
+    R$datanumeric = TRUE; 
+  }else{
+    rdata = Preprocess(datap); 
+    data_proc = rdata$data; 
+    cov_num = rdata$cov_num; level_num = rdata$level_num; 
+    R$datanumeric = FALSE; 
+  }
   
   if(length(omega) != (2 + cov_num) && !is.null(omega)){
     stop("Length of omega must equal to ncols(data) + 2 !")
@@ -38,8 +52,6 @@ HuHuCAR = function(data, omega = NULL, p = 0.85){
   }
   
   RES = C_RHPS(data_proc, cov_num, level_num, omega, p); 
-  
-  R = NULL;
   
   covn = colnames(data);
   R$covariates = covn;
@@ -54,19 +66,19 @@ HuHuCAR = function(data, omega = NULL, p = 0.85){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   R$Cov_Assig = CA;
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]];
-  colnames(AS) = BBCDname(strt_num, "strt.");
-  rownames(AS) = BBCDname(cov_num, "covariate"); 
+  colnames(AS) = BBCDname(strt_num, "level");
+  rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]]; 
-  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", AS); 
   R$Diff = t(Df);
   
   R$method = "Hu and Hu's General CAR";
@@ -89,6 +101,8 @@ HuHuCAR = function(data, omega = NULL, p = 0.85){
 
 PocSimMIN = function(data, weight = NULL, p = 0.85){
   
+  R = NULL;
+  
   pdoub = as.double(p); 
   if(is.na(pdoub)){
     stop("p must be a positive number!");
@@ -105,9 +119,21 @@ PocSimMIN = function(data, weight = NULL, p = 0.85){
     datap = data;
   }
   
-  rdata = Preprocess(datap); 
-  data_proc = rdata$data; 
-  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  dataverify = unique(apply(data[1, ], 2, class)); 
+  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
+    data_proc = t(data); 
+    cov_num = nrow(data_proc); 
+    level_num = vector(); 
+    for(i in 1 : cov_num){
+      level_num[i] = length(unique(data_proc[i, ])); 
+    }
+    R$datanumeric = TRUE; 
+  }else{
+    rdata = Preprocess(datap); 
+    data_proc = rdata$data; 
+    cov_num = rdata$cov_num; level_num = rdata$level_num; 
+    R$datanumeric = FALSE; 
+  }
   
   if(length(weight) != cov_num && !is.null(weight)){
     stop("Length of weight must equal to ncols(data)!")
@@ -118,8 +144,6 @@ PocSimMIN = function(data, weight = NULL, p = 0.85){
   }
   
   RES = C_RHPS(data_proc, cov_num, level_num, omega, p); 
-  
-  R = NULL;
   
   covn = colnames(data);
   R$covariates = covn;
@@ -135,19 +159,19 @@ PocSimMIN = function(data, weight = NULL, p = 0.85){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   R$Cov_Assig = CA;
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]];
-  colnames(AS) = BBCDname(strt_num, "strt.");
-  rownames(AS) = BBCDname(cov_num, "covariate"); 
+  colnames(AS) = BBCDname(strt_num, "level");
+  rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]]; 
-  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", AS); 
   R$Diff = t(Df);
   
   R$method = "Pocock and Simon's Procedure with Two Arms";
@@ -170,6 +194,8 @@ PocSimMIN = function(data, weight = NULL, p = 0.85){
 
 StrBCD = function(data, p = 0.85){
   
+  R = NULL;
+  
   pdoub = as.double(p); 
   if(is.na(pdoub)){
     stop("p must be a positive number!");
@@ -186,14 +212,25 @@ StrBCD = function(data, p = 0.85){
     datap = data;
   }
   
-  rdata = Preprocess(datap); 
-  data_proc = rdata$data; 
-  cov_num = rdata$cov_num; level_num = rdata$level_num; 
-  omega = c(0, 1, rep(0, times = cov_num)); 
+  dataverify = unique(apply(data[1, ], 2, class)); 
+  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
+    data_proc = t(data); 
+    cov_num = nrow(data_proc); 
+    level_num = vector(); 
+    for(i in 1 : cov_num){
+      level_num[i] = length(unique(data_proc[i, ])); 
+    }
+    R$datanumeric = TRUE; 
+  }else{
+    rdata = Preprocess(datap); 
+    data_proc = rdata$data; 
+    cov_num = rdata$cov_num; level_num = rdata$level_num; 
+    R$datanumeric = FALSE; 
+  }
   
+  omega = c(0, 1, rep(0, times = cov_num)); 
   RES = C_RHPS(data_proc, cov_num, level_num, omega, p); 
   
-  R = NULL;
   
   covn = colnames(data);
   R$covariates = covn;
@@ -208,19 +245,19 @@ StrBCD = function(data, p = 0.85){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   R$Cov_Assig = CA; 
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]];
-  colnames(AS) = BBCDname(strt_num, "strt.");
-  rownames(AS) = BBCDname(cov_num, "covariate"); 
+  colnames(AS) = BBCDname(strt_num, "level");
+  rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]]; 
-  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", AS); 
   R$Diff = t(Df);
   
   R$method = "Shao's Procedure";
@@ -242,6 +279,8 @@ StrBCD = function(data, p = 0.85){
 
 StrPBR = function(data, bsize = 4){
   
+  R = NULL;
+  
   bsint = as.integer(bsize);
   if(is.na(bsint)){
     stop("bsize must be a positive integer!")
@@ -258,13 +297,23 @@ StrPBR = function(data, bsize = 4){
     datap = data; 
   }
   
-  rdata = Preprocess(datap); 
-  data_proc = rdata$data; 
-  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  dataverify = unique(apply(data[1, ], 2, class)); 
+  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
+    data_proc = t(data); 
+    cov_num = nrow(data_proc); 
+    level_num = vector(); 
+    for(i in 1 : cov_num){
+      level_num[i] = length(unique(data_proc[i, ])); 
+    }
+    R$datanumeric = TRUE; 
+  }else{
+    rdata = Preprocess(datap); 
+    data_proc = rdata$data; 
+    cov_num = rdata$cov_num; level_num = rdata$level_num; 
+    R$datanumeric = FALSE; 
+  }
   
   RES = C_RStrR(data_proc, cov_num, level_num, bsize, tr_num = 2); 
-  
-  R = NULL;
   
   covn = colnames(data);
   R$covariates = covn;
@@ -279,19 +328,19 @@ StrPBR = function(data, bsize = 4){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   R$Cov_Assig = CA; 
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]];
-  colnames(AS) = BBCDname(strt_num, "strt.");
-  rownames(AS) = BBCDname(cov_num, "covariate"); 
+  colnames(AS) = BBCDname(strt_num, "level");
+  rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]]; 
-  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  rownames(Df) = nameString(cov_num, level_num, strt_num, "All",AS); 
   R$Diff = t(Df);
   
   R$method = "Stratified Permuted Block Randomization";
@@ -319,6 +368,8 @@ StrPBR = function(data, bsize = 4){
 
 DoptBCD = function(data){
   
+  R = NULL;
+  
   if(length(data[is.na(data)]) == 0){
     datap = data;
   }else{
@@ -326,13 +377,23 @@ DoptBCD = function(data){
     datap = data; 
   }
   
-  rdata = Preprocess(datap); 
-  data_proc = rdata$data; 
-  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  dataverify = unique(apply(data[1, ], 2, class)); 
+  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
+    data_proc = t(data); 
+    cov_num = nrow(data_proc); 
+    level_num = vector(); 
+    for(i in 1 : cov_num){
+      level_num[i] = length(unique(data_proc[i, ])); 
+    }
+    R$datanumeric = TRUE; 
+  }else{
+    rdata = Preprocess(datap); 
+    data_proc = rdata$data; 
+    cov_num = rdata$cov_num; level_num = rdata$level_num; 
+    R$datanumeric = FALSE; 
+  }
   
   RES = C_RAtkinBCD(data_proc, cov_num, level_num); 
-  
-  R = NULL;
   
   covn = colnames(data);
   R$covariates = covn;
@@ -347,19 +408,19 @@ DoptBCD = function(data){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   R$Cov_Assig = CA; 
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]];
-  colnames(AS) = BBCDname(strt_num, "strt.");
-  rownames(AS) = BBCDname(cov_num, "covariate"); 
+  colnames(AS) = BBCDname(strt_num, "level");
+  rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]]; 
-  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", AS); 
   R$Diff = t(Df);
   
   R$method = "Atkinson's Optimum Biased Coin Design";
@@ -381,6 +442,8 @@ DoptBCD = function(data){
 
 AdjBCD = function(data, a = 2.0){
   
+  R = NULL;
+  
   adoub = as.double(a); 
   if(is.na(adoub)){
     stop("a must be a positive number!");
@@ -397,13 +460,23 @@ AdjBCD = function(data, a = 2.0){
     datap = data; 
   }
   
-  rdata = Preprocess(datap); 
-  data_proc = rdata$data; 
-  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  dataverify = unique(apply(data[1, ], 2, class)); 
+  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
+    data_proc = t(data); 
+    cov_num = nrow(data_proc); 
+    level_num = vector(); 
+    for(i in 1 : cov_num){
+      level_num[i] = length(unique(data_proc[i, ])); 
+    }
+    R$datanumeric = TRUE; 
+  }else{
+    rdata = Preprocess(datap); 
+    data_proc = rdata$data; 
+    cov_num = rdata$cov_num; level_num = rdata$level_num; 
+    R$datanumeric = FALSE; 
+  }
   
   RES = C_RAdjustBCD(data_proc, cov_num, level_num, adoub); 
-  
-  R = NULL;
   
   covn = colnames(data);
   R$covariates = covn;
@@ -418,19 +491,19 @@ AdjBCD = function(data, a = 2.0){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   R$Cov_Assig = CA;
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]]; 
-  colnames(AS) = BBCDname(strt_num, "strt.");
-  rownames(AS) = BBCDname(cov_num, "covariate"); 
+  colnames(AS) = BBCDname(strt_num, "level");
+  rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]]; 
-  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", AS); 
   R$Diff = t(Df);
   
   R$method = "Covariate-adaptive Biased Coin Design";

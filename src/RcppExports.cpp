@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // Rprod
 double Rprod(arma::vec v);
 RcppExport SEXP _carat_Rprod(SEXP vSEXP) {
@@ -55,8 +60,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // nameString
-Rcpp::StringVector nameString(unsigned int cov_num, arma::vec level_num, int strt_num, Rcpp::String type, Rcpp::String typeData);
-RcppExport SEXP _carat_nameString(SEXP cov_numSEXP, SEXP level_numSEXP, SEXP strt_numSEXP, SEXP typeSEXP, SEXP typeDataSEXP) {
+Rcpp::StringVector nameString(unsigned int cov_num, arma::vec level_num, int strt_num, Rcpp::String type, arma::mat AllStrata);
+RcppExport SEXP _carat_nameString(SEXP cov_numSEXP, SEXP level_numSEXP, SEXP strt_numSEXP, SEXP typeSEXP, SEXP AllStrataSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -64,8 +69,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type level_num(level_numSEXP);
     Rcpp::traits::input_parameter< int >::type strt_num(strt_numSEXP);
     Rcpp::traits::input_parameter< Rcpp::String >::type type(typeSEXP);
-    Rcpp::traits::input_parameter< Rcpp::String >::type typeData(typeDataSEXP);
-    rcpp_result_gen = Rcpp::wrap(nameString(cov_num, level_num, strt_num, type, typeData));
+    Rcpp::traits::input_parameter< arma::mat >::type AllStrata(AllStrataSEXP);
+    rcpp_result_gen = Rcpp::wrap(nameString(cov_num, level_num, strt_num, type, AllStrata));
     return rcpp_result_gen;
 END_RCPP
 }

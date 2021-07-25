@@ -9,6 +9,10 @@ getData<-function(n,cov_num,level_num,pr,type,beta,mu1,mu2,sigma = 1,method = "H
 }
 
 rand.test<-function(data,Reps = 200,method = c("HuHuCAR","PocSimMIN","StrBCD","StrPBR","DoptBCD","AdjBCD"),conf = 0.95, binwidth = 30,...){
+  dataverify = unique(apply(data[, 1, drop = FALSE], 2, class)); 
+  if(!(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric")){
+    stop("Please numeric data!")
+  }
   dname = deparse(substitute(data))
   method = match.arg(method)
   FUN = switch(method,"HuHuCAR" = HuHuCAR_RT, "PocSimMIN" = PocSimMIN_RT,
@@ -26,6 +30,10 @@ rand.test<-function(data,Reps = 200,method = c("HuHuCAR","PocSimMIN","StrBCD","S
 }
 
 boot.test<-function(data,B=200,method = c("HuHuCAR","PocSimMIN","StrBCD","StrPBR","DoptBCD","AdjBCD"),conf = 0.95,...){
+  dataverify = unique(apply(data[, 1, drop = FALSE], 2, class)); 
+  if(!(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric")){
+    stop("Please numeric data!")
+  }
   dname = deparse(substitute(data))
   method = match.arg(method)
   FUN = switch(method,"HuHuCAR" = HuHuCAR_BT, "PocSimMIN" = PocSimMIN_BT,
@@ -49,6 +57,10 @@ boot.test<-function(data,B=200,method = c("HuHuCAR","PocSimMIN","StrBCD","StrPBR
 }
 
 corr.test<-function(data,conf = 0.95){
+  dataverify = unique(apply(data[, 1, drop = FALSE], 2, class)); 
+  if(!(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric")){
+    stop("Please numeric data!")
+  }
   dname = deparse(substitute(data))
   result = CTT(data)
   testmethod<-"Corrected t-test"

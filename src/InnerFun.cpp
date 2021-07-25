@@ -253,62 +253,45 @@ arma::uvec ReturnCol(arma::mat M, arma::vec V){
   return Ind + 1;
 }
 
-// [[Rcpp::export]]
+//[[Rcpp::export]]
 Rcpp::StringVector nameString(unsigned int cov_num, arma::vec level_num, int strt_num,
-                              Rcpp::String type, Rcpp::String typeData){
+                              Rcpp::String type, arma::mat AllStrata){
   
   Rcpp::Environment base("package:base");
   Rcpp::Function paste = base["paste"];
   
   int suml = sum(level_num);
   
-  if(type == "All" && typeData == "Simulation"){
-    int prods = arma::prod(level_num);
+  if(type == "All"){
+    int strt_num = AllStrata.n_cols;
     
-    Rcpp::StringVector name(1 + prods + suml);
+    Rcpp::StringVector name(1 + strt_num + suml);
     name(0) = "overall";
     
-    for(int i = 0; i < prods; i++){
-      SEXP namL_temp = paste("level", i + 1, Rcpp::Named("sep", ""));
+    for(int i = 0; i < strt_num; i++){
+      SEXP namL_temp = paste("level", i + 1, 
+                             "(", paste(AllStrata.col(i), Rcpp::Named("collapse", ",")), ")", 
+                             Rcpp::Named("sep", ""));
       Rcpp::String namL = Rcpp::as<Rcpp::String>(namL_temp);
       name(i + 1) = namL;
     }
     int sums = 0;
     for(unsigned int l = 0; l < cov_num; l++){
       for(int j = 0; j < level_num(l); j++){
-        SEXP namM_temp = paste("margin", l + 1, j + 1, Rcpp::Named("sep", ""));
+        SEXP namM_temp = paste("margin", "(", paste(l + 1, j + 1, Rcpp::Named("sep", ";")), ")", Rcpp::Named("sep", ""));
         Rcpp::String namM = Rcpp::as<Rcpp::String>(namM_temp);
-        name(1 + prods + sums + j) = namM;
+        name(1 + strt_num + sums + j) = namM;
       }
       sums += level_num(l);
     }
     return name;
   }
-  if(typeData == "Simulation" && type == "Margin"){
+  if(type == "Margin"){
     Rcpp::StringVector name(cov_num);
     for(unsigned int i = 0; i < cov_num; i++){
       SEXP nameM_temp = paste("margin", i + 1, Rcpp::Named("sep", ""));
       Rcpp::String nameM = Rcpp::as<Rcpp::String>(nameM_temp);
       name(i) = nameM;
-    }
-    return name;
-  }
-  if(typeData == "Real" && type == "All"){
-    Rcpp::StringVector name(1 + strt_num + suml);
-    name(0) = "overall";
-    for(int i = 0; i < strt_num; i++){
-      SEXP nameRL_temp = paste("level", i + 1, Rcpp::Named("sep", ""));
-      Rcpp::String nameRL = Rcpp::as<Rcpp::String>(nameRL_temp);
-      name(i + 1) = nameRL;
-    }
-    int sumsR = 0;
-    for(unsigned int l = 0; l < cov_num; l++){
-      for(int j = 0; j < level_num(l); j++){
-        SEXP nameRM_temp = paste("margin", l + 1, j + 1, Rcpp::Named("sep", ""));
-        Rcpp::String nameRM = Rcpp::as<Rcpp::String>(nameRM_temp);
-        name(1 + strt_num + sumsR + j) = nameRM;
-      }
-      sumsR += level_num(l);
     }
     return name;
   }
@@ -342,15 +325,24 @@ Rcpp::List Preprocess(Rcpp::DataFrame data){
   }
   else{
     Rcpp::Environment base("package:base");
-    Rcpp::Function numeric = base["as.numeric"];
-    Rcpp::Function sapply = base["sapply"];
+    //Rcpp::Function Asnumeric = base["as.numeric"];
+    //Rcpp::Function Asfactor = base["as.factor"];
+    Rcpp::Function Runique = base["unique"];
+    Rcpp::Function Rmatch = base["match"];
     
-    SEXP data_temp = sapply(data, numeric);
-    Rcpp::NumericMatrix dat = Rcpp::as<Rcpp::NumericMatrix>(data_temp);
-    arma::mat data_new = Rcpp::as<arma::mat>(dat);
+    int nc = data.ncol(), nr = data.nrow(); 
+    arma::mat data_new(nr, nc); 
     
-    unsigned int cov_num = data_new.n_cols;
-    arma::vec level_num = max(trans(data_new), 1);
+    unsigned int cov_num = nc;
+    arma::vec level_num(cov_num); 
+    
+    for(int i = 0; i < nc; i++){
+      SEXP levnamei = Runique(data[i]);
+      Rcpp::CharacterVector levname = Rcpp::as<Rcpp::CharacterVector>(levnamei);
+      SEXP datai = Rmatch(data[i], levnamei); 
+      data_new.col(i) = Rcpp::as<arma::vec>(datai); 
+      level_num(i) = levname.length(); 
+    }
     
     return Rcpp::List::create(Rcpp::Named("data") = trans(data_new),
                               Rcpp::Named("cov_num") = cov_num,
@@ -358,29 +350,28 @@ Rcpp::List Preprocess(Rcpp::DataFrame data){
   }
 }
 
-List Preprocess_out(DataFrame data){
-  DataFrame comp;
-  if(typeid(data).name() != typeid(comp).name()){
-    Rcpp::Rcout<<"Error in data: data type must be dataframe!"<<std::endl;
-    return List::create(Named("data") = data);
+arma::mat TransDataFrame(Rcpp::DataFrame data){
+  int nc = data.ncol(), nr = data.nrow(); 
+  arma::mat datat(nc, nr); 
+  for(int i = 0; i < nr; i++){
+    arma::vec rowi(nc); 
+    for(int j = 0; j < nc; j++){
+      Rcpp::NumericVector colj = data[j]; 
+      rowi(j) = colj(i); 
+    }
+    datat.col(i) = rowi; 
   }
-  else{
-    Environment base("package:base");
-    Function numeric = base["as.numeric"];
-    Function sapply = base["sapply"];
-    Function matrix = base["apply"];
-    
-    SEXP data_temp = sapply(data, numeric);
-    NumericMatrix dat = as<NumericMatrix>(data_temp);
-    arma::mat data_new = as<arma::mat>(dat);
-    
-    int cov_num = data_new.n_rows-2;
-    arma::vec level_num = max(data_new.rows(0,cov_num-1), 1);
-    
-    return List::create(Named("data") = data_new,
-                        Named("cov_num") = cov_num,
-                        Named("level_num") = level_num);
-  }
+  return datat; 
+}
+
+Rcpp::List Preprocess_out(Rcpp::DataFrame data){
+  arma::mat datat = TransDataFrame(data); 
+  int nc = datat.n_cols, cov_num = nc - 2; 
+  arma::mat data_new = datat.cols(0, cov_num - 1); 
+  arma::vec level_num = max(trans(data_new), 1);
+  return Rcpp::List::create(Rcpp::Named("data") = trans(datat), 
+                            Rcpp::Named("cov_num") = cov_num, 
+                            Rcpp::Named("level_num") = level_num); 
 }
 
 arma::mat remd(arma::mat A, int bsize){

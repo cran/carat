@@ -42,3 +42,9 @@
     \item The modification is consistent with the \pkg{OpenMP}-supported version in \issue{carat}. 
   }
 }
+
+\section{version 1.5 (July 25th, 2021)}{
+\itemize{
+    \item Some modifications were added to Remark Index, including modifications in functions of \code{nameString}, \code{PreProcess}, \code{print.carandom}, and \code{print.careval}. 
+  }
+}

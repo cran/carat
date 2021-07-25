@@ -32,7 +32,7 @@ An object of class \code{"careval"} is a list containing at least the following 
 
 \item{N}{the number of patients.}
 \item{Assig}{a \code{n*N} matrix containing assignments for each patient for N iterations. }
-\item{Imb}{a matrix containing maximum, 95\%-quantile, median, and mean of absolute imbalances at overall, each within-stratum and each marginal levels.}
+\item{Imb}{a matrix containing maximum, 95\%-quantile, median, and mean of absolute imbalances at overall, each within-stratum and each marginal levels. Note that, we refer users to the \eqn{i}th column of \code{`All strata`} for details of \code{level} \eqn{i, i=1,\ldots,}\code{str_num}. }
 \item{SNUM}{a matrix with \code{N} colunms containing number of patients at overall, each marginal and each within-stratum levels for each iteration.}
 \item{Data Type}{the data type. \code{Real} or \code{Simulated}. }
 }

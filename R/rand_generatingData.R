@@ -54,12 +54,12 @@ HuHuCAR.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));
-  colnames(AS) = c(BBCDname(ncol(AS), "strt."));
+  colnames(AS) = c(BBCDname(ncol(AS), "level"));
   
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]];
-  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", "Real");
+  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", AS);
   
   R$Diff = t(Df);
   
@@ -133,12 +133,12 @@ PocSimMIN.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));
-  colnames(AS) = c(BBCDname(ncol(AS), "strt."));
+  colnames(AS) = c(BBCDname(ncol(AS), "level"));
   
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]];
-  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", "Real");
+  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", AS);
   
   R$Diff = t(Df);
   
@@ -204,12 +204,12 @@ StrBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));
-  colnames(AS) = c(BBCDname(ncol(AS), "strt."));
+  colnames(AS) = c(BBCDname(ncol(AS), "level"));
   
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]];
-  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", "Real");
+  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", AS);
   
   R$Diff = t(Df);
   
@@ -268,12 +268,12 @@ StrPBR.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));
-  colnames(AS) = c(BBCDname(ncol(AS), "strt."));
+  colnames(AS) = c(BBCDname(ncol(AS), "level"));
   
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]];
-  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", "Real");
+  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", AS);
   
   R$Diff = t(Df);
   
@@ -335,12 +335,12 @@ DoptBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));
-  colnames(AS) = c(BBCDname(ncol(AS), "strt."));
+  colnames(AS) = c(BBCDname(ncol(AS), "level"));
   
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]];
-  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", "Real"); 
+  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", AS); 
   
   R$Diff = t(Df);
   
@@ -398,12 +398,12 @@ DoptBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
 #   
 #   AS = RES[4, 1][[1]]; 
 #   rownames(AS) = c(BBCDname(cov_num, "covariate"));
-#   colnames(AS) = c(BBCDname(ncol(AS), "strt."));
+#   colnames(AS) = c(BBCDname(ncol(AS), "level"));
 #   
 #   R$'All strata' = AS;
 #   
 #   Df = RES[7, 1][[1]];
-#   rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", "Real"); 
+#   rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", AS); 
 #   R$Diff = t(Df);
 #   
 #   R$method = "Biased Coin Design with a Bayesian Bias with Two Arms";
@@ -475,12 +475,12 @@ AdjBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   
   AS = RES[2, 1][[1]]; 
   rownames(AS) = c(BBCDname(cov_num, "covariate"));
-  colnames(AS) = c(BBCDname(ncol(AS), "strt."));
+  colnames(AS) = c(BBCDname(ncol(AS), "level"));
   
   R$'All strata' = AS;
   
   Df = RES[4, 1][[1]];
-  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", "Real");
+  rownames(Df) = nameString(cov_num, level_num, ncol(AS), "All", AS);
   R$Diff = t(Df);
   
   R$method = "Covariate-adaptive Biased Coin Design with Two Arms";

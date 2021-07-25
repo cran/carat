@@ -65,8 +65,8 @@ print.carandom = function(x, digits = getOption("digits"), prefix = "\t", ...)
     }
     names(out) = c("overall", "marginal", BBCDname(x$bsize, "pnum = "))
   }else{
-    out[1 : 3] = c(om, sm, mm)
-    names(out) = c("overall", "within-strt.", "marginal")
+    out[1 : 3] = c(om, mm, sm)
+    names(out) = c("overall", "marginal", "within-strt.")
   }
   cat("absolute mean at overall, marginal and within-strt. levels:\n")
   print(out, digits = 4)
@@ -74,10 +74,21 @@ print.carandom = function(x, digits = getOption("digits"), prefix = "\t", ...)
   if(x$`Data Type` == "Real"){
     list = apply(x$data, 2, unique); 
     cat("Remark-Index: \n"); 
-    for(i in 1 : x$cov_num){
-      cat(i, "--", x$covariates[i], "\n"); 
-      cat("\t", paste(as.numeric(as.factor(list[[i]])), list[[i]], sep = "--"), 
-          sep = "  ", "\n"); 
+    if(!x$datanumeric){
+      for(i in 1 : x$cov_num){
+        cat(i, "--", x$covariates[i], "\n"); 
+        cat("\t", paste(1 : x$level_num[i], as.factor(list[[i]]), 
+                        sep = " <--> "), 
+            sep = "  ", "\n"); 
+      }
+    }else{
+      for(i in 1 : x$cov_num){
+        cat(i, "--", x$covariates[i], "\n"); 
+        cat("\t", paste(1 : x$level_num[i], 
+                        as.factor(list[[i]])[match(1 : x$level_num[i], as.numeric(as.factor(list[[i]])))], 
+                        sep = " <--> "), 
+            sep = "  ", "\n"); 
+      }
     }
   }
   cat("\n");

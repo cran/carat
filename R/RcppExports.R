@@ -17,8 +17,8 @@ Prob_S <- function(cov_num, level_num, pr) {
     .Call(`_carat_Prob_S`, cov_num, level_num, pr)
 }
 
-nameString <- function(cov_num, level_num, strt_num, type, typeData) {
-    .Call(`_carat_nameString`, cov_num, level_num, strt_num, type, typeData)
+nameString <- function(cov_num, level_num, strt_num, type, AllStrata) {
+    .Call(`_carat_nameString`, cov_num, level_num, strt_num, type, AllStrata)
 }
 
 BBCDname <- function(n, S = "pat") {

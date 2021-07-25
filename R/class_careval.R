@@ -23,7 +23,11 @@ print.careval = function(x, digits = getOption("digits"), prefix = "\t", ...){
   cat(strwrap(meth, prefix = prefix), sep = "\n")
   cat("\n")
   cat("call:\n", 
-      paste("evalRand.sim(", "method = ", x$method, ")\n", sep = ""));
+      if(x$`Data Type` == "Real"){
+        paste("evalRand(", "method = ", x$method, ")\n", sep = "")
+      }else{
+        paste("evalRand.sim(", "method = ", x$method, ")\n", sep = "")
+      });
   cat("\n"); 
   cat("group", "=",  LETTERS[1 : 2], "\n", sep = " ")
   cat("N", "=", x$N, "\n", sep = " ")
@@ -56,11 +60,7 @@ print.careval = function(x, digits = getOption("digits"), prefix = "\t", ...){
   cat("\n")
   cat("evaluation by imbalances: \n"); 
   cat("absolute overall imbalances:\n")
-  print(x$Imb[1, ], digits = 3);
-  cat("\n"); 
-  if(x$strt_num <= 3){s = x$strt_num}else{s = 3}
-  cat("absolute within-strt. imbalances for the first", s, "strata:", "\n", sep = " "); 
-  print(x$Imb[2 : (s + 1), ], digits = 3)
+  print(x$Imb[1, ], digits = 3); 
   cat("\n"); 
   cat("absolute marginal imbalances for", x$cov_num, "margins:", "\n", sep = " "); 
   v = vector(); 
@@ -70,6 +70,31 @@ print.careval = function(x, digits = getOption("digits"), prefix = "\t", ...){
     r = r + x$level_num[i]; 
   }
   print(x$Imb[v, ], digits = 3); 
+  cat("\n"); 
+  if(x$strt_num <= 3){s = x$strt_num}else{s = 3}
+  cat("absolute within-strt. imbalances for the first", s, "strata:", "\n", sep = " "); 
+  print(x$Imb[2 : (s + 1), ], digits = 3)
+  
   cat("\n")
+  if(x$`Data Type` == "Real"){
+    list = apply(x$data, 2, unique); 
+    cat("Remark-Index: \n"); 
+    if(!x$datanumeric){
+      for(i in 1 : x$cov_num){
+        cat(i, "--", x$covariates[i], "\n"); 
+        cat("\t", paste(1 : x$level_num[i], as.factor(list[[i]]), 
+                        sep = " <--> "), 
+            sep = "  ", "\n"); 
+      }
+    }else{
+      for(i in 1 : x$cov_num){
+        cat(i, "--", x$covariates[i], "\n"); 
+        cat("\t", paste(1 : x$level_num[i], 
+                        as.factor(list[[i]])[match(1 : x$level_num[i], as.numeric(as.factor(list[[i]])))], 
+                        sep = " <--> "), 
+            sep = "  ", "\n"); 
+      }
+    }
+  }
   invisible(x)
 }
