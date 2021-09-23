@@ -4,7 +4,7 @@
 Command-line User Interface Using Covariate-adjusted Biased Coin Design
 }
 \description{
-A call to the user-interface function for allocation of patients to one of two treatments, using covariate-adjusted biased coin design, as proposed by Baldi Antognini A, Zagoraiou M (2011) <Doi:10.1093/biomet/asr021>. 
+A call to the user-interface function for allocation of patients to one of two treatments, using covariate-adjusted biased coin design, as proposed by Baldi Antognini A, Zagoraiou M (2011) <doi:10.1093/biomet/asr021>. 
 }
 \usage{
 AdjBCD.ui(path, folder = "AdjBCD")

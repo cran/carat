@@ -4,14 +4,14 @@
 Command-line User Interface Using Atkinson's \eqn{D_A}-optimal Biased Coin Design
 }
 \description{
-A call to the user-interface function used to allocate patients to one of two treatments using Atkinson's \eqn{D_A}-optimal biased coin design proposed by Atkinson A C (1982) <Doi:10.2307/2335853>. 
+A call to the user-interface function used to allocate patients to one of two treatments using Atkinson's \eqn{D_A}-optimal biased coin design proposed by Atkinson A C (1982) <doi:10.2307/2335853>. 
 }
 \usage{
 DoptBCD.ui(path, folder = "DoptBCD")
 }
 \arguments{
   \item{path}{the path in which a folder used to store variables will be created. }
-  \item{folder}{name of the folder. If it is the default, a folder named \code{"DoptBCD"} will be created.}
+  \item{folder}{name of the folder. If default, a folder named \code{"DoptBCD"} will be created.}
 }
 \details{
 See \code{\link{DoptBCD}}.

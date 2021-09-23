@@ -5,12 +5,12 @@
 PocSimMIN(data, weight = NULL, p = 0.85)
 }
 \description{
-Allocates patients to one of two treatments using Pocock and Simon's method proposed by Pocock S J, Simon R (1975) <Doi:10.2307/2529712>. 
+Allocates patients to one of two treatments using Pocock and Simon's method proposed by Pocock S J, Simon R (1975) <doi:10.2307/2529712>. 
 }
 \arguments{
-  \item{data}{a dataframe or matrix. A row of the dataframe contains the covariate profile of a patient.}
-  \item{weight}{the vector of weights for maginal imbalances. It is required that at least one element is larger than 0. If \code{weight = NULL} (default), the marginal imbalances are equally weighted as \code{1/cov_num} for each margin.}
-  \item{p}{the probability of assigning one patient to treatment 1. \code{p} should be larger than \code{1/2} to obtain balance. The default is \code{0.85}.}
+  \item{data}{a data frame. A row of the dataframe corresponds to the covariate profile of a patient.}
+  \item{weight}{a vector of weights for within-covariate-margin imbalances. It is required that at least one element is larger than 0. If \code{weight = NULL} (default), the within-covariate-margin imbalances are weighted with an equal proportion, \code{1/cov_num}, for each covariate-margin.}
+  \item{p}{the biased coin probability. \code{p} should be larger than \code{1/2} and less than \code{1}. The default is \code{0.85}.}
 }
 \details{
     Consider \eqn{I} covariates and \eqn{m_i} levels for the \eqn{i}th covariate. \eqn{T_j} is the assignment of the \eqn{j}th patient and \eqn{Z_j = (k_1,\dots,k_I)} indicates the covariate profile of this patient. For convenience, \eqn{(k_1,\dots,k_I)} and \eqn{ (i;k_i)} denote the stratum and margin respectively. \eqn{D_n(.)} is the difference between the numbers of assigned patients in treatment \eqn{1} and treatment \eqn{2} at the corresponding level after \eqn{n} patinets being assigned.The Pocock and Simon's procedure in the two-arms case is then as follows:

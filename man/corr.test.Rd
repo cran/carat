@@ -8,8 +8,8 @@
    Performs corrected t-test on treatment effects. This test follows the idea of Ma et al. (2015) <doi:10.1080/01621459.2014.922469>.
 }
 \arguments{
-\item{data}{a dataframe. It consists of patients' profiles, treatment assignments and outputs. See \code{\link{getData}}.}
-\item{conf}{confidence level of the interval. The default is 0.95.}
+\item{data}{a data frame. It consists of patients' profiles, treatment assignments and outputs. See \code{\link{getData}}.}
+\item{conf}{confidence level of the interval. The default is \code{0.95}.}
 }
 \details{
   When the working model is the true underlying linear model, and the chosen covariate-adaptive design achieves that the overall imbalance and marginal imbalances for all covariates are bounded in probability, we can derive the asymptotic distribution under the null distribution, where the treatment effect of each group is the same. Subsequently, we can replace the variance estimator in a simple two sample t-test with an adjusted variance estimator. Details can be found in Ma et al.(2015). 

@@ -5,10 +5,10 @@
 StrPBR(data, bsize = 4)
 }
 \description{
-Allocates patients to one of two treatments using stratified permuted block randomization proposed by Zelen M (1974) <Doi: 10.1016/0021-9681(74)90015-0>. 
+Allocates patients to one of two treatments using stratified permuted block randomization proposed by Zelen M (1974) <doi:10.1016/0021-9681(74)90015-0>. 
 }
 \arguments{
-  \item{data}{a dataframe. A row of the dataframe contains the covariate profile of a patient.}
+  \item{data}{a data frame. A row of the dataframe corresponds to the covariate profile of a patient.}
   \item{bsize}{the block size for stratified randomization. It is required to be a multiple of 2. The default is \code{4}.}
 }
 \details{

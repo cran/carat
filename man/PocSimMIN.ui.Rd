@@ -4,7 +4,7 @@
 Command-line User Interface Using Pocock and Simon's Procedure with Two-Arms Case
 }
 \description{
-A call to the user-iterface function used to allocate patients to one of two treatments using Pocock and Simon's method proposed by Pocock S J, Simon R (1975) <Doi:10.2307/2529712>. 
+A call to the user-iterface function used to allocate patients to one of two treatments using Pocock and Simon's method proposed by Pocock S J, Simon R (1975) <doi:10.2307/2529712>. 
 }
 \usage{
 PocSimMIN.ui(path, folder = "PocSimMIN")

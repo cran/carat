@@ -5,10 +5,10 @@
 DoptBCD(data)
 }
 \description{
-Allocates patients to one of two treatments based on the \eqn{D_A}-optimal biased coin design with in the presence of the prognostic factors proposed by Atkinson A C (1982) <Doi:10.2307/2335853>.
+Allocates patients to one of two treatments based on the \eqn{D_A}-optimal biased coin design with in the presence of the prognostic factors proposed by Atkinson A C (1982) <doi:10.2307/2335853>.
 }
 \arguments{
-  \item{data}{a dataframe. A row of the dataframe contains the covariate profile of a patient.}
+  \item{data}{a data frame. A row of the dataframe corresponds to the covariate profile of a patient.}
 }
 \details{
 To minimize the loss associated with an experiment involving \eqn{n} patients, Atkinson's optimal applied \eqn{D_A}-optimality to the method, in which the probability of assigning the \eqn{(n+1)}th patient to treatment 1 in the presence of prognostic factors is

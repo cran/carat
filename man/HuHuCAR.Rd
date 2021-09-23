@@ -5,12 +5,12 @@
 HuHuCAR(data, omega = NULL, p = 0.85)
 }
 \description{
-Allocates patients to one of two treatments using Hu and Hu's general covariate-adaptive randomization proposed by Hu Y, Hu F (2012) <Doi:10.1214/12-AOS983>. 
+Allocates patients to one of two treatments using Hu and Hu's general covariate-adaptive randomization proposed by Hu Y, Hu F (2012) <doi:10.1214/12-AOS983>. 
 }
 \arguments{
-  \item{data}{a dataframe or matrix. A row of the dataframe contains the covariate profile of some patient.}
-  \item{omega}{the vector of weights at the overall, within-stratum, and maginal levels. It is required that at least one element is larger than 0. If \code{omega = NULL} (default), it weights the overall, within-stratum as well as marginal levels with porportion \code{1/cov_num}.}
-  \item{p}{the probability of assigning one patient to treatment 1. \code{p} should be larger than \code{1/2} to obtain balance. The default is \code{0.85}.}
+  \item{data}{a data frame. A row of the dataframe corresponds to the covariate profile of a patient.}
+  \item{omega}{a vector of weights at the overall, within-stratum, and within-covariate-margin levels. It is required that at least one element is larger than 0. If \code{omega = NULL} (default), the overall, within-stratum, and within-covariate-margin imbalances are weighted with porportions \code{0.2}, \code{0.3}, and \code{0.5/cov_num} for each covariate-margin, respectively, where \code{cov_num} is the number of covariates of interest.}
+  \item{p}{the biased coin probability. \code{p} should be larger than \code{1/2} and less than \code{1}. The default is \code{0.85}.}
 }
 \details{
     Consider \eqn{I} covariates and \eqn{m_i} levels for the \eqn{i}th covariate. \eqn{T_j} is the assignment of the \eqn{j}th ptient and \eqn{Z_j = (k_1,\dots,k_I)} indicates the covariate profile of this patient. For convenience, \eqn{(k_1,\dots,k_I)} and \eqn{(i;k_i)} denote the stratum and margin respectively. \eqn{D_n(.)} is the difference between the numbers of assigned patients in treatment \eqn{1} and treatment \eqn{2} at the corresponding level after \eqn{n} patinets have been assigned.The general CAR procedure is as follows:
@@ -40,8 +40,8 @@ The function \code{\link{print}} is used to obtain results. The generic accessor
 
 An object of class \code{"carandom"} is a list containing at least the following components: 
 
-\item{cov_num}{the number of covariates.}
 \item{n}{the number of patients.}
+\item{cov_num}{the number of covariates.}
 \item{Cov_Assign}{a \code{(cov_num + 1) * n} matrix containing covariate profiles for all patients and corresponding assignments. The \eqn{i}th column represents the \eqn{i}th patient. The first \code{cov_num} rows include a patient's covariate profile and the last row contains the assignment.}
 \item{All strata}{a matrix containing all strata involved.}
 \item{Diff}{a matrix with only one column. There are final differences at the overall, within-stratum, and marginal levels.}

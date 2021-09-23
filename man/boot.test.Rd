@@ -2,7 +2,7 @@
 \alias{boot.test}
 \title{Bootstrap t-test}
 \usage{
-  boot.test(data, B=200, method = c("HuHuCAR", "PocSimMIN", "StrBCD", 
+  boot.test(data, B = 200, method = c("HuHuCAR", "PocSimMIN", "StrBCD", 
                                   "StrPBR", "DoptBCD", "AdjBCD"), 
           conf = 0.95, \dots)
 }
@@ -10,16 +10,16 @@
   Performs bootstrap t-test on treatment effects. This test is proposed by Shao et al. (2010) <doi:10.1093/biomet/asq014>.
 }
 \arguments{
-  \item{data}{a dataframe. It consists of patients' profiles, treatment assignments and outputs. See \code{\link{getData}}.}
-  \item{B}{an integer. It indicates the number of bootstrap samples. The default is 200.}
-  \item{method}{a character string specifying the alternative randomization methods to be used in allocating patients, must be one of \code{"HuHuCAR"} (default), \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"DoptBCD"} or \code{"AdjBCD"}.}
+  \item{data}{a data frame. It consists of patients' profiles, treatment assignments and outputs. See \code{\link{getData}}.}
+  \item{B}{an integer. It is the number of bootstrap samples. The default is \code{200}.}
+  \item{method}{the randomization procedure to be used for testing. This package provides tests for \code{"HuHuCAR"}, \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"AdjBCD"}, and \code{"DoptBCD"}.}
   \item{conf}{confidence level of the interval. The default is \code{0.95}.}
-  \item{\dots}{arguments to be passed to methods. These depend on the \code{method} used and the following arguments are accepted:
+  \item{\dots}{arguments to be passed to \code{method}. These arguments depend on the randomization method used and the following arguments are accepted:
   \describe{
-      \item{omega}{a vector of weights at the overall, within-stratum, and maginal levels. It is required that at least one element is larger than 0. Note that \code{omega} is only needed when \code{HuHuCAR} is to be used.}
-      \item{weight}{a vector of weights for marginal imbalances. It is required that at least one element is larger than 0. Note that \code{weight} is only needed when \code{PocSimMIN} is to be used.}
-      \item{p}{the probabillty of assigning one patient to treatment 1. \code{p} should be larger than \code{1/2} to obtain balance. Note that \code{p} is only needed when \code{"HuHuCAR", "PocSimMIN"} and \code{"StrBCD"} are to be used.}
-      \item{a}{a design parameter. As \code{a} goes to \eqn{\infty}, the design becomes more deterministic.}
+      \item{omega}{a vector of weights at the overall, within-stratum, and within-covariate-margin levels. It is required that at least one element is larger than 0. Note that \code{omega} is only needed when \code{HuHuCAR} is to be used.}
+      \item{weight}{a vector of weights for within-covariate-margin imbalances. It is required that at least one element is larger than 0. Note that \code{weight} is only needed when \code{PocSimMIN} is to be used.}
+      \item{p}{the biased coin probability. \code{p} should be larger than \code{1/2} and less than \code{1}. Note that \code{p} is only needed when \code{"HuHuCAR", "PocSimMIN"} and \code{"StrBCD"} are to be used.}
+      \item{a}{a design parameter governing the degree of randomness. Note that \code{a} is only needed when \code{"AdjBCD"} is to be used.}
   \item{bsize}{the block size for stratified randomization. It is required to be a multiple of 2. Note that \code{bsize} is only needed when \code{"StrPBR"} is to be used.}
   }}
 }

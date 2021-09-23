@@ -48,3 +48,9 @@
     \item Some modifications were added to Remark Index, including modifications in functions of \code{nameString}, \code{PreProcess}, \code{print.carandom}, and \code{print.careval}. 
   }
 }
+
+\section{version 2.0 (August 25th, 2021)}{
+\itemize{
+    \item Some modifications were added to Remark Index to fixed some issues, including modifications in functions of \code{print.carandom}, and \code{print.careval}. 
+  }
+}

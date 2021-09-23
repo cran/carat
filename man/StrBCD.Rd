@@ -5,11 +5,11 @@
 StrBCD(data, p = 0.85)
 }
 \description{
-Allocates patients to one of the two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <Doi:10.1093/biomet/asq014>. 
+Allocates patients to one of the two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <doi:10.1093/biomet/asq014>. 
 }
 \arguments{
-  \item{data}{a dataframe. A row of the dataframe contains the covariate profile of a patient.}
-  \item{p}{the probability of assigning one patient to treatment 1. \code{p} should be larger than \code{1/2} to obtain balance. The default is \code{0.85}.}
+  \item{data}{a data frame. A row of the dataframe corresponds to the covariate profile of a patient.}
+  \item{p}{the biased coin probability. \code{p} should be larger than \code{1/2} and less than \code{1}. The default is \code{0.85}.}
 }
 \details{
     Consider \eqn{I} covaraites and \eqn{m_i} levels for the \eqn{i}th covariate. \eqn{T_j} is the assignment of the \eqn{j}th patient and \eqn{Z_j = (k_1,\dots,k_I)} indicates the covariate profile of this patient. For convenience, \eqn{(k_1,\dots,k_I)} and \eqn{(i;k_i)} denote the stratum and margin respectively. \eqn{D_n(.)} is the difference between the numbers of assigned patients in treatment \eqn{1} and treatment \eqn{2} at the corresponding level after \eqn{n} patinets have been assigned.Then Shao's procedure is as follows:

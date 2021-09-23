@@ -111,8 +111,8 @@ evalPower<-function(n,cov_num,level_num,pr,type,beta,di = seq(0,0.5,0.1),sigma =
     if(plot == TRUE){
       diff = di 
       value = result[1:length(di)]
-      sd = round(result[(length(di)+1):(2*length(di))], digits = 2)
-      tgg=data.frame(diff, value, sd, stringsAsFactors = TRUE)
+      se = round(result[(length(di)+1):(2*length(di))], digits = 3)
+      tgg=data.frame(diff, value, se, stringsAsFactors = TRUE)
       pic = ggplot2::ggplot(tgg, ggplot2::aes(x=di, y=value)) + ggplot2::geom_line() + geom_point(size=4, shape=20)+
         xlab("Difference in means")+ylab("Power")
       b = Sys.time()
@@ -122,8 +122,8 @@ evalPower<-function(n,cov_num,level_num,pr,type,beta,di = seq(0,0.5,0.1),sigma =
     else{
       diff = di
       value = result[1:length(di)]
-      sd = round(result[(length(di)+1):(2*length(di))], digits = 2)
-      tgg=data.frame(diff, value, sd, stringsAsFactors = TRUE)
+      se = round(result[(length(di)+1):(2*length(di))], digits = 3)
+      tgg=data.frame(diff, value, se, stringsAsFactors = TRUE)
       b = Sys.time()
       result = list(Powers = tgg,Time = paste("Execute time:",round(as.numeric(b-a), digits = 2),units(b-a)))
       return(result)
@@ -162,7 +162,7 @@ compPower<-function(powers,diffs,testname){
     for(i in 1:k){
       Lines = c(Lines,rep(testname[i],l))
       for(j in 1:l){
-        power_temp[j] = paste(powers[[i]]$Powers$value[j], "(", round(powers[[i]]$Powers$sd[j],digits = 3),")",sep = '')
+        power_temp[j] = paste(powers[[i]]$Powers$value[j], "(", round(powers[[i]]$Powers$se[j],digits = 3),")",sep = '')
       }
       popp_out = c(popp_out,power_temp)
       popp = c(popp,powers[[i]]$Powers$value)

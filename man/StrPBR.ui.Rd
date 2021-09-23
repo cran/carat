@@ -4,7 +4,7 @@
 Command-line User Interface Using Stratified Permuted Block Randomization with Two-Arms Case
 }
 \description{
-A call to the user-iterface function used to allocate patients to one of two treatments using stratified permuted block randomization proposed by Zelen M (1974) <Doi: 10.1016/0021-9681(74)90015-0>. 
+A call to the user-iterface function used to allocate patients to one of two treatments using stratified permuted block randomization proposed by Zelen M (1974) <doi: 10.1016/0021-9681(74)90015-0>. 
 }
 \usage{
 StrPBR.ui(path, folder = "StrPBR")

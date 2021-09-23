@@ -4,7 +4,7 @@
 Command-line User Interface Using Shao's Method 
 }
 \description{
-A call to the user-interface function used to allocate patients to one of two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <Doi:10.1093/biomet/asq014>. 
+A call to the user-interface function used to allocate patients to one of two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <doi:10.1093/biomet/asq014>. 
 }
 \usage{
 StrBCD.ui(path, folder = "StrBCD")

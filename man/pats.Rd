@@ -11,7 +11,7 @@ gives the simulated covariate profile of patients for clincal trials.
 data(pats)
 }
 \arguments{
-  \item{pats}{a dataframe. Each row contains an individual's covariate profile and each column corresponds to a covariate. It contains the following columns
+  \item{pats}{a data frame. Each row contains an individual's covariate profile and each column corresponds to a covariate. It contains the following columns
   \describe{
   \item{gender}{Options are \code{male} and \code{female}. }
   \item{employment status}{Options are "unemployment" (\code{unemp}), "part time" (\code{part.}), "full time" (\code{full.}).}

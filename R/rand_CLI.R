@@ -382,7 +382,7 @@ HuHuCAR.ui = function(path, folder = "HuHuCAR"){
     folderpathlog = sub('.....$', '', folder)
     
     load(paste(path, folderpathlog, 
-               "static", "pathlog", "pathvec.Rdata", 
+               "static", "pathlog", "pathvec.RData", 
                sep = "/")); 
     
     for(m in 6 : 12){
@@ -524,7 +524,7 @@ PocSimMIN.ui = function(path, folder = "PocSimMIN"){
     folderpathlog = sub('.....$', '', folder)
     
     load(paste(path, folderpathlog, 
-               "static", "pathlog", "pathvec.Rdata", 
+               "static", "pathlog", "pathvec.RData", 
                sep = "/")); 
     
     for(m in 6 : 12){
@@ -654,7 +654,7 @@ StrBCD.ui = function(path, folder = "StrBCD"){
     folderpathlog = sub('.....$', '', folder)
     
     load(paste(path, folderpathlog, 
-               "static", "pathlog", "pathvec.Rdata", 
+               "static", "pathlog", "pathvec.RData", 
                sep = "/")); 
     
     for(m in 6 : 11){
@@ -793,7 +793,7 @@ StrPBR.ui = function(path, folder = "StrPBR"){
     folderpathlog = sub('.....$', '', folder)
     
     load(paste(path, folderpathlog, 
-               "static", "pathlog", "pathvec.Rdata", 
+               "static", "pathlog", "pathvec.RData", 
                sep = "/")); 
     
     for(m in 6 : 13){
@@ -914,7 +914,7 @@ DoptBCD.ui = function(path, folder = "DoptBCD"){
     folderpathlog = sub('.....$', '', folder)
     
     load(paste(path, folderpathlog, 
-               "static", "pathlog", "pathvec.Rdata", 
+               "static", "pathlog", "pathvec.RData", 
                sep = "/")); 
     
     for(m in 6 : 13){
@@ -1049,7 +1049,7 @@ AdjBCD.ui = function(path, folder = "AdjBCD"){
     folderpathlog = sub('.....$', '', folder)
     
     load(paste(path, folderpathlog, 
-               "static", "pathlog", "pathvec.Rdata", 
+               "static", "pathlog", "pathvec.RData", 
                sep = "/")); 
     
     for(m in 6 : 11){

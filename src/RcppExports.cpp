@@ -59,6 +59,30 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// ReturnCol
+arma::uvec ReturnCol(arma::mat M, arma::vec V);
+RcppExport SEXP _carat_ReturnCol(SEXP MSEXP, SEXP VSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type M(MSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type V(VSEXP);
+    rcpp_result_gen = Rcpp::wrap(ReturnCol(M, V));
+    return rcpp_result_gen;
+END_RCPP
+}
+// MVReturnM
+arma::uvec MVReturnM(arma::mat M, arma::mat MV);
+RcppExport SEXP _carat_MVReturnM(SEXP MSEXP, SEXP MVSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type M(MSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type MV(MVSEXP);
+    rcpp_result_gen = Rcpp::wrap(MVReturnM(M, MV));
+    return rcpp_result_gen;
+END_RCPP
+}
 // nameString
 Rcpp::StringVector nameString(unsigned int cov_num, arma::vec level_num, int strt_num, Rcpp::String type, arma::mat AllStrata);
 RcppExport SEXP _carat_nameString(SEXP cov_numSEXP, SEXP level_numSEXP, SEXP strt_numSEXP, SEXP typeSEXP, SEXP AllStrataSEXP) {
@@ -1269,6 +1293,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_carat_Bpert", (DL_FUNC) &_carat_Bpert, 2},
     {"_carat_PStrGen", (DL_FUNC) &_carat_PStrGen, 2},
     {"_carat_Prob_S", (DL_FUNC) &_carat_Prob_S, 3},
+    {"_carat_ReturnCol", (DL_FUNC) &_carat_ReturnCol, 2},
+    {"_carat_MVReturnM", (DL_FUNC) &_carat_MVReturnM, 2},
     {"_carat_nameString", (DL_FUNC) &_carat_nameString, 5},
     {"_carat_BBCDname", (DL_FUNC) &_carat_BBCDname, 2},
     {"_carat_Preprocess", (DL_FUNC) &_carat_Preprocess, 1},

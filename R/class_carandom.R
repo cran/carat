@@ -49,15 +49,15 @@ print.carandom = function(x, digits = getOption("digits"), prefix = "\t", ...)
   CA = as.data.frame(t(x$Cov_Assig[, 1 : 3]))
   CA$assignment = LETTERS[CA$assignment]
   cat("the first three patients' covariate-profiles and assignments:\n")
-  print(CA); cat("...\n")
+  print(CA); #cat("...\n")
   cat("\n")
   out = vector()
-  om = abs(x$Diff[1, 1]); sm = mean(abs(x$Diff[1, 2 : (1 + x$strt_num)]))
-  mm = mean(abs(x$Diff[(2 + x$strt_num) : (1 + x$strt_num + sum(x$level_num))]))
+  om = abs(t(x$Diff)[1, 1]); sm = mean(abs(t(x$Diff)[1, 2 : (1 + x$strt_num)]))
+  mm = mean(abs(t(x$Diff)[(2 + x$strt_num) : (1 + x$strt_num + sum(x$level_num))]))
   if(x$method == "Stratified Permuted Block Randomization"){
     out[1] = om; out[2] = mm;
     par = x$`numbers of pats for each strata` %% x$bsize
-    str = x$Diff[1, 2 : (1 + x$strt_num)]
+    str = t(x$Diff)[1, 2 : (1 + x$strt_num)]
     index = c(x$bsize, 1 : (x$bsize - 1))
     for(i in 1 : x$bsize){
       ind = which(par == i - 1, arr.ind = T)
@@ -66,28 +66,41 @@ print.carandom = function(x, digits = getOption("digits"), prefix = "\t", ...)
     names(out) = c("overall", "marginal", BBCDname(x$bsize, "pnum = "))
   }else{
     out[1 : 3] = c(om, mm, sm)
-    names(out) = c("overall", "marginal", "within-strt.")
+    names(out) = c("overall", "within-strt.", "within-cov.-margin")
   }
-  cat("absolute mean at overall, marginal and within-strt. levels:\n")
+  cat("Mean absolute imbalances at overall, within-strt., and within-cov.-margin levels:\n")
   print(out, digits = 4)
   cat("\n")
   if(x$`Data Type` == "Real"){
-    list = apply(x$data, 2, unique); 
+    Rlist = apply(x$data, 2, unique); 
     cat("Remark-Index: \n"); 
     if(!x$datanumeric){
       for(i in 1 : x$cov_num){
         cat(i, "--", x$covariates[i], "\n"); 
-        cat("\t", paste(1 : x$level_num[i], as.factor(list[[i]]), 
-                        sep = " <--> "), 
-            sep = "  ", "\n"); 
+        if(length(unique(x$level_num)) > 1){
+          cat("\t", paste(paste(1 : x$level_num[i], as.factor(Rlist[[i]]), 
+                          sep = " <--> "), collapse = "; "), 
+              sep = "  ", "\n"); 
+        }else{
+          cat("\t", paste(paste(1 : x$level_num[i], as.factor(Rlist[, i]), 
+                          sep = " <--> "), collapse = "; "), 
+              sep = "  ", "\n"); 
+        }
       }
     }else{
       for(i in 1 : x$cov_num){
         cat(i, "--", x$covariates[i], "\n"); 
-        cat("\t", paste(1 : x$level_num[i], 
-                        as.factor(list[[i]])[match(1 : x$level_num[i], as.numeric(as.factor(list[[i]])))], 
-                        sep = " <--> "), 
-            sep = "  ", "\n"); 
+        if(length(unique(x$level_num)) > 1){
+          cat("\t", paste(paste(1 : x$level_num[i], 
+                          as.factor(Rlist[[i]])[match(1 : x$level_num[i], as.numeric(as.factor(Rlist[[i]])))], 
+                          sep = " <--> "), collapse = "; "), 
+              sep = "  ", "\n"); 
+        }else{
+          cat("\t", paste(paste(1 : x$level_num[i], 
+                          as.factor(Rlist[, i])[match(1 : x$level_num[i], as.numeric(as.factor(Rlist[, i])))], 
+                          sep = " <--> "), collapse = "; "), 
+              sep = "  ", "\n"); 
+        }
       }
     }
   }

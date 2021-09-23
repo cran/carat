@@ -59,15 +59,15 @@ print.carcomp = function(x, digits = getOption("digits"), prefix = "\t", ...){
   
   cat("\n")
   
-  cat("absolute mean at overall, marginal and within-strt. levels:\n")
+  cat("Mean absolute imbalances at overall, within-strt. and within-cov.-margin levels:\n")
   cat("Overall:", "\n")
   print(x$`Overall Imbalances`, digits = 3)
   cat("\n")
-  cat("Marginal:\n")
-  print(x$`Marginal Imbalances`, digits = 3)
-  cat("\n")
   cat("Within-strt.:\n")
   print(x$`Within-stratum Imbalances`, digits = 3)
+  cat("\n")
+  cat("Within-cov.-margin:\n")
+  print(x$`Marginal Imbalances`, digits = 3)
   
   if(!is.null(x$dfmm) && !is.null(x$df_abm)){
     dfmm = x$dfmm; 
@@ -116,7 +116,7 @@ print.carcomp = function(x, digits = getOption("digits"), prefix = "\t", ...){
     position = "bottom";
     ncol = 3; nrow = 1; 
     
-    plots = list(p1, p2, p3); 
+    plots = list(p1, p3, p2); 
     g = ggplot2::ggplotGrob(plots[[1]] + 
                               ggplot2::theme(legend.position = position))$grobs; 
     legend = g[[which(sapply(g, function(x) x$name) == "guide-box")]]; 

@@ -4,7 +4,7 @@
 Command-line User Interface Using Hu and Hu's General Covariate-adaptive Randomization
 }
 \description{
-A call to the user-iterface function used to allocate patients to one of two treatments using Hu and Hu's general covariate-adaptive randomization method as proposed by Hu Y, Hu F (2012) <Doi:10.1214/12-AOS983>. 
+A call to the user-iterface function used to allocate patients to one of two treatments using Hu and Hu's general covariate-adaptive randomization method as proposed by Hu Y, Hu F (2012) <doi:10.1214/12-AOS983>. 
 }
 \usage{
 HuHuCAR.ui(path, folder = "HuHuCAR")

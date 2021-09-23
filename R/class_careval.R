@@ -55,14 +55,18 @@ print.careval = function(x, digits = getOption("digits"), prefix = "\t", ...){
   for(l in 1 : I){
     ass[l, ] = LETTERS[as.numeric(ass[l, ])]
   }
-  ass$' ' = rep("...", times = I)
+  #ass$' ' = rep("...", times = I)
   print(ass)
   cat("\n")
-  cat("evaluation by imbalances: \n"); 
+  cat("Evaluation by imbalances: \n"); 
   cat("absolute overall imbalances:\n")
   print(x$Imb[1, ], digits = 3); 
   cat("\n"); 
-  cat("absolute marginal imbalances for", x$cov_num, "margins:", "\n", sep = " "); 
+  if(x$strt_num <= 3){s = x$strt_num}else{s = 3}
+  cat("absolute within-strt. imbalances for the first", s, "strata:", "\n", sep = " "); 
+  print(x$Imb[2 : (s + 1), ], digits = 3)
+  cat("\n"); 
+  cat("absolute within-cov.-margin imbalances for", x$cov_num, "margins:", "\n", sep = " "); 
   v = vector(); 
   r = 1 + x$strt_num + 1; 
   for(i in 1 :x$cov_num){
@@ -70,29 +74,38 @@ print.careval = function(x, digits = getOption("digits"), prefix = "\t", ...){
     r = r + x$level_num[i]; 
   }
   print(x$Imb[v, ], digits = 3); 
-  cat("\n"); 
-  if(x$strt_num <= 3){s = x$strt_num}else{s = 3}
-  cat("absolute within-strt. imbalances for the first", s, "strata:", "\n", sep = " "); 
-  print(x$Imb[2 : (s + 1), ], digits = 3)
   
   cat("\n")
   if(x$`Data Type` == "Real"){
-    list = apply(x$data, 2, unique); 
+    Rlist = apply(x$data, 2, unique); 
     cat("Remark-Index: \n"); 
     if(!x$datanumeric){
       for(i in 1 : x$cov_num){
         cat(i, "--", x$covariates[i], "\n"); 
-        cat("\t", paste(1 : x$level_num[i], as.factor(list[[i]]), 
-                        sep = " <--> "), 
-            sep = "  ", "\n"); 
+        if(length(unique(x$level_num)) > 1){
+          cat("\t", paste(1 : x$level_num[i], as.factor(Rlist[[i]]), 
+                          sep = " <--> "), 
+              sep = "  ", "\n"); 
+        }else{
+          cat("\t", paste(1 : x$level_num[i], as.factor(Rlist[, i]), 
+                          sep = " <--> "), 
+              sep = "  ", "\n"); 
+        }
       }
     }else{
       for(i in 1 : x$cov_num){
         cat(i, "--", x$covariates[i], "\n"); 
-        cat("\t", paste(1 : x$level_num[i], 
-                        as.factor(list[[i]])[match(1 : x$level_num[i], as.numeric(as.factor(list[[i]])))], 
-                        sep = " <--> "), 
-            sep = "  ", "\n"); 
+        if(length(unique(x$level_num)) > 1){
+          cat("\t", paste(1 : x$level_num[i], 
+                          as.factor(Rlist[[i]])[match(1 : x$level_num[i], as.numeric(as.factor(Rlist[[i]])))], 
+                          sep = " <--> "), 
+              sep = "  ", "\n"); 
+        }else{
+          cat("\t", paste(1 : x$level_num[i], 
+                          as.factor(Rlist[, i])[match(1 : x$level_num[i], as.numeric(as.factor(Rlist[, i])))], 
+                          sep = " <--> "), 
+              sep = "  ", "\n"); 
+        }
       }
     }
   }

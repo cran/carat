@@ -66,20 +66,26 @@ HuHuCAR = function(data, omega = NULL, p = 0.85){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 
   R$Cov_Assig = CA;
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
-  AS = RES[2, 1][[1]];
-  colnames(AS) = BBCDname(strt_num, "level");
+  
+  AS0 = RES[2, 1][[1]];
+  AS0ordinPS = MVReturnM(PStrGen(cov_num, level_num), AS0)[, 1]; 
+  AS = AS0[, order(AS0ordinPS)]
+  colnames(AS) = BBCDname(strt_num, "stratum");
   rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
-  Df = RES[4, 1][[1]]; 
+  Df0 = RES[4, 1][[1]]; 
+  Df = Df0[c(1, 1 + order(AS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), ,drop = FALSE]
   rownames(Df) = nameString(cov_num, level_num, strt_num, "All", AS); 
-  R$Diff = t(Df);
+  R$Diff = Df;
+  
   
   R$method = "Hu and Hu's General CAR";
   R$'Data Type' = "Real";
@@ -159,20 +165,24 @@ PocSimMIN = function(data, weight = NULL, p = 0.85){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 
   R$Cov_Assig = CA;
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
-  AS = RES[2, 1][[1]];
-  colnames(AS) = BBCDname(strt_num, "level");
+  AS0 = RES[2, 1][[1]];
+  AS0ordinPS = MVReturnM(PStrGen(cov_num, level_num), AS0)[, 1]; 
+  AS = AS0[, order(AS0ordinPS)]
+  colnames(AS) = BBCDname(strt_num, "stratum");
   rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
-  Df = RES[4, 1][[1]]; 
+  Df0 = RES[4, 1][[1]]; 
+  Df = Df0[c(1, 1 + order(AS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), ,drop = FALSE]
   rownames(Df) = nameString(cov_num, level_num, strt_num, "All", AS); 
-  R$Diff = t(Df);
+  R$Diff = Df;
   
   R$method = "Pocock and Simon's Procedure with Two Arms";
   R$'Data Type' = "Real";
@@ -245,20 +255,24 @@ StrBCD = function(data, p = 0.85){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 
   R$Cov_Assig = CA; 
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
-  AS = RES[2, 1][[1]];
-  colnames(AS) = BBCDname(strt_num, "level");
+  AS0 = RES[2, 1][[1]];
+  AS0ordinPS = MVReturnM(PStrGen(cov_num, level_num), AS0)[, 1]; 
+  AS = AS0[, order(AS0ordinPS)]
+  colnames(AS) = BBCDname(strt_num, "stratum");
   rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
-  Df = RES[4, 1][[1]]; 
+  Df0 = RES[4, 1][[1]]; 
+  Df = Df0[c(1, 1 + order(AS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), ,drop = FALSE]
   rownames(Df) = nameString(cov_num, level_num, strt_num, "All", AS); 
-  R$Diff = t(Df);
+  R$Diff = Df;
   
   R$method = "Shao's Procedure";
   R$'Data Type' = "Real";
@@ -328,20 +342,24 @@ StrPBR = function(data, bsize = 4){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 
   R$Cov_Assig = CA; 
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
-  AS = RES[2, 1][[1]];
-  colnames(AS) = BBCDname(strt_num, "level");
+  AS0 = RES[2, 1][[1]];
+  AS0ordinPS = MVReturnM(PStrGen(cov_num, level_num), AS0)[, 1]; 
+  AS = AS0[, order(AS0ordinPS)]
+  colnames(AS) = BBCDname(strt_num, "stratum");
   rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
-  Df = RES[4, 1][[1]]; 
-  rownames(Df) = nameString(cov_num, level_num, strt_num, "All",AS); 
-  R$Diff = t(Df);
+  Df0 = RES[4, 1][[1]]; 
+  Df = Df0[c(1, 1 + order(AS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), ,drop = FALSE]
+  rownames(Df) = nameString(cov_num, level_num, strt_num, "All", AS); 
+  R$Diff = Df;
   
   R$method = "Stratified Permuted Block Randomization";
   R$'Data Type' = "Real";
@@ -408,20 +426,24 @@ DoptBCD = function(data){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 
   R$Cov_Assig = CA; 
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
-  AS = RES[2, 1][[1]];
-  colnames(AS) = BBCDname(strt_num, "level");
+  AS0 = RES[2, 1][[1]];
+  AS0ordinPS = MVReturnM(PStrGen(cov_num, level_num), AS0)[, 1]; 
+  AS = AS0[, order(AS0ordinPS)]
+  colnames(AS) = BBCDname(strt_num, "stratum");
   rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
-  Df = RES[4, 1][[1]]; 
+  Df0 = RES[4, 1][[1]]; 
+  Df = Df0[c(1, 1 + order(AS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), ,drop = FALSE]
   rownames(Df) = nameString(cov_num, level_num, strt_num, "All", AS); 
-  R$Diff = t(Df);
+  R$Diff = Df;
   
   R$method = "Atkinson's Optimum Biased Coin Design";
   R$'Data Type' = "Real";
@@ -440,7 +462,7 @@ DoptBCD = function(data){
 
 #AdjBCD.carandom = function(data, a = 2.0) UseMethod("carandom")
 
-AdjBCD = function(data, a = 2.0){
+AdjBCD = function(data, a = 3.0){
   
   R = NULL;
   
@@ -491,20 +513,24 @@ AdjBCD = function(data, a = 2.0){
   n = ncol(CA); 
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
-  rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
+  rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 
   R$Cov_Assig = CA;
   
   assig_temp = CA[dim(CA)[1], ]; 
   R$assignments = LETTERS[assig_temp]; 
   
-  AS = RES[2, 1][[1]]; 
-  colnames(AS) = BBCDname(strt_num, "level");
+  AS0 = RES[2, 1][[1]];
+  AS0ordinPS = MVReturnM(PStrGen(cov_num, level_num), AS0)[, 1]; 
+  AS = AS0[, order(AS0ordinPS)]
+  colnames(AS) = BBCDname(strt_num, "stratum");
   rownames(AS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$'All strata' = AS;
   
-  Df = RES[4, 1][[1]]; 
+  Df0 = RES[4, 1][[1]]; 
+  Df = Df0[c(1, 1 + order(AS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), ,drop = FALSE]
   rownames(Df) = nameString(cov_num, level_num, strt_num, "All", AS); 
-  R$Diff = t(Df);
+  R$Diff = Df;
   
   R$method = "Covariate-adaptive Biased Coin Design";
   R$'Data Type' = "Real";

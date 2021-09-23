@@ -131,32 +131,6 @@ int sample_one(double prob){
   arma::vec T_One = arma::randu<arma::vec>(1);
   return(sum(T_One > prob) + 1);
 }
-/*
- * PStr:
- *   Generate matrix filled with 1 and 2, and no duplications among columns.
- */
-
-arma::mat PStr(int n){
-  arma::mat PStr;
-  int i;
-  arma::vec one(n), result(n);
-  arma::mat final(n, pow(2, n));
-  arma::uvec id;
-  one(n - 1) = 1; result(n - 1) = 1; final(n - 1, 1) = 1;
-  
-  final.col(0) = one;
-  for(i = 1; i < (pow(2, n) - 1); i++){
-    result = result + one;
-    while(sum(result == 2) > 0){
-      id = find(result == 2);
-      result(id - 1) = result(id - 1) + 1;
-      result(id).fill(0);
-    }
-    final.col(i) = result;
-  }
-  final(find(final != 1.0)).fill(2);
-  return final;
-}
 
 /*
  * PStrGen: 
@@ -167,33 +141,28 @@ arma::mat PStr(int n){
  *           a number among 1 to number which equals to i-th element of level_num.
  */
 
-// [[Rcpp::export]]
+//[[Rcpp::export]]
 arma::mat PStrGen(unsigned int cov_num, arma::vec level_num){
-  arma::mat PS, P;
-  arma::uvec ind = find(level_num >= 2.000001);
-  arma::vec lel = level_num(ind);
-  int leng = lel.n_elem;
-  arma::mat PStr_temp = PStr(cov_num);
-  int dimen = PStr_temp.n_cols;
-  PS = arma::zeros<arma::mat>(cov_num, arma::prod(lel - 1) * dimen);
-  if(leng == 0){
-    return PStr_temp;
-  }
-  else{
-    PS.cols(0, dimen - 1) = PStr_temp;
-    int dimn = dimen;
-    for(int j = 0; j < leng; j++){
-      for(int l = 0; l < (lel(j) - 2); l++){
-        PS.cols((l + 1) * dimn, (l + 2) * dimn - 1) = PS.cols(0, dimn - 1);
-        arma::uvec b1(1); b1(0) = ind(j);
-        arma::rowvec b2(dimn); b2.fill(l + 3);
-        PS.submat(b1, arma::linspace<arma::uvec>((l + 1) * dimn, ((l + 2) * dimn - 1), dimn)) = b2;
+  
+  int strt_num = prod(level_num); 
+  arma::mat final(cov_num, strt_num); 
+  
+  int ground = 1; 
+  for(unsigned int i = 0; i < cov_num; i++){
+    
+    int ground_tree_num = strt_num / ground; //the total number of trees planted in each ground; 
+    int tree_num = ground_tree_num / level_num(i); //the number of each variety of tree; Here, plant level_num(i) kinds of tree in each ground; 
+    for(int j = 0; j < ground; j++){
+      arma::rowvec pad(ground_tree_num); 
+      for(int k = 0; k < level_num(i); k++){
+        pad.subvec(k * tree_num + 0, (k + 1) * tree_num - 1).fill(k + 1); 
       }
-      dimn *= (lel(j) - 1);
+      final.submat(i, j * ground_tree_num + 0, i, (j + 1) * ground_tree_num - 1) = pad; 
     }
-    P = PStrR(PS); 
-    return P;
+    ground = ground * level_num(i); 
   }
+  
+  return final; 
 }
 
 
@@ -242,6 +211,7 @@ arma::mat Prob_S(unsigned int cov_num, arma::vec level_num, arma::vec pr){
   return p_mat;
 }
 
+//[[Rcpp::export]]
 arma::uvec ReturnCol(arma::mat M, arma::vec V){
   unsigned int leng = V.n_elem;
   arma::uvec Ind = find(M.row(0) == V(0));
@@ -251,6 +221,16 @@ arma::uvec ReturnCol(arma::mat M, arma::vec V){
     Ind = Ind(ind);
   }
   return Ind + 1;
+}
+
+//[[Rcpp::export]]
+arma::uvec MVReturnM(arma::mat M, arma::mat MV){
+  int colsnum = MV.n_cols; 
+  arma::uvec ind(colsnum); 
+  for(int i = 0; i < colsnum; i++){
+    ind(i) = ReturnCol(M, MV.col(i))(0); 
+  }
+  return ind; 
 }
 
 //[[Rcpp::export]]
@@ -269,7 +249,7 @@ Rcpp::StringVector nameString(unsigned int cov_num, arma::vec level_num, int str
     name(0) = "overall";
     
     for(int i = 0; i < strt_num; i++){
-      SEXP namL_temp = paste("level", i + 1, 
+      SEXP namL_temp = paste("stratum", i + 1, 
                              "(", paste(AllStrata.col(i), Rcpp::Named("collapse", ",")), ")", 
                              Rcpp::Named("sep", ""));
       Rcpp::String namL = Rcpp::as<Rcpp::String>(namL_temp);
@@ -1908,7 +1888,7 @@ arma::vec HuHuCAR_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma::
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -1944,7 +1924,7 @@ arma::vec HuHuCAR_BT_power(int n,unsigned int cov_num,arma::vec level_num,arma::
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -2324,7 +2304,7 @@ arma::vec PocSimMIN_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -2364,7 +2344,7 @@ arma::vec PocSimMIN_BT_power(int n,unsigned int cov_num,arma::vec level_num,
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -2656,7 +2636,7 @@ arma::vec StrBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -2696,7 +2676,7 @@ arma::vec StrBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -3043,7 +3023,7 @@ arma::vec DoptBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -3082,7 +3062,7 @@ arma::vec DoptBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -3462,7 +3442,7 @@ arma::vec AdjBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -3501,7 +3481,7 @@ arma::vec AdjBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -3889,7 +3869,7 @@ arma::vec StrPBR_RT_power(int n,unsigned int cov_num,arma::vec level_num,
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -3929,7 +3909,7 @@ arma::vec StrPBR_BT_power(int n,unsigned int cov_num,arma::vec level_num,
       arma::vec result(2*N1);
       for(i = 0; i < N1; i++){
         result(i) = sum(p_all.row(i))/Iternum;
-        result(i+N1) = stddev(p_all.row(i));
+        result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
       }
       return result;
     }
@@ -4011,7 +3991,7 @@ arma::vec HuHuCAR_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -4042,7 +4022,7 @@ arma::vec PocSimMIN_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -4073,7 +4053,7 @@ arma::vec StrBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -4104,7 +4084,7 @@ arma::vec DoptBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -4135,7 +4115,7 @@ arma::vec AdjBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -4166,7 +4146,7 @@ arma::vec StrPBR_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }

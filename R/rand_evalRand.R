@@ -311,20 +311,26 @@ evalRand = function(data, method = "HuHuCAR", N = 500, ...){
   rownames(A) = BBCDname(n, "pat");
   R$Assig = A;
   
-  PS = RES[4, 1][[1]]; 
+  PS0 = RES[4, 1][[1]]; 
+  PS0ordinPS = MVReturnM(PStrGen(cov_num, level_num), PS0); 
+  PS = PS0[, order(PS0ordinPS)]; 
   strt_num = ncol(PS); 
   R$strt_num = strt_num; 
-  
-  colnames(PS) = BBCDname(strt_num, "level"); 
+  colnames(PS) = BBCDname(strt_num, "stratum"); 
   rownames(PS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
   R$`All strata` = PS;
   
-  Imbmat = RES[2, 1][[1]]; 
+  Imbmat0 = RES[2, 1][[1]]; 
+  Imbmat = Imbmat0[c(1, 1 + order(PS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), ]
   colnames(Imbmat) = c("max", "95% quan", "median", "mean");
   rownames(Imbmat) = nameString(cov_num, level_num, strt_num, "All", PS); 
   R$Imb = Imbmat; 
   
-  R$SNUM = RES[3, 1][[1]]; 
+  SNUM0 = RES[3, 1][[1]]; 
+  SNUM = SNUM0[order(PS0ordinPS), , drop = FALSE]; 
+  rownames(SNUM) = nameString(cov_num, level_num, strt_num, "All", PS)[2 : (1 + strt_num)];  
+  colnames(SNUM) = BBCDname(N, "iter")
+  R$SNUM = SNUM; 
   
   R$method = method; 
   R$cov_num = cov_num; 
@@ -333,7 +339,8 @@ evalRand = function(data, method = "HuHuCAR", N = 500, ...){
   R$iteration = N;
   R$'Data Type' = "Real"; 
   
-  DIF = RES[5, 1][[1]]; 
+  DIF0 = RES[5, 1][[1]]; 
+  DIF = DIF0[c(1, 1 + order(PS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), , drop = FALSE]
   colnames(DIF) = BBCDname(N, "iter"); 
   rownames(DIF) = nameString(cov_num, level_num, strt_num, "All", PS); 
   R$DIF = DIF; 
@@ -642,21 +649,26 @@ evalRand.sim = function(n = 1000, N = 500, Replace = FALSE, cov_num = 2,
   rownames(A) = BBCDname(n, "pat");
   R$Assig = A;
   
-  PS = RES[4, 1][[1]]; 
-  
+  PS0 = RES[4, 1][[1]]; 
+  PS0ordinPS = MVReturnM(PStrGen(cov_num, level_num), PS0); 
+  PS = PS0[, order(PS0ordinPS)]; 
   strt_num = ncol(PS); 
   R$strt_num = strt_num; 
-  
-  colnames(PS) = BBCDname(strt_num, "level"); 
+  colnames(PS) = BBCDname(strt_num, "stratum"); 
   rownames(PS) = BBCDname(cov_num, "covariate"); 
   R$`All strata` = PS;
   
-  Imbmat = RES[2, 1][[1]]; 
+  Imbmat0 = RES[2, 1][[1]]; 
+  Imbmat = Imbmat0[c(1, 1 + order(PS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), , drop = FALSE]
   colnames(Imbmat) = c("max", "95% quan", "median", "mean");
   rownames(Imbmat) = nameString(cov_num, level_num, strt_num, "All", PS); 
   R$Imb = Imbmat; 
   
-  R$SNUM = RES[3, 1][[1]]; 
+  SNUM0 = RES[3, 1][[1]]; 
+  SNUM = SNUM0[order(PS0ordinPS), , drop = FALSE]; 
+  rownames(SNUM) = nameString(cov_num, level_num, strt_num, "All", PS)[2 : (1 + strt_num)];  
+  colnames(SNUM) = BBCDname(N, "iter")
+  R$SNUM = SNUM; 
   
   R$method = method; 
   R$cov_num = cov_num; 
@@ -666,7 +678,8 @@ evalRand.sim = function(n = 1000, N = 500, Replace = FALSE, cov_num = 2,
   R$'Data Type' = "Simulated"; 
   R$DataGeneration = Replace;
   
-  DIF = RES[5, 1][[1]]; 
+  DIF0 = RES[5, 1][[1]]; 
+  DIF = DIF0[c(1, 1 + order(PS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), , drop = FALSE]
   colnames(DIF) = BBCDname(N, "iter"); 
   rownames(DIF) = nameString(cov_num, level_num, strt_num, "All", PS); 
   R$DIF = DIF; 
