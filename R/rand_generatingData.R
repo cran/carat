@@ -73,10 +73,10 @@ HuHuCAR.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   R$method = "Hu and Hu's General CAR";
   R$cov_num = cov_num;
   R$level_num = level_num;
-  R$N = n;
+  R$n = n;
   R$weight = omega[3 : (2 + cov_num)];
   R$'Data Type' = "Simulated";
-  R$framework = "Minimization"; 
+  R$framework = "Stratified randomization"; 
   
   class(R) <- "carandom";
   
@@ -155,10 +155,10 @@ PocSimMIN.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   R$method = "Pocock and Simon's Procedure with Two Arms";
   R$cov_num = cov_num;
   R$level_num = level_num;
-  R$N = n;
+  R$n = n;
   R$weight = omega[3 : (2 + cov_num)];
   R$'Data Type' = "Simulated";
-  R$framework = "Minimization"; 
+  R$framework = "Stratified randomization"; 
   
   class(R) <- "carandom";
   
@@ -229,9 +229,9 @@ StrBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   R$method = "Shao's Procedure";
   R$cov_num = cov_num;
   R$level_num = level_num;
-  R$N = n;
+  R$n = n;
   R$'Data Type' = "Simulated";
-  R$framework = "Minimization/Stratified randomization"; 
+  R$framework = "Stratified randomization"; 
   
   class(R) <- "carandom";
   
@@ -296,12 +296,12 @@ StrPBR.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   st_num = RES[1, 1][[1]];
   colnames(st_num) = BBCDname(ncol(AS), "level-");
   
-  R$`numbers of pats for each strata` = st_num;
+  R$`numbers of pats for each stratum` = st_num;
   
   R$method = "Stratified Permuted Block Randomization";
   R$cov_num = cov_num;
   R$level_num = level_num;
-  R$N = n;
+  R$n = n;
   R$bsize = bsize;
   R$`Data Type` = "Simulated";
   R$framework = "Stratified randomization"; 
@@ -367,7 +367,7 @@ DoptBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   R$cov_num = cov_num;
   R$level_num = level_num;
   R$strt_num = ncol(AS);
-  R$N = n;
+  R$n = n;
   R$'Data Type' = "Simulated";
   R$framework = "Model-based approach"; 
   
@@ -510,7 +510,7 @@ AdjBCD.sim = function(n = 1000, cov_num = 2, level_num = c(2, 2),
   R$method = "Covariate-adaptive Biased Coin Design with Two Arms";
   R$cov_num = cov_num;
   R$level_num = level_num;
-  R$N = n;
+  R$n = n;
   R$'Data Type' = "Simulated";
   R$framework = "Stratified randomization"; 
   

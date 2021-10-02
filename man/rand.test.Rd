@@ -39,16 +39,14 @@
 \value{
   It returns an object of class \code{"htest"}.
   
-  The function \code{print} is used to obtain results.The generic accessor functions \code{statistic}, \code{p.value} and others extract various useful features of the value returned by \code{rand.test}.
+  An object of class \code{"htest"} is a list containing the following components:
   
-  An object of class \code{"htest"} is a list containing at least the following components:
-  
+  \item{p.value}{p-value of the test, the null hypothesis is rejected if the p-value is less than \code{sl}.}
+  \item{estimate}{the estimated difference in treatment effects between treatment \code{1} and treatment \code{2}.}
+  \item{conf.int}{a confidence interval under the chosen level \code{conf} for the difference in treatment effect between treatment \code{1} and treatment \code{2}. As the randomization test is a nonparametric method, we cannot calculate the confidence interval, so it is hidden in this result.}
+  \item{method}{a character string indicating what type of test was performed.}
   \item{data.name}{a character string giving the name(s) of the data.}
   \item{statistic}{the value of the t-statistic. As the randomization test is a nonparametric method, we cannot calculate the t-statistic, so it is hidden in this result.}
-  \item{p.value}{p-value of the test, the null hypothesis is rejected if the p-value is less than \code{sl}.}
-  \item{conf.int}{a confidence interval under the chosen level \code{conf} for the difference in treatment effect between treatment \code{1} and treatment \code{2}. As the randomization test is a nonparametric method, we cannot calculate the confidence interval, so it is hidden in this result.}
-  \item{estimate}{the estimated difference in treatment effects between treatment \code{1} and treatment \code{2}.}
-  \item{method}{a character string indicating what type of test was performed.}
 }
 \references{
 Rosenberger W F, Lachin J M. Randomization in clinical trials: \emph{theory and practice}[M]. John Wiley & Sons, 2015.

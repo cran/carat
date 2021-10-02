@@ -335,7 +335,7 @@ evalRand = function(data, method = "HuHuCAR", N = 500, ...){
   R$method = method; 
   R$cov_num = cov_num; 
   R$level_num = level_num; 
-  R$N = ncol(data_proc);
+  R$n = ncol(data_proc);
   R$iteration = N;
   R$'Data Type' = "Real"; 
   
@@ -673,7 +673,7 @@ evalRand.sim = function(n = 1000, N = 500, Replace = FALSE, cov_num = 2,
   R$method = method; 
   R$cov_num = cov_num; 
   R$level_num = level_num; 
-  R$N = n; 
+  R$n = n; 
   R$iteration = N; 
   R$'Data Type' = "Simulated"; 
   R$DataGeneration = Replace;

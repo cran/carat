@@ -64,7 +64,7 @@ HuHuCAR = function(data, omega = NULL, p = 0.85){
   
   CA = RES[3, 1][[1]]; 
   n = ncol(CA); 
-  R$N = n;
+  R$n = n;
   colnames(CA) = BBCDname(n, "pat"); 
   #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 
@@ -90,7 +90,7 @@ HuHuCAR = function(data, omega = NULL, p = 0.85){
   R$method = "Hu and Hu's General CAR";
   R$'Data Type' = "Real";
   R$weight = omega[3 : (2 + cov_num)];
-  R$framework = "Minimization";
+  R$framework = "Stratified randomization";
   R$data = data; 
   
   class(R) = "carandom";
@@ -163,7 +163,7 @@ PocSimMIN = function(data, weight = NULL, p = 0.85){
   
   CA = RES[3, 1][[1]]; 
   n = ncol(CA); 
-  R$N = n;
+  R$n = n;
   colnames(CA) = BBCDname(n, "pat"); 
   #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 
@@ -186,8 +186,8 @@ PocSimMIN = function(data, weight = NULL, p = 0.85){
   
   R$method = "Pocock and Simon's Procedure with Two Arms";
   R$'Data Type' = "Real";
-  R$weight = weight;
-  R$framework = "Minimization";
+  R$weight = omega[3 : (2 + cov_num)];
+  R$framework = "Stratified randomization";
   R$data = data; 
   
   class(R) = "carandom";
@@ -253,7 +253,7 @@ StrBCD = function(data, p = 0.85){
   
   CA = RES[3, 1][[1]]; 
   n = ncol(CA); 
-  R$N = n;
+  R$n = n;
   colnames(CA) = BBCDname(n, "pat"); 
   #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 
@@ -276,7 +276,7 @@ StrBCD = function(data, p = 0.85){
   
   R$method = "Shao's Procedure";
   R$'Data Type' = "Real";
-  R$framework = "Minimization/Stratified randomization";
+  R$framework = "Stratified randomization";
   R$data = data; 
   
   class(R) = "carandom";
@@ -340,7 +340,7 @@ StrPBR = function(data, bsize = 4){
   
   CA = RES[3, 1][[1]]; 
   n = ncol(CA); 
-  R$N = n;
+  R$n = n;
   colnames(CA) = BBCDname(n, "pat"); 
   #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 
@@ -370,7 +370,7 @@ StrPBR = function(data, bsize = 4){
   st_num = RES[1, 1][[1]];
   colnames(st_num) = BBCDname(ncol(AS), "level-");
   
-  R$`numbers of pats for each strata` = st_num;
+  R$`numbers of pats for each stratum` = st_num;
   
   class(R) = "carandom";
   
@@ -424,7 +424,7 @@ DoptBCD = function(data){
   
   CA = RES[3, 1][[1]]; 
   n = ncol(CA); 
-  R$N = n;
+  R$n = n;
   colnames(CA) = BBCDname(n, "pat"); 
   #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 
@@ -511,7 +511,7 @@ AdjBCD = function(data, a = 3.0){
   
   CA = RES[3, 1][[1]]; 
   n = ncol(CA); 
-  R$N = n;
+  R$n = n;
   colnames(CA) = BBCDname(n, "pat"); 
   #rownames(CA) = c(paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""), "assignment"); 
   rownames(CA) = c(paste("covariate", 1 : cov_num, sep = ""), "assignment"); 

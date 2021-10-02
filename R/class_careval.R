@@ -30,7 +30,7 @@ print.careval = function(x, digits = getOption("digits"), prefix = "\t", ...){
       });
   cat("\n"); 
   cat("group", "=",  LETTERS[1 : 2], "\n", sep = " ")
-  cat("N", "=", x$N, "\n", sep = " ")
+  cat("Sample size", "=", x$n, "\n", sep = " ")
   cat("iteration", "=", x$iteration, "\n", sep = " ")
   cat("cov_num", "=", x$cov_num, "\n", sep = " ")
   cat("level_num", "=", as.character(x$level_num), "\n", sep = " ")
@@ -47,7 +47,7 @@ print.careval = function(x, digits = getOption("digits"), prefix = "\t", ...){
   }
   
   cat("\n")
-  if(x$N <= 7){K = x$N}else{K = 7}
+  if(x$n <= 7){K = x$n}else{K = 7}
   if(x$iteration <= 3){I = x$iteration}else{I = 3}
   cat("assignments of the first", I, "iterations for the first", K, 
       "patients", ":", "\n", sep = " ")

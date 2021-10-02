@@ -54,3 +54,9 @@
     \item Some modifications were added to Remark Index to fixed some issues, including modifications in functions of \code{print.carandom}, and \code{print.careval}. 
   }
 }
+
+\section{version 2.0.1 (September 29th, 2021)}{
+\itemize{
+    \item Rectified the error in \code{print.carandom} about misplacement between the mean absolute within-stratum imbalance and the mean absolute within-covariate-margin imbalance. 
+    }
+}

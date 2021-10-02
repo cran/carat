@@ -31,19 +31,19 @@ print.carcomp = function(x, digits = getOption("digits"), prefix = "\t", ...){
     meth = paste(meth, x$mechanism[k], sep = ", ")
   }
   cat("Randomization", "=", meth, "\n", sep = " ")
-  if(length(unique(x$DataType)) != 1){
-    cat("Data Type: ", x$DataType, "\n"); 
+  if(length(unique(x$`Data Type`)) != 1){
+    cat("Data Type: ", x$`Data Type`, "\n"); 
   }else{
-    cat("Data Type: ", x$DataType[1], "\n"); 
+    cat("Data Type: ", x$`Data Type`[1], "\n"); 
     if(!"TRUE" %in% is.na(x$DataGeneration)){
       cat("Data generation: ", x$DataGeneration[1], "\n"); 
     }
   }
   cat("group", "=",  LETTERS[1 : 2], "\n", sep = " ")
-  if(is.na(x$N)){
+  if(is.na(x$n)){
     cat("iteration: no consistency between methods.", "\n")
   }else{
-    cat("N", "=", x$N, "\n", sep = " ")
+    cat("Sample size", "=", x$n, "\n", sep = " ")
   }
   if(is.na(x$iteration)){
     cat("iteration: no consistency between methods.", "\n")
@@ -67,7 +67,7 @@ print.carcomp = function(x, digits = getOption("digits"), prefix = "\t", ...){
   print(x$`Within-stratum Imbalances`, digits = 3)
   cat("\n")
   cat("Within-cov.-margin:\n")
-  print(x$`Marginal Imbalances`, digits = 3)
+  print(x$`Within-covariate-margin Imbalances`, digits = 3)
   
   if(!is.null(x$dfmm) && !is.null(x$df_abm)){
     dfmm = x$dfmm; 

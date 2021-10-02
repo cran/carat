@@ -397,7 +397,7 @@ HuHuCAR.ui = function(path, folder = "HuHuCAR"){
     covariate = as.character(CovIndex[, 1]);
     covr = CovIndex[, 2];
   }
-  R = list(); 
+  R = NULL; 
   CPR = EnterCovPrf(cov_num, pth, CovIndex, covariate, R); 
   message("\n"); 
   message("Reenter COVARIATE PROFILE or not?"); 
@@ -1064,7 +1064,7 @@ AdjBCD.ui = function(path, folder = "AdjBCD"){
     covariate = as.character(CovIndex[, 1]);
     covr = CovIndex[, 2]; 
   }
-  R = list(); 
+  R = NULL; 
   CPR = EnterCovPrf(cov_num, pth, CovIndex, covariate, R); 
   message("\n"); 
   message("Reenter COVARIATE PROFILE or not?"); 

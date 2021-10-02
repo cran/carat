@@ -21,7 +21,7 @@ print.carandom = function(x, digits = getOption("digits"), prefix = "\t", ...)
   if(!is.null(x$bsize)){
     cat("block", "=", x$bsize, "\n", sep = " ")
   }
-  cat("N", "=", x$N, "\n", sep = " ")
+  cat("Sample size", "=", x$n, "\n", sep = " ")
   cat("cov_num", "=", x$cov_num, "\n", sep = " ")
   if(x$`Data Type` == "Real"){
     cat("considered covariates: ", x$covariates, "\n", sep = "  ")
@@ -56,16 +56,16 @@ print.carandom = function(x, digits = getOption("digits"), prefix = "\t", ...)
   mm = mean(abs(t(x$Diff)[(2 + x$strt_num) : (1 + x$strt_num + sum(x$level_num))]))
   if(x$method == "Stratified Permuted Block Randomization"){
     out[1] = om; out[2] = mm;
-    par = x$`numbers of pats for each strata` %% x$bsize
+    par = x$`numbers of pats for each stratum` %% x$bsize
     str = t(x$Diff)[1, 2 : (1 + x$strt_num)]
     index = c(x$bsize, 1 : (x$bsize - 1))
     for(i in 1 : x$bsize){
       ind = which(par == i - 1, arr.ind = T)
       out[index[i] + 2] = mean(abs(str[ind[, 2]]))
     }
-    names(out) = c("overall", "marginal", BBCDname(x$bsize, "pnum = "))
+    names(out) = c("overall", "within-cov.-margin", BBCDname(x$bsize, "pnum = "))
   }else{
-    out[1 : 3] = c(om, mm, sm)
+    out[1 : 3] = c(om, sm, mm)
     names(out) = c("overall", "within-strt.", "within-cov.-margin")
   }
   cat("Mean absolute imbalances at overall, within-strt., and within-cov.-margin levels:\n")
