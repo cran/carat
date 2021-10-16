@@ -1,4 +1,4 @@
-6addbca84fb75e3e1668bad11b701467 *DESCRIPTION
+3d0285298ec302ae5e6eb47862fc932c *DESCRIPTION
 07ffb2370f78166edf94c672aa6372ce *NAMESPACE
 7816bf0b976fcba434f5e72726b865c7 *R/RcppExports.R
 5f9598d6c7a62d5dcb2f0a529b4dc706 *R/class_carandom.R
@@ -8,12 +8,12 @@ db9591ee475c264f3f40760314239f79 *R/class_carcomp.R
 29adb75b753ecdca2dd51ba1efc403a8 *R/class_plotrandtest.R
 4737c1d20296962bfd1e9710eaf506c7 *R/rand_CLI.R
 5ba86a99361e6eb4f4e904ca742b127a *R/rand_compRand.R
-551deb3aeb3195325c513ec2d0a9f156 *R/rand_completeData.R
+6911e501dd4594a7e38a5a3126750d13 *R/rand_completeData.R
 5bb628ad99b81b7d9c2499108b0e425b *R/rand_evalRand.R
 a154e44176446fe360bc1aed0ff3406b *R/rand_generatingData.R
 3a9a7e821e0cbdf571bc9d8d90e6772d *R/test_Rfunction.R
 31fd3b1721d7d7b18bfcea29f08a9dbf *data/pats.rda
-d4812f5c1eb61814cbe13e04984d3781 *inst/NEWS.Rd
+8b998dd0ebccc0327192b3532d898b69 *inst/NEWS.Rd
 50a1c0ef3ed558bcd1b508cb272d782e *man/AdjBCD.Rd
 6bfa34bc99378e0f1eb6d95d8e5c3c1d *man/AdjBCD.sim.Rd
 3a8ba4edf3b6e43ef2b671d89288b645 *man/AdjBCD.ui.Rd

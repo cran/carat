@@ -60,3 +60,9 @@
     \item Rectified the error in \code{print.carandom} about misplacement between the mean absolute within-stratum imbalance and the mean absolute within-covariate-margin imbalance. 
     }
 }
+
+\section{version 2.0.2 (October 16th, 2021)}{
+\itemize{
+    \item Rectified some issues.
+    }
+}

@@ -1,8 +1,8 @@
 Package: carat
 Type: Package
 Title: Covariate-Adaptive Randomization for Clinical Trials
-Version: 2.0.1
-Date: 2021-09-30
+Version: 2.0.2
+Date: 2021-10-16
 Authors@R: c(
     person(given="Fuyi", family="Tu", email="fuyi.tu@ruc.edu.cn", role="aut"),
     person(given="Xiaoqing", family="Ye", email="ye_xiaoq@163.com", role=c("aut","cre")),
@@ -22,6 +22,6 @@ Suggests: dplyr (>= 0.8.5)
 Depends: R (>= 3.6.0)
 NeedsCompilation: yes
 LinkingTo: Rcpp, RcppArmadillo
-Packaged: 2021-10-02 14:48:04 UTC; YeXiaoqing
+Packaged: 2021-10-16 07:37:09 UTC; YeXiaoqing
 Repository: CRAN
-Date/Publication: 2021-10-02 15:50:05 UTC
+Date/Publication: 2021-10-16 09:30:02 UTC
