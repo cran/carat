@@ -43,6 +43,8 @@ An object of class \code{"carandom"} is a list containing the following componen
 }
 \references{
 Atkinson A C. \emph{Optimum biased coin designs for sequential clinical trials with prognostic factors}[J]. Biometrika, 1982, 69(1): 61-67.
+
+Ma W, Ye X, Tu F, Hu F. \emph{carat: Covariate-Adaptive Randomization for Clinical Trials}[J]. Journal of Statistical Software, 2023, 107(2): 1-47.
 }
 \examples{
 # a simple use

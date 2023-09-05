@@ -23,6 +23,8 @@ See \code{\link{StrPBR}}.
 This function provides a command-line interface and users should follow the prompts to enter data including covariates as well as levels for each covariate, block size \code{bsize} and the covariate profile of the new patient.
 }
 \references{
+Ma W, Ye X, Tu F, Hu F. \emph{carat: Covariate-Adaptive Randomization for Clinical Trials}[J]. Journal of Statistical Software, 2023, 107(2): 1-47.
+
 Zelen M. \emph{The randomization and stratification of patients to clinical trials}[J]. Journal of chronic diseases, 1974, 27(7): 365-375.
 }
 \value{

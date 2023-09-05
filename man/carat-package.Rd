@@ -23,13 +23,15 @@ Ma W, Hu F, Zhang L. \emph{Testing hypotheses of covariate-adaptive randomized c
 
 Ma W, Qin Y, Li Y, et al. \emph{Statistical Inference for Covariate-Adaptive Randomization Procedures}[J]. Journal of the American Statistical Association, 2020, 115(531): 1488-1597. <doi:10.1080/01621459.2019.1635483>
 
+Ma W, Ye X, Tu F, Hu F. \emph{carat: Covariate-Adaptive Randomization for Clinical Trials}[J]. Journal of Statistical Software, 2023, 107(2): 1-47. <doi: 10.18637/jss.v107.i02>
+
 Pocock S J, Simon R. \emph{Sequential treatment assignment with balancing for prognostic factors in the controlled clinical trial}[J]. Biometrics, 1975: 103-115. <doi:10.2307/2529712>
 
 Rosenberger W F, Lachin J M. \emph{Randomization in clinical trials: theory and practice}[M]. John Wiley & Sons, 2015. <doi:10.1002/9781118742112>
 
 Shao J., Yu, X. \emph{Validity of tests under covariate-adaptive biased coin randomization and generalized linear models}[J]. Biometrics, 2013, 69(4), 960-969. <doi:10.1111/biom.12062>
 
-Shao J, Yu X, Zhong B. \emph{A theory for testing hypotheses under covariate-adaptive randomization}[J]. Biometrika, 2010, 97(2): 347-360. <doi:10.1093/biomet/asq014>
+Shao J., Yu X, Zhong B. \emph{A theory for testing hypotheses under covariate-adaptive randomization}[J]. Biometrika, 2010, 97(2): 347-360. <doi:10.1093/biomet/asq014>
 
 Zelen M. \emph{The randomization and stratification of patients to clinical trials}[J]. Journal of chronic diseases, 1974, 27(7): 365-375. <doi:10.1016/0021-9681(74)90015-0>
 }

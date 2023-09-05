@@ -56,6 +56,8 @@ Baldi Antognini A, Zagoraiou M. \emph{The covariate-adaptive biased coin design 
 
 Hu Y, Hu F. \emph{Asymptotic properties of covariate-adaptive randomization}[J]. The Annals of Statistics, 2012, 40(3): 1794-1815.
 
+Ma W, Ye X, Tu F, Hu F. \emph{carat: Covariate-Adaptive Randomization for Clinical Trials}[J]. Journal of Statistical Software, 2023, 107(2): 1-47.
+
 Pocock S J, Simon R. \emph{Sequential treatment assignment with balancing for prognostic factors in the controlled clinical trial}[J]. Biometrics, 1975: 103-115.
 
 Shao J, Yu X, Zhong B. \emph{A theory for testing hypotheses under covariate-adaptive randomization}[J]. Biometrika, 2010, 97(2): 347-360. 

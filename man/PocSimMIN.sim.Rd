@@ -25,6 +25,8 @@ See \code{\link{PocSimMIN}}.
 See \code{\link{PocSimMIN}}. 
 }
 \references{
+Ma W, Ye X, Tu F, Hu F. \emph{carat: Covariate-Adaptive Randomization for Clinical Trials}[J]. Journal of Statistical Software, 2023, 107(2): 1-47.
+
 Pocock S J, Simon R. \emph{Sequential treatment assignment with balancing for prognostic factors in the controlled clinical trial}[J]. Biometrics, 1975: 103-115.
 }
 \seealso{

@@ -21,6 +21,8 @@ StrPBR.sim(n = 1000, cov_num = 2, level_num = c(2, 2),
 See \code{\link{StrPBR}}.
 }
 \references{
+Ma W, Ye X, Tu F, Hu F. \emph{carat: Covariate-Adaptive Randomization for Clinical Trials}[J]. Journal of Statistical Software, 2023, 107(2): 1-47.
+
 Zelen M. \emph{The randomization and stratification of patients to clinical trials}[J]. Journal of chronic diseases, 1974, 27(7): 365-375.
 }
 \value{

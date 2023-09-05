@@ -24,6 +24,8 @@ See \code{\link{StrBCD}}.
 See \code{\link{StrBCD}}.
 }
 \references{
+Ma W, Ye X, Tu F, Hu F. \emph{carat: Covariate-Adaptive Randomization for Clinical Trials}[J]. Journal of Statistical Software, 2023, 107(2): 1-47.
+
 Shao J, Yu X, Zhong B. \emph{A theory for testing hypotheses under covariate-adaptive randomization}[J]. Biometrika, 2010, 97(2): 347-360. 
 }
 \seealso{

@@ -78,3 +78,9 @@
     \item fixed a typo in calculating the confidence itervals using randomization test. 
     }
 }
+
+\section{version 2.2.1 (April 30th, 2023)}{
+\itemize{
+    \item Add references. 
+    }
+}

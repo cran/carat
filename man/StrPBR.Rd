@@ -45,6 +45,8 @@ An object of class \code{"carandom"} is a list containing the following componen
   See \code{\link{StrPBR.ui}} for the command-line user interface.
 }
 \references{
+Ma W, Ye X, Tu F, Hu F. \emph{carat: Covariate-Adaptive Randomization for Clinical Trials}[J]. Journal of Statistical Software, 2023, 107(2): 1-47.
+
 Zelen M. \emph{The randomization and stratification of patients to clinical trials}[J]. Journal of chronic diseases, 1974, 27(7): 365-375.
 }
 \examples{

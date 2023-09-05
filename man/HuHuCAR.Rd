@@ -62,6 +62,8 @@ An object of class \code{"carandom"} is a list containing the following componen
 }
 \references{
 Hu Y, Hu F. \emph{Asymptotic properties of covariate-adaptive randomization}[J]. The Annals of Statistics, 2012, 40(3): 1794-1815.
+
+Ma W, Ye X, Tu F, Hu F. \emph{carat: Covariate-Adaptive Randomization for Clinical Trials}[J]. Journal of Statistical Software, 2023, 107(2): 1-47.
 }
 \examples{
 # a simple use

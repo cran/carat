@@ -31,6 +31,8 @@
 
 \references{
   Ma W, Hu F, Zhang L. \emph{Testing hypotheses of covariate-adaptive randomized clinical trials}[J]. Journal of the American Statistical Association, 2015, 110(510): 669-680.
+  
+  Ma W, Ye X, Tu F, Hu F. \emph{carat: Covariate-Adaptive Randomization for Clinical Trials}[J]. Journal of Statistical Software, 2023, 107(2): 1-47.
 }
 
 \examples{

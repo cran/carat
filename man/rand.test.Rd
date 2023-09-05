@@ -49,6 +49,8 @@
   \item{statistic}{the value of the t-statistic. As the randomization test is a nonparametric method, we cannot calculate the t-statistic, so it is hidden in this result.}
 }
 \references{
+Ma W, Ye X, Tu F, Hu F. \emph{carat: Covariate-Adaptive Randomization for Clinical Trials}[J]. Journal of Statistical Software, 2023, 107(2): 1-47.
+
 Rosenberger W F, Lachin J M. Randomization in clinical trials: \emph{theory and practice}[M]. John Wiley & Sons, 2015.
 }
 \examples{
